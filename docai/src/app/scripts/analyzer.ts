@@ -73,13 +73,13 @@ export const analyzeAndBuildGraph = async () => {
 
   console.log(elements);
 
-  //   console.log("Graph built successfully:");
-  //   console.log("Nodes");
-  //   console.log(graph.nodes());
-  //   console.log("Edges");
-  //   console.log(graph.edges());
-  //   console.log("Graph");
-  //   console.log(graph);
+    console.log("Graph built successfully:");
+    console.log("Nodes");
+    console.log(graph.nodes());
+    console.log("Edges");
+    console.log(graph.edges());
+    console.log("Graph");
+    console.log(graph);
 };
 
 const getAllFiles = (dirPath: string, arrayOfFiles: string[] = []) => {
@@ -101,18 +101,6 @@ const extractDependencies = (code: string, filePath: string): string[] => {
   const dependencies: string[] = [];
 
   try {
-    const ast = parse(code, {
-      sourceType: "module",
-      plugins: ["typescript", "jsx"],
-    });
-
-    traverse(ast, {
-      ImportDeclaration(path: { node: { source: { value: any } } }) {
-        const importPath = path.node.source.value;
-        dependencies.push(importPath);
-      },
-    });
-
     // console.log("dependencies");
     // console.log(dependencies);
   } catch (error) {
@@ -123,27 +111,11 @@ const extractDependencies = (code: string, filePath: string): string[] => {
 };
 
 const addToGraph = (file: string, dependencies: string[]) => {
-  // Add the file to the graph and its dependencies to the graph as well.
-  //   console.log({
-  //     file,
-  //     dependencies,
-  //   });
-
-  const fileNode = path.relative(process.cwd(), file);
-  if (!graph.hasNode(fileNode)) {
-    graph.setNode(fileNode);
-  }
-
-  dependencies.forEach((dependency) => {
-    const dependencyNode = path.relative(
-      process.cwd(),
-      path.resolve(path.dirname(file), dependency)
-    );
-    if (!graph.hasNode(dependencyNode)) {
-      graph.setNode(dependencyNode);
-    }
-    graph.setEdge(fileNode, dependencyNode);
-  });
+  Add the file to the graph and its dependencies to the graph as well.
+    console.log({
+      file,
+      dependencies,
+    });
 };
 
 // Run the analyzer
@@ -152,4 +124,4 @@ const repositoryPath = path.resolve(
   "repositories/my-nextjs-project"
 );
 
-// analyzeAndBuildGraph(repositoryPath);
+analyzeAndBuildGraph(repositoryPath);
