@@ -19,8 +19,6 @@ import { callTools } from "../../../../../scripts/tools";
 const DocumentPipeline = () => {
   const searchParams = useSearchParams();
 
-  const embedAllJsonFiles = () => {};
-
   const repository = searchParams.get("repository");
 
   return (
