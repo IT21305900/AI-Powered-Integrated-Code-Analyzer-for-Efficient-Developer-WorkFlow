@@ -52,15 +52,10 @@ export const callTools = async () => {
   const pipeline = traceable(async (user_input: string) => {
     // Simulate an LLM response that uses the tools
     if (user_input.startsWith("multiply")) {
-      const args = { a: 5, b: 10 }; // Example arguments
-      const result = await multiplyTool.invoke(args);
-      return `Multiplication result: ${result}`;
-
     } else if (user_input.startsWith("reverse")) {
       const args = { text: "Hello, LangChain!" };
       const result = await reverseTextTool.invoke(args);
       return `Reversed text: ${result}`;
-      
     } else {
       // Default LLM response
       const result = await client.chat.completions.create({

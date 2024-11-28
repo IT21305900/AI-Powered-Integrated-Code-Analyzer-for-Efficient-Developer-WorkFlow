@@ -12,9 +12,7 @@ const apiVersion = process.env.AZURE_OPEN_AI_API_VERSION;
 // Initialize Chroma and Azure OpenAI
 const chromaClient = new ChromaClient({ path: "http://localhost:8081" });
 
-const embeddingClient = new AzureOpenAI({});
-
-const openAIClient = new AzureOpenAI({
+const embeddingClient = new AzureOpenAI({
   apiKey,
   endpoint,
   apiVersion,
@@ -93,5 +91,23 @@ export const embedAllJsonFiles = async () => {
     });
 
     console.log(`Embedded and added: ${file}`);
+  }
+};
+
+const checkEmbeddings = async () => {
+  try {
+    // Retrieve the collection
+    const collection = await chromaClient.getCollection({
+      name: "project-analysis",
+    });
+
+    // Fetch all embeddings and metadata from the collection
+    const data = await collection.get(); // Fetches all ids, embeddings, and metadata
+
+    console.log("Collection Data:");
+    console.log(data); // Logs the complete collection data
+  } catch (error) {
+    console.error("Error retrieving embeddings:");
+    console.error(error);
   }
 };
