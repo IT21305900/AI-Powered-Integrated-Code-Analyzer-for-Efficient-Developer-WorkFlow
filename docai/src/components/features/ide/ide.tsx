@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/accordion";
 import { Icon } from "@iconify/react";
 import DocumentPipeline from "../pipeline/documentation/DocumentPipeline";
+import Documentation from "./Documentation";
 
 const getFileIcon = (fileName: string) => {
   if (fileName.endsWith(".tsx")) return <Icon icon="logos:react" />;
@@ -325,6 +326,14 @@ export default function IDE({
         <ResizablePanel defaultSize={500}>
           <div className="max-h-[92vh] overflow-y-auto">
             <DocumentPipeline />
+          </div>
+        </ResizablePanel>
+
+        <ResizableHandle />
+
+        <ResizablePanel defaultSize={500}>
+          <div className="max-h-[92vh] overflow-y-auto">
+            <Documentation />
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>

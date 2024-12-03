@@ -2,6 +2,7 @@
 
 import { Graph } from "graphlib";
 import fs from "fs";
+import { promises as asfs } from "fs";
 import path from "path";
 import { parse } from "@babel/parser";
 import traverse from "@babel/traverse";
@@ -9,11 +10,36 @@ import traverse from "@babel/traverse";
 const graph = new Graph({ directed: true });
 const segmentsFolder = path.resolve(process.cwd(), "segments");
 
-if (!fs.existsSync(segmentsFolder)) {
-  fs.mkdirSync(segmentsFolder);
-}
+// if (!fs.existsSync(segmentsFolder)) {
+//   fs.mkdirSync(segmentsFolder);
+// }
+
+const clearSegmentsFolder = async () => {
+  try {
+    // Check if the folder exists
+    const folderExists = await asfs.stat(segmentsFolder).catch(() => null);
+    if (folderExists) {
+      // Read all files in the folder
+      const files = await asfs.readdir(segmentsFolder);
+      // Delete each file
+      for (const file of files) {
+        const filePath = path.join(segmentsFolder, file);
+        await asfs.unlink(filePath);
+      }
+      console.log("Segments folder cleared.");
+    } else {
+      // Create the folder if it doesn't exist
+      await asfs.mkdir(segmentsFolder, { recursive: true });
+      console.log("Segments folder created.");
+    }
+  } catch (error) {
+    console.error("Error while clearing the segments folder:", error);
+  }
+};
 
 export const analyzeAndBuildGraph = async (repository: string) => {
+  await clearSegmentsFolder(); // Clear the segments folder first
+
   const repoPath = path.resolve(process.cwd(), `repositories/${repository}`);
   const files = getAllFiles(repoPath);
 
@@ -24,7 +50,7 @@ export const analyzeAndBuildGraph = async (repository: string) => {
       file.endsWith(".ts") ||
       file.endsWith(".tsx")
     ) {
-      console.log(`Analyzing file: ${file}`);
+      // console.log(`Analyzing file: ${file}`);
       const code = fs.readFileSync(file, "utf-8");
 
       const {
@@ -70,7 +96,7 @@ export const analyzeAndBuildGraph = async (repository: string) => {
     }
   }
 
-  console.log("Analysis complete. JSON metadata stored in 'segments' folder.");
+  // console.log("Analysis complete. JSON metadata stored in 'segments' folder.");
 };
 
 const getAllFiles = (dirPath: string, arrayOfFiles: string[] = []) => {
@@ -97,14 +123,7 @@ const parseAndExtract = (code: string, filePath: string) => {
   const hooks: { type: string; details: any }[] = [];
   const serverActions: string[] = [];
   const apiCalls: { endpoint: string; method: string }[] = [];
-  let fileRole = "utility";
-
-  const routePath = filePath
-    .replace(process.cwd(), "")
-    .replace(/\\/g, "/")
-    .replace(/^.*\/app/, "")
-    .replace(/page\.(ts|tsx)$/, "")
-    .replace(/\[(.*?)\]/g, ":$1");
+  let fileRole = "component";
 
   const dynamicParams = (filePath.match(/\[(.*?)\]/g) || []).map((param) =>
     param.replace(/\[|\]/g, "")
@@ -193,17 +212,32 @@ const parseAndExtract = (code: string, filePath: string) => {
         }
       },
     });
-
-    if (filePath.includes("/app/")) {
-      if (filePath.endsWith("page.tsx")) fileRole = "route";
-      else if (filePath.endsWith("layout.tsx")) fileRole = "layout";
-      else if (filePath.endsWith("_template.tsx")) fileRole = "template";
-    } else if (filePath.includes("/pages/")) {
-      fileRole = "legacy-route";
-    }
   } catch (error) {
     console.error(`Failed to parse file: ${filePath}`, error);
   }
+
+  console.log("File Path");
+  console.log(filePath);
+
+  if (filePath.includes("app")) {
+    if (filePath.endsWith("page.tsx")) fileRole = "route";
+    else if (filePath.endsWith("layout.tsx")) fileRole = "layout";
+    else if (filePath.endsWith("_template.tsx")) fileRole = "template";
+  } else if (filePath.includes("pages")) {
+    fileRole = "legacy-route";
+  } else {
+    if (
+      (filePath.endsWith(".ts") || filePath.endsWith(".js")) &&
+      !filePath.endsWith(".tsx")
+    ) {
+      fileRole = "utility";
+    } else if (filePath.endsWith(".json")) {
+      fileRole = ".json";
+    }
+  }
+
+  console.log("File Role");
+  console.log(fileRole);
 
   return {
     dependencies,
@@ -213,7 +247,7 @@ const parseAndExtract = (code: string, filePath: string) => {
     hooks,
     propUsage,
     fileRole,
-    routePath: routePath || null,
+    // routePath: routePath || null,
     dynamicParams,
     serverActions,
     apiCalls,
@@ -267,6 +301,167 @@ const addToGraph = (
 };
 
 // Run the analyzer
+
+//v3
+// "use server";
+// import { Graph } from "graphlib";
+// import fs from "fs";
+// import path from "path";
+// import { parse } from "@babel/parser";
+// import traverse from "@babel/traverse";
+
+// const graph = new Graph({ directed: true });
+// const segmentsFolder = path.resolve(process.cwd(), "segments");
+
+// if (!fs.existsSync(segmentsFolder)) {
+//   fs.mkdirSync(segmentsFolder);
+// }
+
+// export const analyzeAndBuildGraph = async () => {
+//   const repoPath = path.resolve(
+//     process.cwd(),
+//     "repositories/nextjs-app-router-training"
+//   );
+//   const files = getAllFiles(repoPath);
+
+//   for (const file of files) {
+//     if (
+//       file.endsWith(".js") ||
+//       file.endsWith(".jsx") ||
+//       file.endsWith(".ts") ||
+//       file.endsWith(".tsx")
+//     ) {
+//       console.log(`Analyzing file: ${file}`);
+//       const code = fs.readFileSync(file, "utf-8");
+//       const {
+//         dependencies,
+//         components,
+//         reusableComponents,
+//         stateUsages,
+//         hooks,
+//         propUsage,
+//         fileRole,
+//       } = parseAndExtract(code, file);
+
+//       // Save metadata to JSON
+//       saveMetadataToFile(file, {
+//         filePath: file,
+//         code,
+//         dependencies,
+//         components,
+//         reusableComponents,
+//         stateUsages,
+//         hooks,
+//         propUsage,
+//         fileRole,
+//       });
+
+//       addToGraph(
+//         file,
+//         dependencies,
+//         components,
+//         reusableComponents,
+//         stateUsages,
+//         hooks,
+//         fileRole
+//       );
+//     }
+//   }
+
+//   console.log("Analysis complete. JSON metadata stored in 'segments' folder.");
+// };
+
+// const getAllFiles = (dirPath: string, arrayOfFiles: string[] = []) => {
+//   const files = fs.readdirSync(dirPath);
+
+//   files.forEach((file) => {
+//     const fullPath = path.join(dirPath, file);
+//     if (fs.statSync(fullPath).isDirectory()) {
+//       arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
+//     } else {
+//       arrayOfFiles.push(fullPath);
+//     }
+//   });
+
+//   return arrayOfFiles;
+// };
+
+// const parseAndExtract = (code: string, filePath: string) => {
+//   const routePath = filePath
+//     .replace(process.cwd(), "")
+//     .replace(/\\/g, "/")
+//     .replace(/^.*\/app/, "")
+//     .replace(/page\.(ts|tsx)$/, "")
+//     .replace(/\[(.*?)\]/g, ":$1");
+
+//   const dynamicParams = (filePath.match(/\[(.*?)\]/g) || []).map((param) =>
+//     param.replace(/\[|\]/g, "")
+//   );
+//   const dependencies: string[] = [];
+//   const components: string[] = [];
+//   const reusableComponents: string[] = [];
+//   const stateUsages: string[] = [];
+//   const propUsage: Record<string, any[]> = {};
+//   const hooks: { type: string; details: any }[] = [];
+//   let fileRole = "utility";
+
+//   try {
+//     const ast = parse(code, {
+//       sourceType: "module",
+//       plugins: ["typescript", "jsx"],
+//     });
+
+//     traverse(ast, {
+//       ImportDeclaration(path: { node: { source: { value: any } } }) {
+//         const importPath = path.node.source.value;
+//         dependencies.push(importPath);
+//       },
+//       FunctionDeclaration(path: { node: { id: { name: string } } }) {
+//         if (path.node.id?.name) {
+//           components.push(path.node.id.name);
+//         }
+//       },
+//       VariableDeclarator(path: {
+//         node: {
+//           init: { type: string; callee: { type: string; name: string } };
+//           id: { name: string };
+//         };
+//       }) {
+//         if (
+//           path.node.init?.type === "CallExpression" &&
+//           path.node.init.callee.type === "Identifier" &&
+//           path.node.init.callee.name === "useState"
+//         ) {
+//           stateUsages.push(path.node.id.name);
+//         }
+//       },
+//       JSXOpeningElement(path: {
+//         node: {
+//           name: { type: string; name: any };
+//           attributes: {
+//             name: { name: any };
+//             value: { expression: { value: any }; value: any };
+//           }[];
+//         };
+//       }) {
+//         if (path.node.name.type === "JSXIdentifier") {
+//           const componentName = path.node.name.name;
+//           const props = path.node.attributes.map(
+//             (attr: {
+//               name: { name: any };
+//               value: { expression: { value: any }; value: any };
+//             }) => ({
+//               name: attr.name?.name,
+//               value: attr.value?.expression?.value || attr.value?.value || null,
+//             })
+//           );
+//           propUsage[componentName] = props;
+
+//           if (dependencies.some((dep) => dep.includes(componentName))) {
+//             reusableComponents.push(componentName);
+//           }
+//         }
+//       },
 
 //       // CallExpression(path: {
 //       //   node: { callee: { name: any }; arguments: { type: any }[] };

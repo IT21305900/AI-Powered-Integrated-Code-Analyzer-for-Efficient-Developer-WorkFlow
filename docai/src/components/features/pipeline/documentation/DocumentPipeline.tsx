@@ -14,7 +14,8 @@ import React, { ReactNode } from "react";
 import { embedAllJsonFiles } from "../../../../../scripts/vectorize";
 import { analyzeAndBuildGraph } from "../../../../../scripts/analyzer";
 import { generateDocumentation } from "../../../../../scripts/generator";
-import { callTools } from "../../../../../scripts/tools";
+
+// import { callTools } from "../../../../../scripts/tools";
 
 const DocumentPipeline = () => {
   const searchParams = useSearchParams();
@@ -54,7 +55,20 @@ const DocumentPipeline = () => {
 
             <div className="flex gap-2">
               <Input id="repo" value={repository!} disabled />
-              <Button onClick={() => embedAllJsonFiles()}>
+              <Button onClick={() => embedAllJsonFiles(repository!)}>
+                Run <PlayCircle />
+              </Button>
+            </div>
+          </div>
+        </Step>
+
+        <Step step="Generate the Documentation" index={4}>
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="repo">Project</Label>
+
+            <div className="flex gap-2">
+              <Input id="repo" value={repository!} disabled />
+              <Button onClick={() => generateDocumentation(repository!)}>
                 Run <PlayCircle />
               </Button>
             </div>
