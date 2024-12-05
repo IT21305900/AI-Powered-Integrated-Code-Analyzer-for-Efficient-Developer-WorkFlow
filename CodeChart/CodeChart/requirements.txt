@@ -1,0 +1,2 @@
+gitpython
+llama-index-llms-ollama
