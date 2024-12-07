@@ -1,4 +1,5 @@
-![image](https://github.com/user-attachments/assets/7fda6951-3a09-405f-b33c-c8f81e14374d)![image](https://github.com/user-attachments/assets/70aa5a85-c4eb-46ce-8e07-cce90b3609e8)# AI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow
+
+# AI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow
 
 
 ## Branches
