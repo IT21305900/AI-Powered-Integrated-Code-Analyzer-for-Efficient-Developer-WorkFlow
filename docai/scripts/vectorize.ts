@@ -94,6 +94,7 @@ export const embedAllJsonFiles = async (collectionName: string) => {
 
   for (const file of files) {
     const filePath = path.join(segmentsFolder, file);
+    // @ts-ignore
     const response: {
       id: string;
       code: string;

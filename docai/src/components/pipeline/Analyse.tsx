@@ -6,9 +6,9 @@ import { Button } from "../ui/button";
 const Analyse = () => {
   return (
     <div>
-      <Button className="rounded-none" onClick={() => analyzeAndBuildGraph()}>
+      {/* <Button className="rounded-none" onClick={() => analyzeAndBuildGraph()}>
         Generate Graph
-      </Button>
+      </Button> */}
     </div>
   );
 };

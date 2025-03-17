@@ -61,7 +61,7 @@ export const analyzeAndBuildGraph = async (repository: string) => {
         hooks,
         propUsage,
         fileRole,
-        routePath,
+        // routePath,
         dynamicParams,
         serverActions,
         apiCalls,
@@ -78,7 +78,7 @@ export const analyzeAndBuildGraph = async (repository: string) => {
         hooks,
         propUsage,
         fileRole,
-        routePath,
+        // routePath,
         dynamicParams,
         serverActions,
         apiCalls,
@@ -140,8 +140,9 @@ const parseAndExtract = (code: string, filePath: string) => {
         const importPath = path.node.source.value;
         dependencies.push(importPath);
       },
+      // @ts-ignore
       FunctionDeclaration(path: {
-        node: { id: { name: string }; async: boolean };
+        node: { id: { name: string } | null | undefined; async: boolean };
       }) {
         if (path.node.id?.name) {
           components.push(path.node.id.name);
@@ -150,6 +151,7 @@ const parseAndExtract = (code: string, filePath: string) => {
           }
         }
       },
+      // @ts-ignore
       VariableDeclarator(path: {
         node: {
           init: { type: string; callee: { type: string; name: string } };
@@ -164,6 +166,7 @@ const parseAndExtract = (code: string, filePath: string) => {
           stateUsages.push(path.node.id.name);
         }
       },
+      // @ts-ignore
       JSXOpeningElement(path: {
         node: {
           name: { type: string; name: any };
@@ -191,6 +194,7 @@ const parseAndExtract = (code: string, filePath: string) => {
           }
         }
       },
+      // @ts-ignore
       CallExpression(path: {
         node: { callee: { name: any }; arguments: any[] };
       }) {

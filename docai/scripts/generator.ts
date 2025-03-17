@@ -207,8 +207,8 @@ export const generateDocumentation = async (collectionName: string) => {
     fileRole: "route",
   });
 
-  const routes: [] = routesResults.documents[0];
-  const ids: [] = routesResults.ids[0];
+  const routes: any = routesResults.documents[0];
+  const ids: any = routesResults.ids[0];
   const routesMarkdown = await generateRouting("Routing", routes, ids);
   await appendToFile(
     outputFilePath,

@@ -36,7 +36,9 @@ const embedJsonFile = async (filePath: string) => {
   `;
 
   // Generate embedding using Azure OpenAI API
+
   const response = await openAIClient.embeddings.create(
+    // @ts-ignore
     "text-embedding-ada-002",
     {
       body: text,

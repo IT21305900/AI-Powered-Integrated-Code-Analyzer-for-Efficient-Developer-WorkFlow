@@ -138,9 +138,11 @@ export const generatDocumentation = async (repository: string) => {
     console.log(mydocument);
 
     // Save Markdown to File
+
     await fs.writeFile(
       "./public/DOCUMENTATION.md",
-      mydocument.content,
+      // @ts-ignore
+      JSON.stringify(mydocument.content),
       "utf-8"
     );
 

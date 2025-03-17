@@ -112,6 +112,7 @@ export default function FileViewer({
           >
             <SyntaxHighlighter
               language={language}
+              // @ts-ignore
               style={theme === "dark" ? customTheme : customLightTheme}
               showLineNumbers={lineNumbers}
               lineNumberStyle={{
