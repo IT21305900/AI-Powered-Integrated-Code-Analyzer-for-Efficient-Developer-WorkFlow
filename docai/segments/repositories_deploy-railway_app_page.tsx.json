@@ -1,0 +1,19 @@
+{
+  "filePath": "D:\\SLIIT\\Research\\AI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow\\docai\\repositories\\deploy-railway\\app\\page.tsx",
+  "code": "export default function Home() {\r\n  return (\r\n    <main>\r\n      <div>Next.js on Railway</div>\r\n    </main>\r\n  );\r\n}\r\n",
+  "dependencies": [],
+  "components": [
+    "Home"
+  ],
+  "reusableComponents": [],
+  "stateUsages": [],
+  "hooks": [],
+  "propUsage": {
+    "main": [],
+    "div": []
+  },
+  "fileRole": "route",
+  "dynamicParams": [],
+  "serverActions": [],
+  "apiCalls": []
+}

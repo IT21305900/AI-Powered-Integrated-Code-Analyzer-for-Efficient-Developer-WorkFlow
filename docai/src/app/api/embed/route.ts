@@ -77,7 +77,7 @@ const embedAllJsonFiles = async () => {
 };
 
 // API route handler for embedding
-export default async function handler(req: NextRequest, res: NextResponse) {
+export const POST = async (req: NextRequest) => {
   if (req.method === "POST") {
     console.log("Called the API");
     try {
@@ -92,4 +92,4 @@ export default async function handler(req: NextRequest, res: NextResponse) {
     // Only allow POST requests
     // res.status(405).json({ error: "Method Not Allowed" });
   }
-}
+};

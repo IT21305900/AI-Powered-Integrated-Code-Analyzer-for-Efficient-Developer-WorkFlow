@@ -20,7 +20,10 @@ const Documentation = () => {
         return response.text();
       })
       .then((text) => setMarkdownContent(text))
-      .catch((error) => setError(true));
+      .catch((error) => {
+        console.error(error);
+        setError(true);
+      });
   }, []);
 
   return (

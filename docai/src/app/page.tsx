@@ -1,11 +1,6 @@
-import IDE from "@/components/features/ide/ide";
-import Image from "next/image";
-import { getFileIcon } from "@/core/config/file-icons";
-import { projectStructure } from "@/core/config/tree-object";
 import Repositories from "@/components/home/Repositories";
 import Features from "@/components/home/Features";
 import Greeting from "@/components/home/Greeting";
-import AppBar from "@/components/common/AppBar";
 import History from "@/components/home/History";
 import CloneRepo from "@/components/home/CloneRepo";
 

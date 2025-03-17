@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import {
   FormControl,
   FormField,
@@ -12,13 +12,10 @@ import { Input } from "../ui/input";
 import {
   Select,
   SelectContent,
-  SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { FormFieldType, CustomProps } from "@/lib/types";
-import { getRepositoryFolderNames } from "@/lib/filesystem";
-import { isErrored } from "stream";
 // import { useQuery } from "@tanstack/react-query";
 // import UploadWidget from "../common/upload/UploadWidget";
 
@@ -171,7 +168,7 @@ const RenderInput = ({ field, props }: { field: any; props: any }) => {
 // };
 
 const CustomFormField = (props: CustomProps) => {
-  const { control, name, label, disabled } = props;
+  const { control, name, label } = props;
 
   return (
     <FormField
@@ -192,10 +189,3 @@ const CustomFormField = (props: CustomProps) => {
 };
 
 export default CustomFormField;
-function useQuery(arg0: { queryKey: string[]; queryFn: () => Promise<any> }): {
-  data: any;
-  isLoading: any;
-  error: any;
-} {
-  throw new Error("Function not implemented.");
-}

@@ -1,4 +1,3 @@
-import AppBar from "@/components/common/AppBar";
 import ProjectToolBar from "@/components/features/ide/ProjectToolBar";
 import React from "react";
 

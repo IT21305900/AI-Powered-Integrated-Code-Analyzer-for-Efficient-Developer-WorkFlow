@@ -1,18 +1,16 @@
 import RepositorySelector from "@/components/common/RepositorySelector";
 import IDE from "@/components/features/ide/ide";
 import { getFileIcon } from "@/core/config/file-icons";
-import { FileExplorer, projectStructure } from "@/core/config/tree-object";
 import { buildProjectStructure } from "@/lib/filesystem";
 import React from "react";
 
-const page = async ({
-  searchParams,
-}: {
-  searchParams?: {
-    repository?: string;
-  };
-}) => {
-  const { repository }: any = await searchParams;
+// After
+type Params = Promise<{ slug: string }>;
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+
+const page = async (props: { params: Params; searchParams: SearchParams }) => {
+  const searchParams = await props.searchParams;
+  const repository = searchParams.repository;
 
   if (!repository)
     return (

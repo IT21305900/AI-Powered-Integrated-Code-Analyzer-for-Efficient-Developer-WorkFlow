@@ -4,8 +4,8 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { AnimatePresence, motion, Reorder } from "framer-motion";
-import { Code2, File, Folder, GripVertical } from "lucide-react";
+import { Reorder } from "framer-motion";
+import { Code2, Folder } from "lucide-react";
 import * as React from "react";
 import { create } from "zustand";
 import { Card } from "@/components/ui/card";
@@ -69,14 +69,6 @@ interface FileStoreState {
   openedFiles: string[];
   setOpenedFiles: (files: string[]) => void;
 }
-
-type SetState = (
-  partial:
-    | FileStoreState
-    | Partial<FileStoreState>
-    | ((state: FileStoreState) => FileStoreState | Partial<FileStoreState>),
-  replace?: boolean | undefined
-) => void;
 
 const useFileStore = create<FileStoreState>((set) => ({
   expandedPaths: new Set<string>(),
@@ -143,33 +135,33 @@ const isBinaryFile = (fileName: string): boolean => {
   return binaryExtensions.includes(extension);
 };
 
-// Add icon colors mapping
-const FILE_ICON_COLORS = {
-  // Config files
-  "tsconfig.json": "text-blue-400",
-  "package.json": "text-red-400",
-  ".env": "text-green-400",
-  // Source files
-  ".tsx": "text-blue-400",
-  ".ts": "text-blue-400",
-  ".js": "text-yellow-400",
-  ".jsx": "text-yellow-400",
-  // Styles
-  ".css": "text-sky-400",
-  ".scss": "text-pink-400",
-  // Other
-  ".md": "text-white",
-  ".json": "text-yellow-400",
-} as const;
+// // Add icon colors mapping
+// const FILE_ICON_COLORS = {
+//   // Config files
+//   "tsconfig.json": "text-blue-400",
+//   "package.json": "text-red-400",
+//   ".env": "text-green-400",
+//   // Source files
+//   ".tsx": "text-blue-400",
+//   ".ts": "text-blue-400",
+//   ".js": "text-yellow-400",
+//   ".jsx": "text-yellow-400",
+//   // Styles
+//   ".css": "text-sky-400",
+//   ".scss": "text-pink-400",
+//   // Other
+//   ".md": "text-white",
+//   ".json": "text-yellow-400",
+// } as const;
 
-const FOLDER_COLORS = {
-  src: "text-blue-400",
-  components: "text-purple-400",
-  pages: "text-orange-400",
-  styles: "text-pink-400",
-  public: "text-green-400",
-  assets: "text-yellow-400",
-} as const;
+// const FOLDER_COLORS = {
+//   src: "text-blue-400",
+//   components: "text-purple-400",
+//   pages: "text-orange-400",
+//   styles: "text-pink-400",
+//   public: "text-green-400",
+//   assets: "text-yellow-400",
+// } as const;
 
 // Add SettingsState type (can be imported from settings.tsx)
 type SettingsState = {
@@ -188,13 +180,13 @@ export default function IDE({
   defaultCollapsed = false,
   defaultOpen = true,
   maxFilesOpen = 5,
-  folderColor,
+  // folderColor,
+  // showIndentGuides = true,
+  // customIcons,
   defaultSelectedPath,
   colorfulIcons = false,
   defaultSettings = {},
   rootName = "project-root",
-  showIndentGuides = true,
-  customIcons,
 }: IDEProps) {
   // Initialize settings with defaults
   const [settings, setSettings] = React.useState<SettingsState>({
@@ -278,7 +270,7 @@ export default function IDE({
                 rootName={rootName}
                 showIndentGuides={settings.showIndentGuides}
                 handleFileSelect={function (path: string): void {
-                  throw new Error("Function not implemented.");
+                  throw new Error("Function not implemented. " + path);
                 }}
               />
             </Reorder.Group>

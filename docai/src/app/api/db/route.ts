@@ -6,6 +6,8 @@ export async function GET() {
     await dbConnect();
     return NextResponse.json({ message: "Database connected successfully" });
   } catch (error) {
+    console.log(error);
+
     return NextResponse.json(
       { error: "Database connection failed" },
       { status: 500 }

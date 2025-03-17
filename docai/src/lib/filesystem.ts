@@ -5,7 +5,6 @@ import path from "path";
 import Repo from "@/lib/db/repo.model";
 import { ProjectStructure } from "./types";
 import dbConnect from "./db/db";
-import { revalidatePage } from "../../repositories/ecommerce/src/payload/collections/Pages/hooks/revalidatePage";
 import { revalidatePath } from "next/cache";
 
 export const clonRepository = async (formData: FormData) => {

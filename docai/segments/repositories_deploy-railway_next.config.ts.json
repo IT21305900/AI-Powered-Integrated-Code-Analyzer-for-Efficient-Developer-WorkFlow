@@ -1,0 +1,16 @@
+{
+  "filePath": "D:\\SLIIT\\Research\\AI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow\\docai\\repositories\\deploy-railway\\next.config.ts",
+  "code": "import type { NextConfig } from \"next\";\r\n\r\nconst nextConfig: NextConfig = {\r\n  /* config options here */\r\n};\r\n\r\nexport default nextConfig;\r\n",
+  "dependencies": [
+    "next"
+  ],
+  "components": [],
+  "reusableComponents": [],
+  "stateUsages": [],
+  "hooks": [],
+  "propUsage": {},
+  "fileRole": "utility",
+  "dynamicParams": [],
+  "serverActions": [],
+  "apiCalls": []
+}
