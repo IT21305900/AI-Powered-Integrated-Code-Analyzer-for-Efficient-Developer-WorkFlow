@@ -11,6 +11,7 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import { Suspense } from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -54,7 +55,9 @@ export default function RootLayout({
             </div>
           </header>
 
-          <TanstackProvider>{children}</TanstackProvider>
+          <TanstackProvider>
+            <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+          </TanstackProvider>
         </body>
       </html>
     </ClerkProvider>

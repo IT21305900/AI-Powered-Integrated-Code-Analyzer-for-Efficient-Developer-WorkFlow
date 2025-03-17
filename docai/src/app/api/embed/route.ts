@@ -83,8 +83,8 @@ export const POST = async (req: NextRequest) => {
   if (req.method === "POST") {
     console.log("Called the API");
     try {
-      // // Call the function to embed all JSON files
-      // await embedAllJsonFiles();
+      // Call the function to embed all JSON files
+      await embedAllJsonFiles();
       // res.status(200).json({ message: "Successfully embedded all files!" });
     } catch (error) {
       // console.error("Error during embedding:", error);

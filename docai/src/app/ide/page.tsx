@@ -1,16 +1,16 @@
+import { Suspense } from "react";
 import RepositorySelector from "@/components/common/RepositorySelector";
 import IDE from "@/components/features/ide/ide";
 import { getFileIcon } from "@/core/config/file-icons";
 import { buildProjectStructure } from "@/lib/filesystem";
-import React from "react";
+import ProjectToolBar from "@/components/features/ide/ProjectToolBar";
 
-// After
-type Params = Promise<{ slug: string }>;
-type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
-
-const page = async (props: { params: Params; searchParams: SearchParams }) => {
-  const searchParams = await props.searchParams;
-  const repository = searchParams.repository;
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const repository = (await searchParams).repository;
 
   if (!repository)
     return (
@@ -30,10 +30,9 @@ const page = async (props: { params: Params; searchParams: SearchParams }) => {
 
     return (
       <div>
+        <ProjectToolBar />
         <IDE root={structure} theme="dark" customIcons={getFileIcon} />
       </div>
     );
   }
-};
-
-export default page;
+}
