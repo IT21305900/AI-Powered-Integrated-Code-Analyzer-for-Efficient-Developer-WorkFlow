@@ -12,28 +12,28 @@ export const getFeaturesList = () => {
       feature: "Documentation",
       value: "documentation",
       description:
-        "Our website is built with a responsive design, ensuring it looks great on any device.",
+        "Comprehensive and well-structured documentation to help users understand the system easily.",
     },
     {
       id: "2",
       feature: "Chat Bot",
       value: "chat",
       description:
-        "We use Google's SEO practices to make your website stand out from the competition.",
+        "An AI-powered chatbot to assist users and provide quick answers to their queries.",
     },
     {
       id: "3",
       feature: "Vidual Aid",
       value: "visual",
       description:
-        "Our website is intuitive and easy to navigate, making it easy for users to find what they're looking for.",
+        "Rich visual elements and intuitive UI to enhance user experience.",
     },
     {
       id: "4",
       value: "feedback",
       feature: "Feedback",
       description:
-        "Our website is intuitive and easy to navigate, making it easy for users to find what they're looking for.",
+        "A structured feedback mechanism to gather user insights and improve the system.",
     },
   ];
 };

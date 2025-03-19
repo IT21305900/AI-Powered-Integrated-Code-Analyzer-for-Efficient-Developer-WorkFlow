@@ -12,6 +12,7 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import { Suspense } from "react";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -58,6 +59,8 @@ export default function RootLayout({
           <TanstackProvider>
             <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
           </TanstackProvider>
+
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>

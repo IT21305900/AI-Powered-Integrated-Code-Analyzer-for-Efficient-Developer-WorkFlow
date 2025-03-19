@@ -49,8 +49,8 @@ export const clonRepository = async (formData: FormData) => {
     revalidatePath("/");
 
     console.log("Github Clone Process End");
-
     console.log(`Repository cloned successfully to ${targetFolder}`);
+    return { success: true };
   } catch (error) {
     console.error("Error cloning repository:", error);
     throw new Error("Failed to clone the repository.");

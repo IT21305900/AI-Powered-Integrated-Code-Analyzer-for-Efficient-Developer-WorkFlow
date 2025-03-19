@@ -1,0 +1,590 @@
+{
+  "nodes": [
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\auth\\[...nextauth]\\route.js",
+      "data": {
+        "components": [],
+        "reusableComponents": [],
+        "stateUsages": [],
+        "hooks": [],
+        "fileRole": "route"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\auth\\[...nextauth]\\next-auth"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\auth\\[...nextauth]\\next-auth\\providers\\google"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\auth\\[...nextauth]\\@models\\user"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\auth\\[...nextauth]\\@utils\\database"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\new\\route.js",
+      "data": {
+        "components": [],
+        "reusableComponents": [],
+        "stateUsages": [],
+        "hooks": [],
+        "fileRole": "component"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\new\\@models\\prompt"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\new\\@utils\\database"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\route.js",
+      "data": {
+        "components": [],
+        "reusableComponents": [],
+        "stateUsages": [],
+        "hooks": [],
+        "fileRole": "component"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\@models\\prompt"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\@utils\\database"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\[id]\\route.js",
+      "data": {
+        "components": [],
+        "reusableComponents": [],
+        "stateUsages": [],
+        "hooks": [],
+        "fileRole": "route"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\[id]\\@models\\prompt"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\[id]\\@utils\\database"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\users\\[id]\\posts\\route.js",
+      "data": {
+        "components": [],
+        "reusableComponents": [],
+        "stateUsages": [],
+        "hooks": [],
+        "fileRole": "route"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\users\\[id]\\posts\\@models\\prompt"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\users\\[id]\\posts\\@utils\\database"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\create-prompt\\page.jsx",
+      "data": {
+        "components": [],
+        "reusableComponents": [
+          "Form"
+        ],
+        "stateUsages": [
+          null,
+          null
+        ],
+        "hooks": [],
+        "fileRole": "component"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\create-prompt\\react"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\create-prompt\\next-auth\\react"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\create-prompt\\next\\navigation"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\create-prompt\\@components\\Form"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\layout.jsx",
+      "data": {
+        "components": [],
+        "reusableComponents": [
+          "Provider",
+          "Nav"
+        ],
+        "stateUsages": [],
+        "hooks": [],
+        "fileRole": "component"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\@styles\\globals.css"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\@components\\Nav"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\@components\\Provider"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\page.jsx",
+      "data": {
+        "components": [],
+        "reusableComponents": [
+          "p",
+          "Feed"
+        ],
+        "stateUsages": [],
+        "hooks": [],
+        "fileRole": "component"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\@components\\Feed"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\loading.jsx",
+      "data": {
+        "components": [],
+        "reusableComponents": [],
+        "stateUsages": [],
+        "hooks": [],
+        "fileRole": "component"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\next\\image"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\page.jsx",
+      "data": {
+        "components": [],
+        "reusableComponents": [
+          "Profile"
+        ],
+        "stateUsages": [
+          null
+        ],
+        "hooks": [],
+        "fileRole": "component"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\next-auth\\react"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\react"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\next\\navigation"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\@components\\Profile"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\[id]\\page.jsx",
+      "data": {
+        "components": [],
+        "reusableComponents": [
+          "Profile"
+        ],
+        "stateUsages": [
+          null
+        ],
+        "hooks": [],
+        "fileRole": "route"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\[id]\\react"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\[id]\\next\\navigation"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\[id]\\@components\\Profile"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\update-prompt\\page.jsx",
+      "data": {
+        "components": [],
+        "reusableComponents": [
+          "Form"
+        ],
+        "stateUsages": [
+          null,
+          null
+        ],
+        "hooks": [],
+        "fileRole": "component"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\update-prompt\\react"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\update-prompt\\next\\navigation"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\app\\update-prompt\\@components\\Form"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\components\\Feed.jsx",
+      "data": {
+        "components": [],
+        "reusableComponents": [
+          "PromptCard"
+        ],
+        "stateUsages": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "hooks": [],
+        "fileRole": "component"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\components\\react"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\components\\PromptCard"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\components\\Form.jsx",
+      "data": {
+        "components": [],
+        "reusableComponents": [],
+        "stateUsages": [],
+        "hooks": [],
+        "fileRole": "component"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\components\\next\\link"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\components\\Nav.jsx",
+      "data": {
+        "components": [],
+        "reusableComponents": [],
+        "stateUsages": [
+          null,
+          null
+        ],
+        "hooks": [],
+        "fileRole": "component"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\components\\next\\image"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\components\\next-auth\\react"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\components\\Profile.jsx",
+      "data": {
+        "components": [],
+        "reusableComponents": [
+          "p",
+          "PromptCard"
+        ],
+        "stateUsages": [],
+        "hooks": [],
+        "fileRole": "component"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\components\\PromptCard.jsx",
+      "data": {
+        "components": [],
+        "reusableComponents": [],
+        "stateUsages": [
+          null
+        ],
+        "hooks": [],
+        "fileRole": "component"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\components\\next\\navigation"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\components\\Provider.jsx",
+      "data": {
+        "components": [],
+        "reusableComponents": [],
+        "stateUsages": [],
+        "hooks": [],
+        "fileRole": "component"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\models\\prompt.js",
+      "data": {
+        "components": [],
+        "reusableComponents": [],
+        "stateUsages": [],
+        "hooks": [],
+        "fileRole": "utility"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\models\\mongoose"
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\models\\user.js",
+      "data": {
+        "components": [],
+        "reusableComponents": [],
+        "stateUsages": [],
+        "hooks": [],
+        "fileRole": "utility"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\next.config.js",
+      "data": {
+        "components": [],
+        "reusableComponents": [],
+        "stateUsages": [],
+        "hooks": [],
+        "fileRole": "utility"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\postcss.config.js",
+      "data": {
+        "components": [],
+        "reusableComponents": [],
+        "stateUsages": [],
+        "hooks": [],
+        "fileRole": "utility"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\tailwind.config.js",
+      "data": {
+        "components": [],
+        "reusableComponents": [],
+        "stateUsages": [],
+        "hooks": [],
+        "fileRole": "utility"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\utils\\database.js",
+      "data": {
+        "components": [],
+        "reusableComponents": [],
+        "stateUsages": [],
+        "hooks": [],
+        "fileRole": "utility"
+      }
+    },
+    {
+      "id": "repositories\\project_next_14_ai_prompt_sharing\\utils\\mongoose"
+    }
+  ],
+  "edges": [
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\auth\\[...nextauth]\\route.js",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\auth\\[...nextauth]\\next-auth"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\auth\\[...nextauth]\\route.js",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\auth\\[...nextauth]\\next-auth\\providers\\google"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\auth\\[...nextauth]\\route.js",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\auth\\[...nextauth]\\@models\\user"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\auth\\[...nextauth]\\route.js",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\auth\\[...nextauth]\\@utils\\database"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\new\\route.js",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\new\\@models\\prompt"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\new\\route.js",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\new\\@utils\\database"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\route.js",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\@models\\prompt"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\route.js",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\@utils\\database"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\[id]\\route.js",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\[id]\\@models\\prompt"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\[id]\\route.js",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\prompt\\[id]\\@utils\\database"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\users\\[id]\\posts\\route.js",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\users\\[id]\\posts\\@models\\prompt"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\users\\[id]\\posts\\route.js",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\api\\users\\[id]\\posts\\@utils\\database"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\create-prompt\\page.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\create-prompt\\react"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\create-prompt\\page.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\create-prompt\\next-auth\\react"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\create-prompt\\page.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\create-prompt\\next\\navigation"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\create-prompt\\page.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\create-prompt\\@components\\Form"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\layout.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\@styles\\globals.css"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\layout.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\@components\\Nav"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\layout.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\@components\\Provider"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\page.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\@components\\Feed"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\loading.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\next\\image"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\page.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\next-auth\\react"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\page.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\react"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\page.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\next\\navigation"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\page.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\@components\\Profile"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\[id]\\page.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\[id]\\react"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\[id]\\page.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\[id]\\next\\navigation"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\[id]\\page.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\profile\\[id]\\@components\\Profile"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\update-prompt\\page.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\update-prompt\\react"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\update-prompt\\page.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\update-prompt\\next\\navigation"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\app\\update-prompt\\page.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\app\\update-prompt\\@components\\Form"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\components\\Feed.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\components\\react"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\components\\Feed.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\components\\PromptCard"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\components\\Form.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\components\\next\\link"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\components\\Nav.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\components\\next\\link"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\components\\Nav.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\components\\next\\image"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\components\\Nav.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\components\\react"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\components\\Nav.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\components\\next-auth\\react"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\components\\Profile.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\components\\PromptCard"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\components\\PromptCard.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\components\\react"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\components\\PromptCard.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\components\\next\\image"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\components\\PromptCard.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\components\\next-auth\\react"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\components\\PromptCard.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\components\\next\\navigation"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\components\\Provider.jsx",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\components\\next-auth\\react"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\models\\prompt.js",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\models\\mongoose"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\models\\user.js",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\models\\mongoose"
+    },
+    {
+      "source": "repositories\\project_next_14_ai_prompt_sharing\\utils\\database.js",
+      "target": "repositories\\project_next_14_ai_prompt_sharing\\utils\\mongoose"
+    }
+  ]
+}

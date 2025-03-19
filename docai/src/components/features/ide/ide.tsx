@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/accordion";
 import { Icon } from "@iconify/react";
 import DocumentPipeline from "../pipeline/documentation/DocumentPipeline";
-import Documentation from "./Documentation";
+import Documentation from "../documentation/Documentation";
 import { useSearchParams } from "next/navigation";
 import VisualAid from "../visualaid/VisualAid";
 
@@ -329,8 +329,8 @@ export default function IDE({
         )}
 
         {feature === "visual" && (
-          <ResizablePanel defaultSize={500}>
-            <div className="max-h-[92vh] overflow-y-auto">
+          <ResizablePanel defaultSize={100}>
+            <div className="max-h-[92vh] w-auto overflow-y-auto">
               <VisualAid />
             </div>
           </ResizablePanel>
