@@ -15,6 +15,30 @@ const Repositories = async () => {
 
   const data = (await getRepositoryFolderNames()) || [];
 
+  const getRelativeTime = (dateString: string) => {
+    const createdDate = new Date(dateString);
+    const now = new Date();
+    const diffInSeconds = Math.floor(
+      (now.getTime() - createdDate.getTime()) / 1000
+    );
+
+    const rtf = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
+
+    if (diffInSeconds < 60) return rtf.format(-diffInSeconds, "seconds");
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) return rtf.format(-diffInMinutes, "minutes");
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return rtf.format(-diffInHours, "hours");
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays < 7) return rtf.format(-diffInDays, "days");
+    const diffInWeeks = Math.floor(diffInDays / 7);
+    if (diffInWeeks < 4) return rtf.format(-diffInWeeks, "weeks");
+    const diffInMonths = Math.floor(diffInDays / 30);
+    if (diffInMonths < 12) return rtf.format(-diffInMonths, "months");
+    const diffInYears = Math.floor(diffInDays / 365);
+    return rtf.format(-diffInYears, "years");
+  };
+
   // const handleRepositoryChange = (value: string) => {
   //   setSelectedRepository(selectedRepository);
   //   router.push(`/ide/?repository=${value}`);
@@ -38,19 +62,35 @@ const Repositories = async () => {
 
         <CardContent></CardContent>
         <CardContent>
-          <div className="flex flex-col space-y-2">
-            {data?.map((repo: { _id: string; name: string }) => (
-              <Link key={repo._id} href={`?repository=${repo.name}`}>
-                <IDENavigator>
-                  <span
-                    key={repo._id}
-                    className="mb-2 text-left text-xl hover:text-blue-500 hover:underline cursor-pointer"
-                  >
-                    {repo.name}
-                  </span>
-                </IDENavigator>
-              </Link>
-            ))}
+          <div className="flex flex-col">
+            {data?.map(
+              (
+                repo: { _id: string; name: string; created: string },
+                index: number
+              ) => (
+                <Link key={repo._id} href={`?repository=${repo.name}`}>
+                  <IDENavigator>
+                    <div
+                      className={`
+          border py-3 pb-2 px-2 flex justify-between
+          ${index === 0 ? "rounded-t-sm" : ""} 
+          ${index === data.length - 1 ? "rounded-b-sm" : ""}
+        `}
+                    >
+                      <span
+                        key={repo._id}
+                        className="mb-2 text-left text-xl hover:text-blue-500 hover:underline cursor-pointer"
+                      >
+                        {repo.name}
+                      </span>
+                      <span className="text-sm text-secondary-foreground">
+                        {getRelativeTime(repo.created)}
+                      </span>
+                    </div>
+                  </IDENavigator>
+                </Link>
+              )
+            )}
           </div>
         </CardContent>
         <CardFooter></CardFooter>

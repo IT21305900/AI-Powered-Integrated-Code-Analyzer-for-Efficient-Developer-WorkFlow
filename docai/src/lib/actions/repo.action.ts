@@ -5,7 +5,7 @@ import dbConnect from "../db/db";
 export const getRepositoryFolderNames = async () => {
   try {
     await dbConnect();
-    const repos = await Repo.find().lean();
+    const repos = await Repo.find().sort({ created: -1 }).lean();
 
     return JSON.parse(JSON.stringify(repos));
   } catch (error) {

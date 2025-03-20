@@ -21,7 +21,7 @@ const Features = () => {
   const data = getFeaturesList();
 
   return (
-    <div className="col-span-4 grid grid-cols-1 gap-2">
+    <div className="col-span-4 flex flex-col gap-4">
       {data.map((feature: Feature) => (
         <FeatureCard key={feature.id} {...feature} />
       ))}
@@ -31,16 +31,18 @@ const Features = () => {
 
 const FeatureCard = (feature: Feature) => {
   return (
-    <Link className="block" href={`?feature=${feature.value}`}>
+    <Link className="block group" href={`?feature=${feature.value}`}>
       <IDENavigator>
-        <Card className="rounded-md text-left shadow-sm bg-white w-full ">
+        <Card className="rounded-md text-left shadow-sm bg-white w-full border border-gray-200 transition-all duration-200 ease-in-out group-hover:shadow-md group-hover:border-gray-300 group-hover:translate-y-[-2px]">
           <CardHeader>
-            <CardTitle className="text-xl font-medium antialiased">
+            <CardTitle className="text-xl font-medium antialiased group-hover:text-gray-900">
               {feature.feature}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <CardDescription>{feature.description}</CardDescription>
+            <CardDescription className="group-hover:text-gray-700">
+              {feature.description}
+            </CardDescription>
           </CardContent>
         </Card>
       </IDENavigator>

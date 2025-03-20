@@ -98,3 +98,16 @@ body {
     @apply text-3xl font-normal tracking-tight;
   }
 }
+
+@keyframes gridMove {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -100px -100px;
+  }
+}
+
+.animate-gridMove {
+  animation: gridMove 20s linear infinite;
+}

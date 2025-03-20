@@ -1,0 +1,62 @@
+[
+  {
+    "categoryName": "nextjs",
+    "references": [
+      {
+        "title": "Next.js Documentation",
+        "url": "https://nextjs.org/docs",
+        "description": "Official Next.js documentation"
+      },
+      {
+        "title": "Learn Next.js",
+        "url": "https://nextjs.org/learn",
+        "description": "Interactive Next.js tutorial"
+      }
+    ]
+  },
+  {
+    "categoryName": "appRouter",
+    "references": [
+      {
+        "title": "Next.js App Router",
+        "url": "https://nextjs.org/docs/app",
+        "description": "Official documentation for the App Router"
+      },
+      {
+        "title": "Defining Routes",
+        "url": "https://nextjs.org/docs/app/building-your-application/routing/defining-routes",
+        "description": "Learn how to define routes in Next.js App Router"
+      },
+      {
+        "title": "Dynamic Routes",
+        "url": "https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes",
+        "description": "Working with dynamic routes in Next.js"
+      }
+    ]
+  },
+  {
+    "categoryName": "tailwind",
+    "references": [
+      {
+        "title": "Tailwind CSS Documentation",
+        "url": "https://tailwindcss.com/docs",
+        "description": "Official Tailwind CSS documentation"
+      },
+      {
+        "title": "Tailwind CSS with Next.js",
+        "url": "https://tailwindcss.com/docs/guides/nextjs",
+        "description": "Guide for using Tailwind CSS with Next.js"
+      }
+    ]
+  },
+  {
+    "categoryName": "middleware",
+    "references": [
+      {
+        "title": "Next.js Middleware",
+        "url": "https://nextjs.org/docs/middleware",
+        "description": "Documentation for Next.js Middleware"
+      }
+    ]
+  }
+]

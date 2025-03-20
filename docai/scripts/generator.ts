@@ -7,6 +7,14 @@ import { AzureOpenAI } from "openai";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
 import { AzureChatOpenAI } from "@langchain/openai";
 import { cookies } from "next/headers";
+import { getReferencesMarkdown } from "./reference";
+import {
+  createProgressTracker,
+  finalizeProgress,
+  initializeDocumentationFile,
+  runDocumentationAgent,
+  writeDocumentationSummary,
+} from "./documentation-helper";
 
 // Initialize OpenAI Client
 const model = new AzureChatOpenAI({
@@ -25,13 +33,13 @@ const embeddingClient = new AzureOpenAI({
   apiVersion: process.env.AZURE_OPEN_AI_EMBEDDING_API_VERSION!,
 });
 
-async function ensureFolderExists(folderPath: string) {
-  try {
-    await fs.access(folderPath); // Check if the folder exists
-  } catch {
-    await fs.mkdir(folderPath, { recursive: true }); // Create it if it doesn't
-  }
-}
+// async function ensureFolderExists(folderPath: string) {
+//   try {
+//     await fs.access(folderPath); // Check if the folder exists
+//   } catch {
+//     await fs.mkdir(folderPath, { recursive: true }); // Create it if it doesn't
+//   }
+// }
 
 // Function to query ChromaDB for relevant documents
 const queryChroma = async (
@@ -62,172 +70,196 @@ const queryChroma = async (
   return docs;
 };
 
-const generateRouting = async (sectionTitle: string, content: [], ids: []) => {
-  let documentation = "";
-  let index = 0;
-
-  // Iterate through each content item (Next.js 14 code files)
-  for (const file of content) {
-    // Assuming each file is a string containing the code
-    const fileContent = file;
-
-    // Generate section documentation for each file using the model
-    const fileDocumentation = await generateSectionMarkdown(
-      sectionTitle + " " + ids[index],
-      fileContent
-    );
-
-    // Append generated documentation to the overall documentation
-    documentation += `\n\n## ${ids[index]}\n\n${fileDocumentation}`;
-
-    index++; // Move to the next content item
-  }
-
-  return documentation;
-};
-
-// Generate Markdown for a given section
-const generateSectionMarkdown = async (
-  sectionTitle: string,
-  content: string
-) => {
-  const response = await model.invoke([
-    new HumanMessage(
-      `Using the project context, generate code documentation which can help developers to identify the project codebase better. Use the md format to output the documentation. Identify the code files.`
-    ),
-    new AIMessage(`## ${sectionTitle}
-      ### Explanation
-      Explain the content first following the Next.js 14 context. 
-      ${content}
-      `),
-  ]);
-
-  return response.content || "";
-};
-
 // Function to append content to the documentation file
 async function appendToFile(filePath: string, content: string) {
   try {
-    await fs.appendFile(filePath, content, "utf-8");
+    const normalizedContent = content.replace(/\n{3,}/g, "\n\n");
+    await fs.appendFile(filePath, normalizedContent, "utf-8");
   } catch (error: any) {
     console.error(`Failed to append to file: ${error.message}`);
   }
 }
 
-// Main flow to generate documentation
 export const generateDocumentation = async (collectionName: string) => {
-  //   const outputFolder = path.resolve(process.cwd(), "generatedDocs");
-  //   await ensureFolderExists(outputFolder);
-  // Define the output file path
-  // Define the folder path inside "public"
+  // Define the folder path inside "public" directory
   const folderPath = path.join("./public", collectionName);
   const outputFilePath = path.join(folderPath, `${collectionName}.md`);
 
-  await ensureFolderExists(folderPath);
-
-  const lastupdate = new Date().toString();
-
-  // Clear the file if it exists (to start fresh)
+  // Ensure the directory exists
   try {
-    await fs.writeFile(outputFilePath, `Last Update ${lastupdate}`, "utf-8");
+    await fs.mkdir(folderPath, { recursive: true });
   } catch (error: any) {
-    console.error(`Failed to initialize file: ${error.message}`);
+    if (error.code !== "EEXIST") {
+      console.error(`Failed to create directory: ${error.message}`);
+      throw new Error(
+        `Failed to create documentation directory: ${error.message}`
+      );
+    }
   }
 
-  console.log("Document Generation Started for " + collectionName);
+  // Define documentation sections
+  const documentationSections = [
+    {
+      name: "Project Introduction",
+      anchor: "project-introduction",
+      agent: ProjectIntroductionAgent,
+    },
+    {
+      name: "Development Environment Setup",
+      anchor: "development-environment-setup",
+      agent: DevSetupAgent,
+    },
+    {
+      name: "Project Dependencies",
+      anchor: "project-dependencies",
+      agent: PackageDocumentationAgent,
+    },
+    {
+      name: "Styling Architecture",
+      anchor: "styling-architecture",
+      agent: TailwindCssAgent,
+    },
+    {
+      name: "Middleware Implementation",
+      anchor: "middleware-implementation",
+      agent: MiddlewareAgent,
+    },
+    {
+      name: "Component Architecture",
+      anchor: "component-architecture",
+      agent: ComponentDocumentationAgent,
+    },
+    {
+      name: "Web Routes (App Router)",
+      anchor: "web-routes-app-router",
+      agent: AppRouterDocumentationAgent,
+    },
+    {
+      name: "Server API Routes",
+      anchor: "server-api-routes",
+      agent: AppAPIRouterDocumentationAgent,
+    },
+  ];
 
-  // 1. Updated Agents
-  //   await ProjectIntroductionAgent({
-  //     collectionName,
-  //     outputPath: outputFilePath,
-  //   });
-
-  //   2. Local Dev Environment Config
-  //   await DevSetupAgent({
-  //     collectionName,
-  //     outputPath: outputFilePath,
-  //   });
-
-  // 3. Package Agent
-  //   await PackageDocumentationAgent({
-  //     collectionName,
-  //     outputPath: outputFilePath,
-  //   });
-
-  // 4. Tailwind Agent
-  //   await TailwindCssAgent({
-  //     collectionName,
-  //     outputPath: outputFilePath,
-  //   });
-
-  // 5. Middleware Agent
-  //   await MiddlewareAgent({ collectionName, outputPath: outputFilePath });
-
-  // 6. App Router Agent
-  await AppRouterDocumentationAgent({
+  // Initialize documentation file
+  await initializeDocumentationFile(
+    outputFilePath,
     collectionName,
-    outputPath: outputFilePath,
-  });
+    documentationSections
+  );
 
-  // 1. Environment Setup Guidelines
-  //   const setupMarkdown = await packageJsonNode(collectionName);
-  //   await appendToFile(
-  //     outputFilePath,
-  //     `##Environment Setup Guidelines\n\n${setupMarkdown}`
-  //   );
-  //   console.log("Environment setup guidelines completed successfully");
+  console.log(`📝 Documentation generation started for "${collectionName}"`);
 
-  // 2. Routing Documentation
-  //   const routesQuery =
-  //     "Query the NextJS 14 app routes files. Which file route path is ends with page.tsx or layout.tsx";
-  //   const routesResults = await queryChroma(routesQuery, collectionName, {
-  //     fileRole: "route",
-  //   });
+  // Create progress tracker
+  let progress = createProgressTracker(
+    documentationSections.map((s) => s.name)
+  );
 
-  //   const routes: any = routesResults.documents[0];
-  //   const ids: any = routesResults.ids[0];
-  //   const routesMarkdown = await generateRouting("Routing", routes, ids);
-  //   await appendToFile(
-  //     outputFilePath,
-  //     `\n\n##Routing Documentation\n\n${routesMarkdown}`
-  //   );
-  //   console.log("Routing documentation iss completed successfully");
+  // Generate each section with proper error handling and progress tracking
+  for (const section of documentationSections) {
+    progress = await runDocumentationAgent(
+      section.agent,
+      section.name,
+      progress,
+      {
+        collectionName,
+        outputPath: outputFilePath,
+      }
+    );
+  }
 
-  // 3. Components and API Calls
-  //   const componentsQuery =
-  //     "Details about components, props, state usage, and API calls.";
-  //   const componentsResults = await queryChroma(componentsQuery, collectionName, {
-  //     fileRole: "component",
-  //   });
-  //   const componentsMarkdown = await generateSectionMarkdown(
-  //     "Components and API Calls",
-  //     componentsResults.documents.join("\n")
-  //   );
-  //   await appendToFile(
-  //     outputFilePath,
-  //     `\n\n##Components and API Calls\n\n${componentsMarkdown}`
-  //   );
-
-  // 4. Utility Files
-  //   const utilsQuery = "Find the files ends with with .ts and .js";
-  //   const utilityResults = await queryChroma(utilsQuery, collectionName, {
-  //     fileRole: "utility",
-  //   });
-  //   const utilityMarkdown = await generateSectionMarkdown(
-  //     "Utility Files",
-  //     utilityResults.documents.join("\n")
-  //   );
-  //   await appendToFile(
-  //     outputFilePath,
-  //     `\n\n##Utility Functions\n\n${utilityMarkdown}`
-  //   );
-
-  console.log("Componenent explanation completed successfully");
+  // Finalize progress and write summary
+  progress = finalizeProgress(progress);
+  await writeDocumentationSummary(outputFilePath, collectionName, progress);
 
   console.log(
-    `Documentation generation completed. File saved at: ${outputFilePath}`
+    `📚 Documentation generation completed. File saved at: ${outputFilePath}`
   );
+
+  return {
+    filePath: outputFilePath,
+    progress,
+  };
 };
+
+// Main flow to generate documentation
+// export const generateDocumentation = async (collectionName: string) => {
+//   //   const outputFolder = path.resolve(process.cwd(), "generatedDocs");
+//   //   await ensureFolderExists(outputFolder);
+//   // Define the output file path
+//   // Define the folder path inside "public"
+//   const folderPath = path.join("./public", collectionName);
+//   const outputFilePath = path.join(folderPath, `${collectionName}.md`);
+
+//   await ensureFolderExists(folderPath);
+
+//   const lastupdate = new Date().toString();
+
+//   // Clear the file if it exists (to start fresh)
+//   try {
+//     await fs.writeFile(outputFilePath, `Last Update ${lastupdate}`, "utf-8");
+//   } catch (error: any) {
+//     console.error(`Failed to initialize file: ${error.message}`);
+//   }
+
+//   console.log("Document Generation Started for " + collectionName);
+
+//   await ComponentDocumentationAgent({
+//     collectionName,
+//     outputPath: outputFilePath,
+//   });
+
+//   // 1. Updated Agents
+//   await ProjectIntroductionAgent({
+//     collectionName,
+//     outputPath: outputFilePath,
+//   });
+
+//   //  2. Local Dev Environment Config
+//   await DevSetupAgent({
+//     collectionName,
+//     outputPath: outputFilePath,
+//   });
+
+//   // 3. Package Agent
+//   await PackageDocumentationAgent({
+//     collectionName,
+//     outputPath: outputFilePath,
+//   });
+
+//   //4. Tailwind Agent
+//   await TailwindCssAgent({
+//     collectionName,
+//     outputPath: outputFilePath,
+//   });
+
+//   // 5. Middleware Agent
+//   await MiddlewareAgent({ collectionName, outputPath: outputFilePath });
+
+//   // 6. App Router Agent
+//   await AppRouterDocumentationAgent({
+//     collectionName,
+//     outputPath: outputFilePath,
+//   });
+
+//   // 6. API Route Agent
+//   await AppAPIRouterDocumentationAgent({
+//     collectionName,
+//     outputPath: outputFilePath,
+//   });
+
+//   //7. Sub Component
+//   await ComponentDocumentationAgent({
+//     collectionName,
+//     outputPath: outputFilePath,
+//   });
+
+//   console.log("Componenent explanation completed successfully");
+
+//   console.log(
+//     `Documentation generation completed. File saved at: ${outputFilePath}`
+//   );
+// };
 
 // intro agent
 const ProjectIntroductionAgent = async ({
@@ -802,18 +834,18 @@ const AppRouterDocumentationAgent = async ({
   const routeIDs: any = routesData?.ids[0];
 
   // Append the output to the documentation file
-  await appendToFile(outputPath, `\n\n\n\n# Web Routes (App Router)\n\n\n[n]`);
+  await appendToFile(outputPath, `\n\n\n\n## Web Routes (App Router)\n`);
 
   const routeAgent = async (content: string[], ids: string[]) => {
     let index = 0;
 
     // Append the output to the documentation file
-    await appendToFile(outputPath, `\n\n\n## Static Routes\n\n\n\n\n`);
+    await appendToFile(outputPath, `\n\n\n### App Routes\n\n`);
 
     // Iterate through each content item (Next.js 14 code files)
     for (const file of content[0]) {
       const relativePath = ids[index].replace(/^repositories[\\/]/, "");
-      await appendToFile(outputPath, `\n\n\n\n### ${relativePath}\n\n\n`);
+      await appendToFile(outputPath, `\n\n\n\n### ${relativePath}\n\n`);
 
       //   Generate documentation about middleware implementation
       const output = await generateSection({
@@ -821,7 +853,7 @@ const AppRouterDocumentationAgent = async ({
         content: `Expalain the static route  ${file}`,
       });
       //   Append the output to the documentation file
-      await appendToFile(outputPath, `\n\n\n${output}\n\n\n`);
+      await appendToFile(outputPath, `\n\n\n${output}\n`);
 
       index++; // Move to the next content item
     }
@@ -841,20 +873,20 @@ const AppRouterDocumentationAgent = async ({
     console.log(ids);
 
     // Append the output to the documentation file
-    await appendToFile(outputPath, `\n\n\n## Layout Routes\n\n\n`);
+    await appendToFile(outputPath, `\n\n\n## Layout Routes\n`);
 
     // Iterate through each content item (Next.js 14 code files)
     for (const file of content[0]) {
       const relativePath = ids[index].replace(/^repositories[\\/]/, "");
-      await appendToFile(outputPath, `\n\n\n\n### ${relativePath}\n\n\n\n`);
+      await appendToFile(outputPath, `\n\n\n\n### ${relativePath}\n`);
 
       //   Generate documentation about middleware implementation
       const output = await generateSection({
         sectionTitle: `${relativePath}`,
-        content: `Expalain the static route  ${file}`,
+        content: `Expalain the layout route  ${file}`,
       });
       //   Append the output to the documentation file
-      await appendToFile(outputPath, `\n\n\n${output}\n\n\n`);
+      await appendToFile(outputPath, `\n\n\n${output}\n\n`);
 
       index++; // Move to the next content item
     }
@@ -864,34 +896,269 @@ const AppRouterDocumentationAgent = async ({
 
   // Append the output to the documentation file
   //   await appendToFile(outputPath, `\n\n${output}`);
-  console.log("Middleware documentation completed successfully");
+  console.log("Route documentation completed successfully");
 };
 
-// generate the documemtation and save
+// API Roiter Agent
+const AppAPIRouterDocumentationAgent = async ({
+  collectionName,
+  outputPath,
+}: {
+  collectionName: string;
+  outputPath: string;
+}) => {
+  console.log("Starting App API Router Documentation Agent");
+
+  // Query for static routes (page.tsx files)
+  const routesQuery = "Query for api files in the app directory";
+  const routesData = await queryChroma(
+    routesQuery,
+    collectionName,
+    {
+      fileRole: "api-route",
+    },
+    10 // Get up to 10 static routes
+  );
+
+  // Access the files
+  const routes: any = routesData?.documents || [];
+  const routeIDs: any = routesData?.ids[0];
+
+  // Append the output to the documentation file
+  await appendToFile(outputPath, `\n\n\n\n## Server API Routes (App Router)\n`);
+
+  const routeAgent = async (content: string[], ids: string[]) => {
+    let index = 0;
+
+    // Append the output to the documentation file
+    await appendToFile(outputPath, `\n\n\n### API Routes\n\n`);
+
+    // Iterate through each content item (Next.js 14 code files)
+    for (const file of content[0]) {
+      const relativePath = ids[index].replace(/^repositories[\\/]/, "");
+      await appendToFile(outputPath, `\n\n\n\n### ${relativePath}\n`);
+
+      //   Generate documentation about middleware implementation
+      const output = await generateSection({
+        sectionTitle: `${relativePath}`,
+        content: `Expalain the API route  ${file}`,
+      });
+      //   Append the output to the documentation file
+      await appendToFile(outputPath, `\n\n\n${output}\n`);
+
+      index++; // Move to the next content item
+    }
+  };
+
+  await routeAgent(routes, routeIDs);
+  // Append the output to the documentation file
+  //   await appendToFile(outputPath, `\n\n${output}`);
+  console.log("API documentation completed successfully");
+};
+
+// Component Documentation Agent
+// This agent analyzes React components in a Next.js project and generates
+// comprehensive documentation about their structure, props, and usage patterns
+// Component Documentation Agent
+// This agent analyzes React components in a Next.js project and generates
+// comprehensive documentation about their structure, props, and usage patterns
+const ComponentDocumentationAgent = async ({
+  collectionName,
+  outputPath,
+}: {
+  collectionName: string;
+  outputPath: string;
+}) => {
+  console.log("Starting Component Documentation Agent...");
+
+  // Query for React component files
+  const componentQuery = "Query for React component files in the project";
+  const componentData = await queryChroma(
+    componentQuery,
+    collectionName,
+    {
+      fileRole: "component",
+    },
+    10 // Get up to 10 components
+  );
+
+  // Access the files
+  const components: any = componentData?.documents || [];
+  const componentIDs: any = componentData?.ids[0];
+
+  // Append the output to the documentation file
+  await appendToFile(outputPath, `\n\n\n\n# Sub Components\n\n\n[n]`);
+
+  const componentAgent = async (content: string[], ids: string[]) => {
+    let index = 0;
+
+    // Append the output to the documentation file
+    await appendToFile(outputPath, `\n\n\n## Static Routes\n\n\n\n\n`);
+
+    // Iterate through each content item (Next.js 14 code files)
+    for (const file of content[0]) {
+      const relativePath = ids[index].replace(/^repositories[\\/]/, "");
+      await appendToFile(outputPath, `\n\n\n\n### ${relativePath}\n\n\n`);
+
+      //   Generate documentation about middleware implementation
+      const output = await generateSection({
+        sectionTitle: `${relativePath}`,
+        content: `Expalain the component  ${file}
+        Analyze the overall component architecture of the project with a focus on:
+        
+        1. Component Organization:
+           - Describe how components are organized in the project structure
+           - Identify any component patterns (e.g., atoms, molecules, organisms, etc.)
+           - Note reusable vs. page-specific components 
+           - render directive client side ("use client")
+
+            2. UI Library Usage:
+           - Describe how the UI libraries are integrated into the component system
+        
+        3. State Management:
+           - Identify patterns of state management in components
+           - Note usage of Context API, Redux, or other state management approaches
+        
+        4. Component Best Practices:
+           - Provide guidance on how to create new components following project patterns
+           - Explain component testing approach (if detectable)
+        `,
+      });
+      //   Append the output to the documentation file
+      await appendToFile(outputPath, `\n\n\n${output}\n\n\n`);
+
+      index++; // Move to the next content item
+    }
+  };
+
+  await componentAgent(components, componentIDs);
+
+  console.log("Component documentation completed successfully");
+};
+
 const generateSection = async ({
   sectionTitle,
   content,
+  referenceCategories = [], // Allow specifying explicit reference categories
 }: {
   sectionTitle: string;
   content: string;
+  referenceCategories?: string[];
 }) => {
+  // Detect relevant reference categories from content if none provided
+  const detectedCategories =
+    referenceCategories.length > 0
+      ? referenceCategories
+      : detectReferenceCategories(sectionTitle, content);
+
+  // Get references markdown based on detected categories
+  const referencesMarkdown = await getReferencesMarkdown(detectedCategories);
+
+  // Generate the content using the AI model (keep your existing model.invoke code)
   const response = await model.invoke([
     new HumanMessage(
       `
       You are a helpful developer documentation generator for the Next.js repositories. 
-      You are tasked to help bothe novice and experience developers to understand provided Next.js project repositories.
+      You are tasked to help both novice and experienced developers understand provided Next.js project repositories.
       Don't provide out of the context information other than the Next.js and web development context. 
-      You will be provided with the Section Title which required to generate a documentation section and relavant code content for the each section. 
-      You need analyze those content well and provide a developer friendly software industry standard  version of the documentation in well formated md for the each provided section. 
-      Used the standard writing formate and tone when generate documentation, you can add comments for the code sections and programming related joke to improve the documentation readibility and understanding.
+      You will be provided with the Section Title which is required to generate a documentation section and relevant code content for each section. 
+      You need to analyze those content well and provide a developer-friendly software industry standard version of the documentation in well-formatted markdown for each provided section. 
+      Use standard writing format and tone when generating documentation. You can add comments for the code sections and programming-related jokes to improve the documentation readability and understanding.
       `
     ),
     new HumanMessage(sectionTitle),
     new AIMessage(`project code file context: ${content}`),
     new HumanMessage(
-      "Fomat the output well into the md document format document format"
+      "Format the output well into markdown document format. The documentation will be enhanced with official references after your content."
     ),
   ]);
 
-  return response.content || "";
+  // Extract the content string from the AIMessageChunk object
+  const generatedContent = (response.content as string) || "";
+
+  // Format consistently - remove any wrapper markdown code blocks if they exist
+  const cleanContent = generatedContent.replace(/```markdown\n|\n```/g, "");
+
+  // Add proper heading for section if not already present
+  const hasProperHeading = cleanContent.trim().startsWith("#");
+  const formattedContent = hasProperHeading
+    ? cleanContent
+    : `## ${sectionTitle}\n\n${cleanContent}`;
+
+  // Add references if they exist
+  if (referencesMarkdown) {
+    return formattedContent + referencesMarkdown;
+  }
 };
+
+// Helper function to detect appropriate reference categories based on content analysis
+function detectReferenceCategories(
+  sectionTitle: string,
+  content: string
+): string[] {
+  const categories: string[] = ["nextjs"]; // Always include Next.js reference
+  const lowerTitle = sectionTitle.toLowerCase();
+  const lowerContent = content.toLowerCase();
+
+  // Detect routing related content
+  if (
+    lowerTitle.includes("route") ||
+    lowerTitle.includes("navigation") ||
+    lowerContent.includes("app/") ||
+    lowerContent.includes("page.tsx")
+  ) {
+    categories.push("appRouter");
+  }
+
+  // Detect styling related content
+  if (
+    lowerTitle.includes("style") ||
+    lowerTitle.includes("css") ||
+    lowerContent.includes("tailwind")
+  ) {
+    if (lowerContent.includes("tailwind")) {
+      categories.push("tailwind");
+    }
+  }
+
+  // Detect middleware related content
+  if (
+    lowerTitle.includes("middleware") ||
+    lowerContent.includes("middleware")
+  ) {
+    categories.push("middleware");
+  }
+
+  return categories;
+}
+
+export default generateSection;
+
+// // generate the documemtation and save
+// const generateSection = async ({
+//   sectionTitle,
+//   content,
+// }: {
+//   sectionTitle: string;
+//   content: string;
+// }) => {
+//   const response = await model.invoke([
+//     new HumanMessage(
+//       `
+//       You are a helpful developer documentation generator for the Next.js repositories.
+//       You are tasked to help bothe novice and experience developers to understand provided Next.js project repositories.
+//       Don't provide out of the context information other than the Next.js and web development context.
+//       You will be provided with the Section Title which required to generate a documentation section and relavant code content for the each section.
+//       You need analyze those content well and provide a developer friendly software industry standard  version of the documentation in well formated md for the each provided section.
+//       Used the standard writing formate and tone when generate documentation, you can add comments for the code sections and programming related joke to improve the documentation readibility and understanding.
+//       `
+//     ),
+//     new HumanMessage(sectionTitle),
+//     new AIMessage(`project code file context: ${content}`),
+//     new HumanMessage(
+//       "Fomat the output well into the md document format document format"
+//     ),
+//   ]);
+
+//   return response.content || "";
+// };

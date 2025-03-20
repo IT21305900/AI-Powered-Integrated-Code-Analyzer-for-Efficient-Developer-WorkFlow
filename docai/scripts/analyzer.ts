@@ -173,6 +173,8 @@ const processJsonFile = (file: string, repository: string) => {
         rules: jsonContent.rules || {},
         code: jsonContent, //addedd
       };
+    } else {
+      fileRole = "utlity";
     }
   } catch (error) {
     console.error(`Failed to parse JSON file: ${file}`, error);
@@ -427,7 +429,7 @@ const parseAndExtract = (code: string, filePath: string) => {
     else if (filePath.endsWith("layout.tsx")) fileRole = "layout";
     else if (filePath.endsWith("_template.tsx")) fileRole = "template";
     else if (filePath.includes("api") && filePath.endsWith(".ts"))
-      fileRole = "api-route";
+      fileRole = "apiroute";
   } else if (filePath.includes("pages")) {
     if (filePath.includes("api") && filePath.endsWith(".ts"))
       fileRole = "api-route";
