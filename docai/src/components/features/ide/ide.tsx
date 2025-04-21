@@ -23,6 +23,7 @@ import DocumentPipeline from "../pipeline/documentation/DocumentPipeline";
 import Documentation from "../documentation/Documentation";
 import { useSearchParams } from "next/navigation";
 import VisualAid from "../visualaid/VisualAid";
+import Feedback from "../feedback/Feedback";
 
 const getFileIcon = (fileName: string) => {
   if (fileName.endsWith(".tsx")) return <Icon icon="logos:react" />;
@@ -332,6 +333,13 @@ export default function IDE({
           <ResizablePanel defaultSize={100}>
             <div className="max-h-[92vh] w-auto overflow-y-auto">
               <VisualAid />
+            </div>
+          </ResizablePanel>
+        )}
+        {feature === "feedback" && (
+          <ResizablePanel defaultSize={500}>
+            <div className="max-h-[92vh] overflow-y-auto">
+              <Feedback />
             </div>
           </ResizablePanel>
         )}
