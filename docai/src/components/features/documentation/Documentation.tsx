@@ -108,6 +108,7 @@ const Documentation = () => {
                   const match = /language-(\w+)/.exec(className || "");
                   return !inline && match ? (
                     <SyntaxHighlighter
+                      // @ts-ignore
                       style={atomDark}
                       language={match[1]}
                       PreTag="div"
