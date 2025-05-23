@@ -7,26 +7,50 @@ import { NextRequest, NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 
 // Get environment variables
-const apiKey = process.env.AZURE_OPEN_AI_API_KEY!;
-const endpoint = process.env.AZURE_OPEN_AI_ENDPOINT;
-const apiVersion = process.env.AZURE_OPEN_AI_API_VERSION;
+// const apiKey = process.env.AZURE_OPEN_AI_API_KEY!;
+// const endpoint = process.env.AZURE_OPEN_AI_ENDPOINT;
+// const apiVersion = process.env.AZURE_OPEN_AI_API_VERSION;
+
+// Function to get and validate environment variables at runtime
+const getEnvConfig = () => {
+  const apiKey = process.env.AZURE_OPEN_AI_API_KEY;
+  const endpoint = process.env.AZURE_OPEN_AI_ENDPOINT;
+  const apiVersion = process.env.AZURE_OPEN_AI_API_VERSION;
+
+  if (!apiKey || !endpoint || !apiVersion) {
+    throw new Error(
+      `Missing required Azure OpenAI environment variables. Found: ${JSON.stringify({
+        hasApiKey: !!apiKey,
+        hasEndpoint: !!endpoint,
+        hasApiVersion: !!apiVersion,
+      })}`
+    );
+  }
+
+  return { apiKey, endpoint, apiVersion };
+};
 
 
-// Validate environment variables
-if (!apiKey || !endpoint || !apiVersion) {
-  throw new Error(
-    "Missing required Azure OpenAI environment variables: AZURE_OPEN_AI_API_KEY, AZURE_OPEN_AI_ENDPOINT, AZURE_OPEN_AI_API_VERSION"
-  );
-}
+// Function to create OpenAI client at runtime
+const createOpenAIClient = () => {
+  const { apiKey, endpoint, apiVersion } = getEnvConfig();
+
+  return new AzureOpenAI({
+    apiVersion,
+    apiKey,
+    endpoint,
+  });
+};
+
 
 
 // Initialize Chroma and Azure OpenAI
 const chromaClient = new ChromaClient();
-const openAIClient = new AzureOpenAI({
-  apiVersion,
-  apiKey,
-  endpoint,
-});
+// const openAIClient = new AzureOpenAI({
+//   apiVersion,
+//   apiKey,
+//   endpoint,
+// });
 
 const segmentsFolder = path.resolve(process.cwd(), "segments");
 
@@ -46,7 +70,7 @@ const embedJsonFile = async (filePath: string) => {
 
   // Generate embedding using Azure OpenAI API
 
-  const response = await openAIClient.embeddings.create(
+  const response = await createOpenAIClient().embeddings.create(
     // @ts-ignore
     "text-embedding-ada-002",
     {
