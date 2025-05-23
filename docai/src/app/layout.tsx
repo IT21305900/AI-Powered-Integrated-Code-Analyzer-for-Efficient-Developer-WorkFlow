@@ -45,7 +45,7 @@ export default function RootLayout({
             <div>
               <h1 className="text-2xl text-slate-900 font-semibold">Cody</h1>
             </div>
-            <div className="flex gap-4">
+            <div>
               <SignedOut>
                 <SignInButton />
                 <SignUpButton />

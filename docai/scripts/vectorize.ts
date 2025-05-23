@@ -125,6 +125,8 @@ export const embedAllJsonFiles = async (collectionName: string) => {
         documents: [response.code],
         metadatas: [response.metadata],
       });
+
+      console.log("Indexing Completed");
     } catch (error: any) {
       console.error(`Error processing file ${file}:`, error);
     }

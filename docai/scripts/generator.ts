@@ -1,12 +1,10 @@
 "use server";
-
 import { promises as fs } from "fs";
 import path from "path";
 import { ChromaClient } from "chromadb";
 import { AzureOpenAI } from "openai";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
 import { AzureChatOpenAI } from "@langchain/openai";
-import { cookies } from "next/headers";
 import { getReferencesMarkdown } from "./reference";
 import {
   createProgressTracker,
@@ -73,7 +71,46 @@ const queryChroma = async (
 // Function to append content to the documentation file
 async function appendToFile(filePath: string, content: string) {
   try {
-    const normalizedContent = content.replace(/\n{3,}/g, "\n\n");
+    // Normalize content by removing excessive line breaks
+    let normalizedContent = content.replace(/\n{3,}/g, "\n\n");
+
+    // Ensure code blocks are properly formatted
+    // This regex looks for code-like content that isn't wrapped in code fences
+    normalizedContent = normalizedContent.replace(
+      /(?<!```\w*\n)((import|export|const|let|var|function|class|interface|type|\/\/|\/\*|\*\/|if|else|for|while|switch|case|break|return|throw|try|catch|finally)[ \t{]((?!```).)*?[;\n}])/gims,
+      (match) => {
+        // If not already in a code block
+        if (!match.includes("```")) {
+          // Determine language for the code block
+          let lang = "js";
+          if (
+            match.includes("import React") ||
+            match.includes("React.") ||
+            match.includes("<div") ||
+            match.includes("JSX")
+          ) {
+            lang = "jsx";
+          } else if (
+            match.includes(": ") &&
+            (match.includes("interface") || match.includes("type"))
+          ) {
+            lang = "ts";
+          } else if (
+            match.includes("React.") &&
+            (match.includes(": ") ||
+              (match.includes("<") && match.includes(">")))
+          ) {
+            lang = "tsx";
+          }
+
+          return "```" + lang + "\n" + match + "\n```";
+        }
+        return match;
+      }
+    );
+
+    // Write the normalized content to the file
+    await fs.appendFile(filePath, normalizedContent, "utf-8");
     await fs.appendFile(filePath, normalizedContent, "utf-8");
   } catch (error: any) {
     console.error(`Failed to append to file: ${error.message}`);
@@ -125,11 +162,6 @@ export const generateDocumentation = async (collectionName: string) => {
       agent: MiddlewareAgent,
     },
     {
-      name: "Component Architecture",
-      anchor: "component-architecture",
-      agent: ComponentDocumentationAgent,
-    },
-    {
       name: "Web Routes (App Router)",
       anchor: "web-routes-app-router",
       agent: AppRouterDocumentationAgent,
@@ -138,6 +170,11 @@ export const generateDocumentation = async (collectionName: string) => {
       name: "Server API Routes",
       anchor: "server-api-routes",
       agent: AppAPIRouterDocumentationAgent,
+    },
+    {
+      name: "Component Architecture",
+      anchor: "component-architecture",
+      agent: ComponentDocumentationAgent,
     },
   ];
 
@@ -181,85 +218,6 @@ export const generateDocumentation = async (collectionName: string) => {
     progress,
   };
 };
-
-// Main flow to generate documentation
-// export const generateDocumentation = async (collectionName: string) => {
-//   //   const outputFolder = path.resolve(process.cwd(), "generatedDocs");
-//   //   await ensureFolderExists(outputFolder);
-//   // Define the output file path
-//   // Define the folder path inside "public"
-//   const folderPath = path.join("./public", collectionName);
-//   const outputFilePath = path.join(folderPath, `${collectionName}.md`);
-
-//   await ensureFolderExists(folderPath);
-
-//   const lastupdate = new Date().toString();
-
-//   // Clear the file if it exists (to start fresh)
-//   try {
-//     await fs.writeFile(outputFilePath, `Last Update ${lastupdate}`, "utf-8");
-//   } catch (error: any) {
-//     console.error(`Failed to initialize file: ${error.message}`);
-//   }
-
-//   console.log("Document Generation Started for " + collectionName);
-
-//   await ComponentDocumentationAgent({
-//     collectionName,
-//     outputPath: outputFilePath,
-//   });
-
-//   // 1. Updated Agents
-//   await ProjectIntroductionAgent({
-//     collectionName,
-//     outputPath: outputFilePath,
-//   });
-
-//   //  2. Local Dev Environment Config
-//   await DevSetupAgent({
-//     collectionName,
-//     outputPath: outputFilePath,
-//   });
-
-//   // 3. Package Agent
-//   await PackageDocumentationAgent({
-//     collectionName,
-//     outputPath: outputFilePath,
-//   });
-
-//   //4. Tailwind Agent
-//   await TailwindCssAgent({
-//     collectionName,
-//     outputPath: outputFilePath,
-//   });
-
-//   // 5. Middleware Agent
-//   await MiddlewareAgent({ collectionName, outputPath: outputFilePath });
-
-//   // 6. App Router Agent
-//   await AppRouterDocumentationAgent({
-//     collectionName,
-//     outputPath: outputFilePath,
-//   });
-
-//   // 6. API Route Agent
-//   await AppAPIRouterDocumentationAgent({
-//     collectionName,
-//     outputPath: outputFilePath,
-//   });
-
-//   //7. Sub Component
-//   await ComponentDocumentationAgent({
-//     collectionName,
-//     outputPath: outputFilePath,
-//   });
-
-//   console.log("Componenent explanation completed successfully");
-
-//   console.log(
-//     `Documentation generation completed. File saved at: ${outputFilePath}`
-//   );
-// };
 
 // intro agent
 const ProjectIntroductionAgent = async ({
@@ -1060,6 +1018,17 @@ const generateSection = async ({
       `
       You are a helpful developer documentation generator for the Next.js repositories. 
       You are tasked to help both novice and experienced developers understand provided Next.js project repositories.
+      
+      IMPORTANT FORMATTING INSTRUCTIONS:
+      1. Always format your response using proper markdown.
+      2. Always wrap code examples in markdown code blocks with the appropriate language tag.
+      3. For JavaScript/TypeScript code, use \`\`\`js, \`\`\`jsx, \`\`\`ts, or \`\`\`tsx.
+      4. For HTML code, use \`\`\`html.
+      5. For CSS code, use \`\`\`css.
+      6. For configuration files like JSON, use \`\`\`json.
+      7. For shell commands, use \`\`\`bash or \`\`\`sh.
+      8. Never display code without proper code fences.
+      
       Don't provide out of the context information other than the Next.js and web development context. 
       You will be provided with the Section Title which is required to generate a documentation section and relevant code content for each section. 
       You need to analyze those content well and provide a developer-friendly software industry standard version of the documentation in well-formatted markdown for each provided section. 

@@ -29,9 +29,9 @@ export default function Home() {
           <Features />
         </section>
 
-        <section className="my-20">
+        {/* <section className="my-20">
           <History />
-        </section>
+        </section> */}
       </main>
     </div>
   );

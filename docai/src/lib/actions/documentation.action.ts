@@ -111,9 +111,7 @@ export async function getDocumentation(
  * @param repository The repository name
  * @returns List of backup files with timestamps
  */
-export async function listDocumentationBackups(
-  repository: string
-): Promise<{
+export async function listDocumentationBackups(repository: string): Promise<{
   success: boolean;
   backups?: { name: string; timestamp: number }[];
   message?: string;
