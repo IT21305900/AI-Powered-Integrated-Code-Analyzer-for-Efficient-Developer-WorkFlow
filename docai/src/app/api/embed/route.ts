@@ -7,9 +7,18 @@ import { NextRequest, NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 
 // Get environment variables
-const apiKey = process.env.AZURE_OPEN_AI_API_KEY;
+const apiKey = process.env.AZURE_OPEN_AI_API_KEY!;
 const endpoint = process.env.AZURE_OPEN_AI_ENDPOINT;
 const apiVersion = process.env.AZURE_OPEN_AI_API_VERSION;
+
+
+// Validate environment variables
+if (!apiKey || !endpoint || !apiVersion) {
+  throw new Error(
+    "Missing required Azure OpenAI environment variables: AZURE_OPEN_AI_API_KEY, AZURE_OPEN_AI_ENDPOINT, AZURE_OPEN_AI_API_VERSION"
+  );
+}
+
 
 // Initialize Chroma and Azure OpenAI
 const chromaClient = new ChromaClient();
