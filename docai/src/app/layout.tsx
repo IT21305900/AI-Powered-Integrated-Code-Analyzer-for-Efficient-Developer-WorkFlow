@@ -36,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
+    <ClerkProvider publishableKey={"pk_test_Y2xpbWJpbmctYW5lbW9uZS01Ni5jbGVyay5hY2NvdW50cy5kZXYk"}>
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable}  antialiased bg-primary-foreground`}
