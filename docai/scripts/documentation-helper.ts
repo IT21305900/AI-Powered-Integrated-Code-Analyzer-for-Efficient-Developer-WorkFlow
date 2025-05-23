@@ -83,7 +83,7 @@ export const markSectionStarted = (
     if (section.name === sectionName) {
       return {
         ...section,
-        status: "pending",
+        status: "pending" as "pending",
         startTime: new Date(),
       };
     }
@@ -109,7 +109,7 @@ export const markSectionCompleted = (
     if (section.name === sectionName) {
       return {
         ...section,
-        status: success ? "success" : "error",
+        status: success ? "success" : "error" as "success" | "error",
         endTime: new Date(),
         error: error,
       };
@@ -166,11 +166,11 @@ export const writeDocumentationSummary = async (
   const errorContent =
     errorCount > 0
       ? `### Sections with Errors\n\n` +
-        progress.sections
-          .filter((s) => s.status === "error")
-          .map((s) => `* **${s.name}**: ${s.error || "Unknown error"}`)
-          .join("\n") +
-        "\n\n"
+      progress.sections
+        .filter((s) => s.status === "error")
+        .map((s) => `* **${s.name}**: ${s.error || "Unknown error"}`)
+        .join("\n") +
+      "\n\n"
       : "";
 
   // Add footer
@@ -241,8 +241,8 @@ export const runDocumentationAgent = async (
       await appendToFile(
         params.outputPath,
         formatSectionHeading(sectionName) +
-          `> ⚠️ **Error**: Documentation for this section could not be generated.\n\n` +
-          `> ${error.message || "An unknown error occurred."}\n\n`
+        `> ⚠️ **Error**: Documentation for this section could not be generated.\n\n` +
+        `> ${error.message || "An unknown error occurred."}\n\n`
       );
     } catch (appendError) {
       console.error(`Failed to append error notice: ${appendError}`);

@@ -31,13 +31,6 @@ const embeddingClient = new AzureOpenAI({
   apiVersion: process.env.AZURE_OPEN_AI_EMBEDDING_API_VERSION!,
 });
 
-// async function ensureFolderExists(folderPath: string) {
-//   try {
-//     await fs.access(folderPath); // Check if the folder exists
-//   } catch {
-//     await fs.mkdir(folderPath, { recursive: true }); // Create it if it doesn't
-//   }
-// }
 
 // Function to query ChromaDB for relevant documents
 const queryChroma = async (
@@ -77,7 +70,7 @@ async function appendToFile(filePath: string, content: string) {
     // Ensure code blocks are properly formatted
     // This regex looks for code-like content that isn't wrapped in code fences
     normalizedContent = normalizedContent.replace(
-      /(?<!```\w*\n)((import|export|const|let|var|function|class|interface|type|\/\/|\/\*|\*\/|if|else|for|while|switch|case|break|return|throw|try|catch|finally)[ \t{]((?!```).)*?[;\n}])/gims,
+      /(?<!```\w*\n)((import|export|const|let|var|function|class|interface|type|\/\/|\/\*|\*\/|if|else|for|while|switch|case|break|return|throw|try|catch|finally)[ \t{]((?!```).)*?[;\n}])/gim,
       (match) => {
         // If not already in a code block
         if (!match.includes("```")) {
