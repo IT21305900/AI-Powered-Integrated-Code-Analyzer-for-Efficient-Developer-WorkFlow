@@ -6,13 +6,7 @@ interface CachedConnection {
   promise: Promise<typeof mongoose> | null;
 }
 
-const MONGODB_URI: string = process.env.MONGODB_URI!;
 
-if (!MONGODB_URI) {
-  throw new Error(
-    "Please define the MONGODB_URI environment variable inside .env.local"
-  );
-}
 
 const globalAny: any = global;
 
@@ -22,6 +16,16 @@ let cached: CachedConnection = globalAny.mongoose || {
 };
 
 async function dbConnect(): Promise<Connection> {
+
+  const MONGODB_URI: string = process.env.MONGODB_URI!;
+
+  if (!MONGODB_URI) {
+    throw new Error(
+      "Please define the MONGODB_URI environment variable inside .env.local"
+    );
+  }
+
+  
   if (cached.conn) {
     return cached.conn;
   }
