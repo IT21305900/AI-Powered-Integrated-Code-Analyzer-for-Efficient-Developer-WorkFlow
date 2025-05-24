@@ -23,7 +23,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Use CORS middleware to allow cross-origin requests
 app.use(cors({
-  origin: '*', // Allow requests from this frontend URL
+  origin: 'localhost:3000', // Allow requests from this frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
 }));
 
