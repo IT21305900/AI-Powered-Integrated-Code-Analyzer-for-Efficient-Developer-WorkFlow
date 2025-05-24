@@ -2,130 +2,90 @@
   "node": {
     "7f27e04d5d43e9b4cb2bfea276bba375985adbe536": {
       "workers": {
-        "app/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Ckeyless-actions.js%22%2C%5B%5B%227f27e04d5d43e9b4cb2bfea276bba375985adbe536%22%2C%22createOrReadKeylessAction%22%5D%2C%5B%227f77b5001857432e0b9138f2fb2247e4df11bd4659%22%2C%22syncKeylessConfigAction%22%5D%2C%5B%227fffbe6e3e623bf00cd6821f980e8d1dfdb2452a7a%22%2C%22deleteKeylessAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cactions%5C%5Crepo.action.ts%22%2C%5B%5B%227faeabd5d737f64517501aba16ba84b8426ae95b19%22%2C%22getRepositoryFolderNames%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cdb%5C%5Cdb.ts%22%2C%5B%5B%227f92938facab6358aa5634e2cb6c8f76308a65e980%22%2C%22default%22%5D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
         "app/ide/page": {
           "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Ckeyless-actions.js%22%2C%5B%5B%227f27e04d5d43e9b4cb2bfea276bba375985adbe536%22%2C%22createOrReadKeylessAction%22%5D%2C%5B%227f77b5001857432e0b9138f2fb2247e4df11bd4659%22%2C%22syncKeylessConfigAction%22%5D%2C%5B%227fffbe6e3e623bf00cd6821f980e8d1dfdb2452a7a%22%2C%22deleteKeylessAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cfilesystem.ts%22%2C%5B%5B%227f8106e637f83ef666442d1b3973dc71267f847c35%22%2C%22clonRepository%22%5D%2C%5B%227f81741028b53d807da454896dee756ab04c55319e%22%2C%22buildProjectStructure%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cdb%5C%5Cdb.ts%22%2C%5B%5B%227f92938facab6358aa5634e2cb6c8f76308a65e980%22%2C%22default%22%5D%5D%5D%5D&__client_imported__=!",
           "async": false
         }
       },
       "layer": {
-        "app/page": "rsc",
         "app/ide/page": "rsc"
       }
     },
     "7f77b5001857432e0b9138f2fb2247e4df11bd4659": {
       "workers": {
-        "app/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Ckeyless-actions.js%22%2C%5B%5B%227f27e04d5d43e9b4cb2bfea276bba375985adbe536%22%2C%22createOrReadKeylessAction%22%5D%2C%5B%227f77b5001857432e0b9138f2fb2247e4df11bd4659%22%2C%22syncKeylessConfigAction%22%5D%2C%5B%227fffbe6e3e623bf00cd6821f980e8d1dfdb2452a7a%22%2C%22deleteKeylessAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cactions%5C%5Crepo.action.ts%22%2C%5B%5B%227faeabd5d737f64517501aba16ba84b8426ae95b19%22%2C%22getRepositoryFolderNames%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cdb%5C%5Cdb.ts%22%2C%5B%5B%227f92938facab6358aa5634e2cb6c8f76308a65e980%22%2C%22default%22%5D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
         "app/ide/page": {
           "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Ckeyless-actions.js%22%2C%5B%5B%227f27e04d5d43e9b4cb2bfea276bba375985adbe536%22%2C%22createOrReadKeylessAction%22%5D%2C%5B%227f77b5001857432e0b9138f2fb2247e4df11bd4659%22%2C%22syncKeylessConfigAction%22%5D%2C%5B%227fffbe6e3e623bf00cd6821f980e8d1dfdb2452a7a%22%2C%22deleteKeylessAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cfilesystem.ts%22%2C%5B%5B%227f8106e637f83ef666442d1b3973dc71267f847c35%22%2C%22clonRepository%22%5D%2C%5B%227f81741028b53d807da454896dee756ab04c55319e%22%2C%22buildProjectStructure%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cdb%5C%5Cdb.ts%22%2C%5B%5B%227f92938facab6358aa5634e2cb6c8f76308a65e980%22%2C%22default%22%5D%5D%5D%5D&__client_imported__=!",
           "async": false
         }
       },
       "layer": {
-        "app/page": "rsc",
         "app/ide/page": "rsc"
       }
     },
     "7fffbe6e3e623bf00cd6821f980e8d1dfdb2452a7a": {
       "workers": {
-        "app/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Ckeyless-actions.js%22%2C%5B%5B%227f27e04d5d43e9b4cb2bfea276bba375985adbe536%22%2C%22createOrReadKeylessAction%22%5D%2C%5B%227f77b5001857432e0b9138f2fb2247e4df11bd4659%22%2C%22syncKeylessConfigAction%22%5D%2C%5B%227fffbe6e3e623bf00cd6821f980e8d1dfdb2452a7a%22%2C%22deleteKeylessAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cactions%5C%5Crepo.action.ts%22%2C%5B%5B%227faeabd5d737f64517501aba16ba84b8426ae95b19%22%2C%22getRepositoryFolderNames%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cdb%5C%5Cdb.ts%22%2C%5B%5B%227f92938facab6358aa5634e2cb6c8f76308a65e980%22%2C%22default%22%5D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
         "app/ide/page": {
           "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Ckeyless-actions.js%22%2C%5B%5B%227f27e04d5d43e9b4cb2bfea276bba375985adbe536%22%2C%22createOrReadKeylessAction%22%5D%2C%5B%227f77b5001857432e0b9138f2fb2247e4df11bd4659%22%2C%22syncKeylessConfigAction%22%5D%2C%5B%227fffbe6e3e623bf00cd6821f980e8d1dfdb2452a7a%22%2C%22deleteKeylessAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cfilesystem.ts%22%2C%5B%5B%227f8106e637f83ef666442d1b3973dc71267f847c35%22%2C%22clonRepository%22%5D%2C%5B%227f81741028b53d807da454896dee756ab04c55319e%22%2C%22buildProjectStructure%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cdb%5C%5Cdb.ts%22%2C%5B%5B%227f92938facab6358aa5634e2cb6c8f76308a65e980%22%2C%22default%22%5D%5D%5D%5D&__client_imported__=!",
           "async": false
         }
       },
       "layer": {
-        "app/page": "rsc",
         "app/ide/page": "rsc"
-      }
-    },
-    "7faeabd5d737f64517501aba16ba84b8426ae95b19": {
-      "workers": {
-        "app/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Ckeyless-actions.js%22%2C%5B%5B%227f27e04d5d43e9b4cb2bfea276bba375985adbe536%22%2C%22createOrReadKeylessAction%22%5D%2C%5B%227f77b5001857432e0b9138f2fb2247e4df11bd4659%22%2C%22syncKeylessConfigAction%22%5D%2C%5B%227fffbe6e3e623bf00cd6821f980e8d1dfdb2452a7a%22%2C%22deleteKeylessAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cactions%5C%5Crepo.action.ts%22%2C%5B%5B%227faeabd5d737f64517501aba16ba84b8426ae95b19%22%2C%22getRepositoryFolderNames%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cdb%5C%5Cdb.ts%22%2C%5B%5B%227f92938facab6358aa5634e2cb6c8f76308a65e980%22%2C%22default%22%5D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
-        "app/ide/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Cserver-actions.js%22%2C%5B%5B%227f377eeafa5ba414466be67c4e3216dc976e78d05e%22%2C%22invalidateCacheAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cactions%5C%5Crepo.action.ts%22%2C%5B%5B%227faeabd5d737f64517501aba16ba84b8426ae95b19%22%2C%22getRepositoryFolderNames%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cscripts%5C%5Cvectorize.ts%22%2C%5B%5B%227f27379a1900b82dccfea7b0a64f0de2f9ab0858a6%22%2C%22embedAllJsonFiles%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cscripts%5C%5Canalyzer.ts%22%2C%5B%5B%227f96d2bfb719e8d32d4a8b442400dcd97000140bf7%22%2C%22analyzeAndBuildGraph%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cscripts%5C%5Cgenerator.ts%22%2C%5B%5B%227f5ebf6c3c2226202bd96fcbfc9a25e66a70706421%22%2C%22generateDocumentation%22%5D%2C%5B%227fe469901a7a164879a7ab22f9bc5f8969bd4212c8%22%2C%22default%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cactions%5C%5Cdocumentation.action.ts%22%2C%5B%5B%22404071d85f0f72caff058d938a5f704e43a90ff8ac%22%2C%22getDocumentation%22%5D%2C%5B%2240602e772757c0f9db154f2d86f3617622bcb9c3b3%22%2C%22listDocumentationBackups%22%5D%2C%5B%22603eb6d0249906e51343f5abde47f7fa36196b84e2%22%2C%22restoreDocumentationBackup%22%5D%2C%5B%2260b2267b4dbbba28132f5ffdba31c52b715f5bdbe1%22%2C%22saveDocumentation%22%5D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/page": "rsc",
-        "app/ide/page": "action-browser"
-      }
-    },
-    "7f92938facab6358aa5634e2cb6c8f76308a65e980": {
-      "workers": {
-        "app/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Ckeyless-actions.js%22%2C%5B%5B%227f27e04d5d43e9b4cb2bfea276bba375985adbe536%22%2C%22createOrReadKeylessAction%22%5D%2C%5B%227f77b5001857432e0b9138f2fb2247e4df11bd4659%22%2C%22syncKeylessConfigAction%22%5D%2C%5B%227fffbe6e3e623bf00cd6821f980e8d1dfdb2452a7a%22%2C%22deleteKeylessAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cactions%5C%5Crepo.action.ts%22%2C%5B%5B%227faeabd5d737f64517501aba16ba84b8426ae95b19%22%2C%22getRepositoryFolderNames%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cdb%5C%5Cdb.ts%22%2C%5B%5B%227f92938facab6358aa5634e2cb6c8f76308a65e980%22%2C%22default%22%5D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
-        "app/ide/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Ckeyless-actions.js%22%2C%5B%5B%227f27e04d5d43e9b4cb2bfea276bba375985adbe536%22%2C%22createOrReadKeylessAction%22%5D%2C%5B%227f77b5001857432e0b9138f2fb2247e4df11bd4659%22%2C%22syncKeylessConfigAction%22%5D%2C%5B%227fffbe6e3e623bf00cd6821f980e8d1dfdb2452a7a%22%2C%22deleteKeylessAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cfilesystem.ts%22%2C%5B%5B%227f8106e637f83ef666442d1b3973dc71267f847c35%22%2C%22clonRepository%22%5D%2C%5B%227f81741028b53d807da454896dee756ab04c55319e%22%2C%22buildProjectStructure%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cdb%5C%5Cdb.ts%22%2C%5B%5B%227f92938facab6358aa5634e2cb6c8f76308a65e980%22%2C%22default%22%5D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/page": "rsc",
-        "app/ide/page": "rsc"
-      }
-    },
-    "7f377eeafa5ba414466be67c4e3216dc976e78d05e": {
-      "workers": {
-        "app/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Cserver-actions.js%22%2C%5B%5B%227f377eeafa5ba414466be67c4e3216dc976e78d05e%22%2C%22invalidateCacheAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cfilesystem.ts%22%2C%5B%5B%227f8106e637f83ef666442d1b3973dc71267f847c35%22%2C%22clonRepository%22%5D%2C%5B%227f81741028b53d807da454896dee756ab04c55319e%22%2C%22buildProjectStructure%22%5D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        },
-        "app/ide/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Cserver-actions.js%22%2C%5B%5B%227f377eeafa5ba414466be67c4e3216dc976e78d05e%22%2C%22invalidateCacheAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cactions%5C%5Crepo.action.ts%22%2C%5B%5B%227faeabd5d737f64517501aba16ba84b8426ae95b19%22%2C%22getRepositoryFolderNames%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cscripts%5C%5Cvectorize.ts%22%2C%5B%5B%227f27379a1900b82dccfea7b0a64f0de2f9ab0858a6%22%2C%22embedAllJsonFiles%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cscripts%5C%5Canalyzer.ts%22%2C%5B%5B%227f96d2bfb719e8d32d4a8b442400dcd97000140bf7%22%2C%22analyzeAndBuildGraph%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cscripts%5C%5Cgenerator.ts%22%2C%5B%5B%227f5ebf6c3c2226202bd96fcbfc9a25e66a70706421%22%2C%22generateDocumentation%22%5D%2C%5B%227fe469901a7a164879a7ab22f9bc5f8969bd4212c8%22%2C%22default%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cactions%5C%5Cdocumentation.action.ts%22%2C%5B%5B%22404071d85f0f72caff058d938a5f704e43a90ff8ac%22%2C%22getDocumentation%22%5D%2C%5B%2240602e772757c0f9db154f2d86f3617622bcb9c3b3%22%2C%22listDocumentationBackups%22%5D%2C%5B%22603eb6d0249906e51343f5abde47f7fa36196b84e2%22%2C%22restoreDocumentationBackup%22%5D%2C%5B%2260b2267b4dbbba28132f5ffdba31c52b715f5bdbe1%22%2C%22saveDocumentation%22%5D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/page": "action-browser",
-        "app/ide/page": "action-browser"
       }
     },
     "7f8106e637f83ef666442d1b3973dc71267f847c35": {
       "workers": {
-        "app/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Cserver-actions.js%22%2C%5B%5B%227f377eeafa5ba414466be67c4e3216dc976e78d05e%22%2C%22invalidateCacheAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cfilesystem.ts%22%2C%5B%5B%227f8106e637f83ef666442d1b3973dc71267f847c35%22%2C%22clonRepository%22%5D%2C%5B%227f81741028b53d807da454896dee756ab04c55319e%22%2C%22buildProjectStructure%22%5D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        },
         "app/ide/page": {
           "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Ckeyless-actions.js%22%2C%5B%5B%227f27e04d5d43e9b4cb2bfea276bba375985adbe536%22%2C%22createOrReadKeylessAction%22%5D%2C%5B%227f77b5001857432e0b9138f2fb2247e4df11bd4659%22%2C%22syncKeylessConfigAction%22%5D%2C%5B%227fffbe6e3e623bf00cd6821f980e8d1dfdb2452a7a%22%2C%22deleteKeylessAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cfilesystem.ts%22%2C%5B%5B%227f8106e637f83ef666442d1b3973dc71267f847c35%22%2C%22clonRepository%22%5D%2C%5B%227f81741028b53d807da454896dee756ab04c55319e%22%2C%22buildProjectStructure%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cdb%5C%5Cdb.ts%22%2C%5B%5B%227f92938facab6358aa5634e2cb6c8f76308a65e980%22%2C%22default%22%5D%5D%5D%5D&__client_imported__=!",
           "async": false
         }
       },
       "layer": {
-        "app/page": "action-browser",
         "app/ide/page": "rsc"
       }
     },
     "7f81741028b53d807da454896dee756ab04c55319e": {
       "workers": {
-        "app/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Cserver-actions.js%22%2C%5B%5B%227f377eeafa5ba414466be67c4e3216dc976e78d05e%22%2C%22invalidateCacheAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cfilesystem.ts%22%2C%5B%5B%227f8106e637f83ef666442d1b3973dc71267f847c35%22%2C%22clonRepository%22%5D%2C%5B%227f81741028b53d807da454896dee756ab04c55319e%22%2C%22buildProjectStructure%22%5D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        },
         "app/ide/page": {
           "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Ckeyless-actions.js%22%2C%5B%5B%227f27e04d5d43e9b4cb2bfea276bba375985adbe536%22%2C%22createOrReadKeylessAction%22%5D%2C%5B%227f77b5001857432e0b9138f2fb2247e4df11bd4659%22%2C%22syncKeylessConfigAction%22%5D%2C%5B%227fffbe6e3e623bf00cd6821f980e8d1dfdb2452a7a%22%2C%22deleteKeylessAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cfilesystem.ts%22%2C%5B%5B%227f8106e637f83ef666442d1b3973dc71267f847c35%22%2C%22clonRepository%22%5D%2C%5B%227f81741028b53d807da454896dee756ab04c55319e%22%2C%22buildProjectStructure%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cdb%5C%5Cdb.ts%22%2C%5B%5B%227f92938facab6358aa5634e2cb6c8f76308a65e980%22%2C%22default%22%5D%5D%5D%5D&__client_imported__=!",
           "async": false
         }
       },
       "layer": {
-        "app/page": "action-browser",
         "app/ide/page": "rsc"
+      }
+    },
+    "7f92938facab6358aa5634e2cb6c8f76308a65e980": {
+      "workers": {
+        "app/ide/page": {
+          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Ckeyless-actions.js%22%2C%5B%5B%227f27e04d5d43e9b4cb2bfea276bba375985adbe536%22%2C%22createOrReadKeylessAction%22%5D%2C%5B%227f77b5001857432e0b9138f2fb2247e4df11bd4659%22%2C%22syncKeylessConfigAction%22%5D%2C%5B%227fffbe6e3e623bf00cd6821f980e8d1dfdb2452a7a%22%2C%22deleteKeylessAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cfilesystem.ts%22%2C%5B%5B%227f8106e637f83ef666442d1b3973dc71267f847c35%22%2C%22clonRepository%22%5D%2C%5B%227f81741028b53d807da454896dee756ab04c55319e%22%2C%22buildProjectStructure%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cdb%5C%5Cdb.ts%22%2C%5B%5B%227f92938facab6358aa5634e2cb6c8f76308a65e980%22%2C%22default%22%5D%5D%5D%5D&__client_imported__=!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/ide/page": "rsc"
+      }
+    },
+    "7f377eeafa5ba414466be67c4e3216dc976e78d05e": {
+      "workers": {
+        "app/ide/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Cserver-actions.js%22%2C%5B%5B%227f377eeafa5ba414466be67c4e3216dc976e78d05e%22%2C%22invalidateCacheAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cactions%5C%5Crepo.action.ts%22%2C%5B%5B%227faeabd5d737f64517501aba16ba84b8426ae95b19%22%2C%22getRepositoryFolderNames%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cscripts%5C%5Cvectorize.ts%22%2C%5B%5B%227f27379a1900b82dccfea7b0a64f0de2f9ab0858a6%22%2C%22embedAllJsonFiles%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cscripts%5C%5Canalyzer.ts%22%2C%5B%5B%227f96d2bfb719e8d32d4a8b442400dcd97000140bf7%22%2C%22analyzeAndBuildGraph%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cscripts%5C%5Cgenerator.ts%22%2C%5B%5B%227f5ebf6c3c2226202bd96fcbfc9a25e66a70706421%22%2C%22generateDocumentation%22%5D%2C%5B%227fe469901a7a164879a7ab22f9bc5f8969bd4212c8%22%2C%22default%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cactions%5C%5Cdocumentation.action.ts%22%2C%5B%5B%22404071d85f0f72caff058d938a5f704e43a90ff8ac%22%2C%22getDocumentation%22%5D%2C%5B%2240602e772757c0f9db154f2d86f3617622bcb9c3b3%22%2C%22listDocumentationBackups%22%5D%2C%5B%22603eb6d0249906e51343f5abde47f7fa36196b84e2%22%2C%22restoreDocumentationBackup%22%5D%2C%5B%2260b2267b4dbbba28132f5ffdba31c52b715f5bdbe1%22%2C%22saveDocumentation%22%5D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/ide/page": "action-browser"
+      }
+    },
+    "7faeabd5d737f64517501aba16ba84b8426ae95b19": {
+      "workers": {
+        "app/ide/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Cserver-actions.js%22%2C%5B%5B%227f377eeafa5ba414466be67c4e3216dc976e78d05e%22%2C%22invalidateCacheAction%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cactions%5C%5Crepo.action.ts%22%2C%5B%5B%227faeabd5d737f64517501aba16ba84b8426ae95b19%22%2C%22getRepositoryFolderNames%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cscripts%5C%5Cvectorize.ts%22%2C%5B%5B%227f27379a1900b82dccfea7b0a64f0de2f9ab0858a6%22%2C%22embedAllJsonFiles%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cscripts%5C%5Canalyzer.ts%22%2C%5B%5B%227f96d2bfb719e8d32d4a8b442400dcd97000140bf7%22%2C%22analyzeAndBuildGraph%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Cscripts%5C%5Cgenerator.ts%22%2C%5B%5B%227f5ebf6c3c2226202bd96fcbfc9a25e66a70706421%22%2C%22generateDocumentation%22%5D%2C%5B%227fe469901a7a164879a7ab22f9bc5f8969bd4212c8%22%2C%22default%22%5D%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5CHp%5C%5CDesktop%5C%5Cresearch_mayuranfinal%5C%5CAI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow%5C%5Cdocai%5C%5Csrc%5C%5Clib%5C%5Cactions%5C%5Cdocumentation.action.ts%22%2C%5B%5B%22404071d85f0f72caff058d938a5f704e43a90ff8ac%22%2C%22getDocumentation%22%5D%2C%5B%2240602e772757c0f9db154f2d86f3617622bcb9c3b3%22%2C%22listDocumentationBackups%22%5D%2C%5B%22603eb6d0249906e51343f5abde47f7fa36196b84e2%22%2C%22restoreDocumentationBackup%22%5D%2C%5B%2260b2267b4dbbba28132f5ffdba31c52b715f5bdbe1%22%2C%22saveDocumentation%22%5D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/ide/page": "action-browser"
       }
     },
     "7f27379a1900b82dccfea7b0a64f0de2f9ab0858a6": {
