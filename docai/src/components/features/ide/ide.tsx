@@ -23,6 +23,8 @@ import DocumentPipeline from "../pipeline/documentation/DocumentPipeline";
 import Documentation from "../documentation/Documentation";
 import { useSearchParams } from "next/navigation";
 import VisualAid from "../visualaid/VisualAid";
+import Chat from "../chat/Chat";
+import Feedback from "../feeback/Feedback";
 
 const getFileIcon = (fileName: string) => {
   if (fileName.endsWith(".tsx")) return <Icon icon="logos:react" />;
@@ -258,7 +260,7 @@ export default function IDE({
       >
         <ResizablePanel defaultSize={100}>
           <div className="max-h-[92vh] overflow-y-auto overflow-x-hidden">
-            <Reorder.Group axis="y" values={[root]} onReorder={() => {}}>
+            <Reorder.Group axis="y" values={[root]} onReorder={() => { }}>
               <FileTree
                 item={root}
                 defaultCollapsed={defaultCollapsed}
@@ -336,7 +338,7 @@ export default function IDE({
           </ResizablePanel>
         )}
 
-        <ResizableHandle />
+
 
         {feature === "documentation" && (
           <ResizablePanel defaultSize={500}>
@@ -345,6 +347,25 @@ export default function IDE({
             </div>
           </ResizablePanel>
         )}
+
+
+        {feature === "chat" && (
+          <ResizablePanel defaultSize={100}>
+            <div className="max-h-[92vh] w-auto overflow-y-auto">
+              <Chat />
+            </div>
+          </ResizablePanel>
+        )}
+
+        {
+          feature === "feedback" && <ResizablePanel defaultSize={100}>
+            <div className="max-h-[92vh] w-auto overflow-y-auto">
+              <Feedback />
+            </div>
+          </ResizablePanel>
+        }
+
+        <ResizableHandle />
       </ResizablePanelGroup>
     </Card>
   );

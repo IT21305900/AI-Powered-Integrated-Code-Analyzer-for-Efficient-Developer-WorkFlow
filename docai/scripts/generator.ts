@@ -243,6 +243,8 @@ const ProjectIntroductionAgent = async ({
     },
     1
   );
+  
+  console.log(queryPackage)
 
   const readme: any = introResults.documents[0];
   const packagejson: any = queryPackage.documents[0];
@@ -349,9 +351,8 @@ const DevSetupAgent = async ({
         Generate comprehensive developer setup guidelines with the following content requirements:
         
         1. Package Information:
-           - Analyze the package.json dependencies and devDependencies: ${
-             packagejson[0]
-           }
+           - Analyze the package.json dependencies and devDependencies: ${packagejson[0]
+      }
            - Extract the required Node.js version (if specified)
            - Identify key libraries and frameworks being used
            - List the available npm scripts with explanations of what each does
@@ -362,41 +363,34 @@ const DevSetupAgent = async ({
            - Include any special build or deployment configurations
         
         3. TypeScript Setup:
-           - The project ${
-             hasTypescript === "Yes" ? "uses" : "does not use"
-           } TypeScript
-           - ${
-             hasTypescript === "Yes"
-               ? `Explain the TypeScript configuration: ${tsconfigjson}`
-               : ""
-           }
-           - ${
-             hasTypescript === "Yes"
-               ? "Include any specific tsconfig settings that developers should be aware of"
-               : ""
-           }
+           - The project ${hasTypescript === "Yes" ? "uses" : "does not use"
+      } TypeScript
+           - ${hasTypescript === "Yes"
+        ? `Explain the TypeScript configuration: ${tsconfigjson}`
+        : ""
+      }
+           - ${hasTypescript === "Yes"
+        ? "Include any specific tsconfig settings that developers should be aware of"
+        : ""
+      }
         
         4. Tailwind CSS Setup:
-           - The project ${
-             hasTailwind === "Yes" ? "uses" : "does not use"
-           } Tailwind CSS
-           - ${
-             hasTailwind === "Yes"
-               ? `Explain the Tailwind configuration: ${tailwindconfig}`
-               : ""
-           }
-           - ${
-             hasTailwind === "Yes"
-               ? "Describe how to work with Tailwind in this project including any custom theme configurations"
-               : ""
-           }
+           - The project ${hasTailwind === "Yes" ? "uses" : "does not use"
+      } Tailwind CSS
+           - ${hasTailwind === "Yes"
+        ? `Explain the Tailwind configuration: ${tailwindconfig}`
+        : ""
+      }
+           - ${hasTailwind === "Yes"
+        ? "Describe how to work with Tailwind in this project including any custom theme configurations"
+        : ""
+      }
         
         5. Environment Variables:
-           - ${
-             hasEnvExample === "Yes"
-               ? `Detail required environment variables based on: ${envexample}`
-               : "Mention any environment variables that might be needed based on dependencies"
-           }
+           - ${hasEnvExample === "Yes"
+        ? `Detail required environment variables based on: ${envexample}`
+        : "Mention any environment variables that might be needed based on dependencies"
+      }
            - Explain how to set up local environment variables
         
         6. Setup Step-by-Step Guide:
@@ -591,20 +585,18 @@ const TailwindCssAgent = async ({
     content: `
       Provide a concise summary of the project's styling approach with a focus on:
       
-      ${
-        usesTailwind
-          ? `
+      ${usesTailwind
+        ? `
       1. Tailwind CSS Implementation:
          - The project uses Tailwind CSS for styling
-         - Tailwind Configuration: ${
-           tailwindConfig
-             ? tailwindConfig[0]
-             : "Not found, but Tailwind dependencies detected"
-         }
+         - Tailwind Configuration: ${tailwindConfig
+          ? tailwindConfig[0]
+          : "Not found, but Tailwind dependencies detected"
+        }
          - Highlight any custom theme configurations (colors, spacing, etc.)
          - Note any Tailwind plugins being used
       `
-          : `
+        : `
       1. CSS Approach:
          - The project does NOT use Tailwind CSS
          - Identify the primary styling method used instead (CSS Modules, Styled Components, etc.)
@@ -614,26 +606,23 @@ const TailwindCssAgent = async ({
       2. CSS Files Analysis:
          - Global CSS file content: ${globalCss ? globalCss[0] : "Not found"}
          - Other CSS files found: ${cssFiles.length > 0 ? "Yes" : "No"}
-         ${
-           cssFiles.length > 0
-             ? `- Sample additional CSS content: ${cssFiles
-                 .slice(0, 2)
-                 .map((file: any) => file[0].substring(0, 150) + "...")
-                 .join("\n")}`
-             : ""
-         }
+         ${cssFiles.length > 0
+        ? `- Sample additional CSS content: ${cssFiles
+          .slice(0, 2)
+          .map((file: any) => file[0].substring(0, 150) + "...")
+          .join("\n")}`
+        : ""
+      }
          - Identify important global styles, CSS variables, or CSS reset approaches
          - Note any imported fonts or base styles
          - Identify CSS organization patterns (CSS modules, component-specific files, etc.)
       
       3. Styling Architecture:
          - Summarize the overall styling approach in 1-2 sentences
-         - CSS Modules: ${
-           usesCssModules ? "Used in the project" : "Not detected"
-         }
-         - Styled Components/Emotion: ${
-           usesStyledComponents ? "Used in the project" : "Not detected"
-         }
+         - CSS Modules: ${usesCssModules ? "Used in the project" : "Not detected"
+      }
+         - Styled Components/Emotion: ${usesStyledComponents ? "Used in the project" : "Not detected"
+      }
          - Describe how styles are organized (global vs. component-level)
          - Note how developers should approach adding new styles to maintain consistency
       
@@ -696,43 +685,40 @@ const MiddlewareAgent = async ({
     content: `
         Document the project's middleware implementation with a focus on:
   
-        ${
-          hasMiddleware
-            ? `
+        ${hasMiddleware
+        ? `
         1. Middleware Overview:
            - The project implements Next.js middleware
            - Middleware file content: ${middlewareFile[0]}
            - Identify the main functionality implemented in the middleware
            - Explain the purpose and role of this middleware in the application
         `
-            : `
+        : `
         1. Middleware Status:
            - The project does NOT implement custom Next.js middleware
            - Note that middleware could be added in the root directory as middleware.ts or middleware.js
         `
-        }
+      }
         
         2. Middleware Configuration:
-           - Next.config.js configuration related to middleware: ${
-             nextConfig ? nextConfig[0] : "Not found"
-           }
+           - Next.config.js configuration related to middleware: ${nextConfig ? nextConfig[0] : "Not found"
+      }
            - Document any matcher configurations that limit where middleware runs
            - Explain any middleware-specific settings in the project configuration
         
         3. Middleware Functionality:
-           ${
-             hasMiddleware
-               ? `
+           ${hasMiddleware
+        ? `
            - Describe the core middleware functionality (authentication, redirects, headers, etc.)
            - Explain the request flow and how middleware intercepts it
            - Document any conditional logic in the middleware
            - Note important Edge API functions being used
            `
-               : `
+        : `
            - Suggest potential middleware use cases for this specific project
            - Provide a simple example of how middleware could be implemented
            `
-           }
+      }
         
         4. Development Considerations:
            - Explain how developers should approach modifying or extending the middleware
@@ -767,6 +753,9 @@ const AppRouterDocumentationAgent = async ({
     },
     10 // Get up to 10 static routes
   );
+
+
+
 
   // Check for layout files and other special files
   const layoutsQuery =
@@ -932,6 +921,8 @@ const ComponentDocumentationAgent = async ({
     },
     10 // Get up to 10 components
   );
+
+
 
   // Access the files
   const components: any = componentData?.documents || [];

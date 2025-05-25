@@ -20,6 +20,24 @@ const embeddingClient = new AzureOpenAI({
 
 const segmentsFolder = path.resolve(process.cwd(), "segments");
 
+const sanitizeMetadata = (metadata: any) => {
+  const flattened: Record<string, any> = {};
+
+  for (const [key, value] of Object.entries(metadata)) {
+    if (typeof value === 'object' && value !== null) {
+      // Flatten arrays by joining, nested objects by JSON.stringify
+      flattened[key] = Array.isArray(value)
+        ? value.join(', ') // or JSON.stringify(value) if needed
+        : JSON.stringify(value); // flatten nested objects
+    } else {
+      flattened[key] = value;
+    }
+  }
+
+  return flattened;
+};
+
+
 // Function to embed JSON file
 const embedJsonFile = async (filePath: string) => {
   const jsonData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
@@ -62,8 +80,20 @@ const embedJsonFile = async (filePath: string) => {
       input: [file],
     });
 
+
+    // AFTER - Safe ID generation
+    const generateSafeId = (filePath: string): string => {
+      return filePath
+        .replace(/\\/g, '_')              // repositories_gemini-chat_tailwind.config.ts
+        .replace(/\//g, '_')              // Handle forward slashes too
+        .replace(/[^a-zA-Z0-9._-]/g, '_') // Replace special characters
+        .replace(/_+/g, '_')              // Clean up multiple underscores
+        .replace(/^_|_$/g, '');           // Remove leading/trailing underscores
+    };
+
+
     const data = {
-      id: relativePath,
+      id: generateSafeId(relativePath), // Use the safe ID generation function
       embedding: response.data[0].embedding,
       code:
         typeof codeContent === "string"
@@ -116,15 +146,17 @@ export const embedAllJsonFiles = async (collectionName: string) => {
         metadata: any;
       } = await embedJsonFile(filePath);
 
-      console.log(response.metadata);
+      console.log(`Processing file: ${file}`);
+      console.log(response.metadata)
 
       // Add embedding to Chroma
-      await collection.add({
+      const res = await collection.add({
         ids: [response.id],
         embeddings: [response.embedding],
         documents: [response.code],
-        metadatas: [response.metadata],
+        metadatas: [sanitizeMetadata(response.metadata)],
       });
+
 
       console.log("Indexing Completed");
     } catch (error: any) {
