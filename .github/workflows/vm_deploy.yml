@@ -1,3 +1,14 @@
+name: Deploy to VM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy over SSH 
         uses: appleboy/ssh-action@master
         with:
@@ -8,8 +19,8 @@
           script: |
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm install 22
-            nvm use 22
+            nvm install 20
+            nvm use 20
             node -v
             cd ~/AI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow
             if [ ! -d .git ]; then
