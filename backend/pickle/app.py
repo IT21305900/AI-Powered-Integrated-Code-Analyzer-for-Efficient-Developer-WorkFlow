@@ -47,6 +47,7 @@ custom_function_1 = [{
         "properties": {
             "suggestion": {
                 "type": "string",
+                "description": "Provide a short explanation for 2 lines of the issue and suggest an improved version of the code."
             },
             "line_number": {
                 "type": "string",
@@ -95,6 +96,7 @@ def get_gpt_suggestion(text,smell_type, max_retries=1):
 
     print(f"Skipping page due to repeated failures after {max_retries} attempts.")
     return {"suggestion": "No issues in the code", "line_number": "None"}  # Return empty list and unknown level if it fails after retries                                                       
+@app.route('/analyze', methods=['POST'])
 def analyze_code():
     try:
         data = request.get_json()
@@ -127,7 +129,9 @@ def analyze_code():
                 code_snippet = file.read()
                 smell_type = predict_code_smell(code_snippet)
                 
+                if smell_type in ["dead_code", "duplicate_code", "long_methods", "unoptimized_loops","inconsistent_naming", "primitive_obsession"]:
                     main_type = "Implementation smell"
+                elif smell_type in ["god_object", "cyclic_dependencies", "feature_envy", "imperative_abstraction","wide_hierarchy","deficient_encapsulation", "cyclic_dependency","lazy_class", "shotgun_surgery"]:
                     main_type = "Design smell"
                 else:
                     main_type = "Good smell"
