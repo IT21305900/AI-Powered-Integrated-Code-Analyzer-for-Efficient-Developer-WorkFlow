@@ -6,6 +6,9 @@ const RepoSchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
+  link: {
+    type: String,
+  },
   created: {
     type: Date,
     default: Date.now,

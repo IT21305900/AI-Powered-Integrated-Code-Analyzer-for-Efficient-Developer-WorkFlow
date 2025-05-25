@@ -23,38 +23,80 @@ interface AnalysisResult {
 const Feedback = () => {
   const [showCharts, setShowCharts] = useState(false);
   const [results, setResults] = useState<AnalysisResult[]>([]);
+  const [repoUrl, setRepoUrl] = useState("");
+  const [loadingClone, setLoadingClone] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
+  const fetchAnalysisResults = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/codesmelldata");
+      const data = await response.json();
+
+      // Filter results by matching repo_url
+      const matchedRepo = data
+        .filter((entry: any) => entry.repo_url === repoUrl)
+        .sort( //@ts-ignore
+          (a: any, b: any) => new Date(b.timestamp) - new Date(a.timestamp)
+        ); // latest first
+
+      if (matchedRepo.length > 0 && matchedRepo[0].analysis_results) {
+        const formattedResults = matchedRepo[0].analysis_results.map(
+          (smell: any) => ({
+            smell_type: smell.smell,
+            file: smell.file,
+            line_number: smell.line_number,
+            suggestion: smell.suggestion,
+          })
+        );
+        setResults(formattedResults);
+      } else {
+        throw new Error("No analysis found for this repository.");
+      }
+    } catch (error) {
+      console.error("Error fetching results:", error);
+      alert("Failed to fetch analysis results.");
+    }
+  };
 
   useEffect(() => {
-    fetch(`http://4.240.106.235:5000/codesmelldata`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (
-          Array.isArray(data) &&
-          data.length > 0 &&
-          data[0].analysis_results
-        ) {
-          const formattedResults = data[0].analysis_results.map(
-            (smell: any) => ({
-              smell_type: smell.smell,
-              file: smell.file,
-              line_number: smell.line_number,
-              suggestion: smell.suggestion,
-            })
-          );
-          setResults(formattedResults);
-        } else {
-          throw new Error("Unexpected API response format");
-        }
-      })
-      .catch((error) => console.error("Error fetching results:", error));
+    fetchAnalysisResults();
   }, []);
+
+  const handleCloneRepo = async () => {
+    if (!repoUrl.trim()) {
+      alert("Please enter a valid GitHub repository URL");
+      return;
+    }
+
+    setLoadingClone(true);
+
+    try {
+      const response = await fetch("http://localhost:5001/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ repo_url: repoUrl }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        console.error("Backend error:", result.error);
+        throw new Error(result.error || "Failed to clone repo");
+      }
+
+      console.log("✅ Clone result:", result);
+      alert("✅ Repository cloned and analyzed successfully!");
+
+      setRepoUrl(""); // Clear the input field
+      await fetchAnalysisResults();
+    } catch (err) {
+      console.error("Clone error:", err);
+      // @ts-ignore
+      alert("❌ Clone failed: " + err.message);
+    } finally {
+      setLoadingClone(false);
+    }
+  };
 
   const implementationSmells = results.filter((result) =>
     [
@@ -62,14 +104,19 @@ const Feedback = () => {
       "duplicate_code",
       "long_methods",
       "unoptimized_loops",
+      "inconsistent_naming",
+      "primitive_obsession",
     ].includes(result.smell_type)
   );
+
   const designSmells = results.filter((result) =>
     [
       "cyclic_dependency",
       "deficient_encapsulation",
       "imperative_abstraction",
       "wide_hierarchy",
+      "lazy_class",
+      "shotgun_surgery",
     ].includes(result.smell_type)
   );
 
@@ -79,31 +126,63 @@ const Feedback = () => {
   const downloadPDF = async () => {
     const pdf = new jsPDF("p", "mm", "a4");
     const content = contentRef.current;
-
     if (!content) return;
 
-    // Render the entire content section
+    // Expand height temporarily to include full content
+    const originalHeight = content.style.height;
+    content.style.height = "auto";
+
     const canvas = await html2canvas(content, {
       useCORS: true,
       allowTaint: true,
-      scale: 2, // higher quality
+      scale: 2,
+      scrollY: -window.scrollY, // Prevent partial capture if page is scrolled
     });
+
+    content.style.height = originalHeight;
 
     const imgData = canvas.toDataURL("image/png");
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    // If content is taller than one page, consider pagination
+    if (pdfHeight > pdf.internal.pageSize.getHeight()) {
+      let position = 0;
+      const pageHeight = pdf.internal.pageSize.getHeight();
+
+      while (position < pdfHeight) {
+        pdf.addImage(imgData, "PNG", 0, -position, pdfWidth, pdfHeight);
+        position += pageHeight;
+        if (position < pdfHeight) pdf.addPage();
+      }
+    } else {
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    }
+
     pdf.save("CodeSmellFeedback.pdf");
   };
 
   return (
     <div className="p-8 bg-black min-h-screen">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
         <h2 className="text-3xl font-bold text-white">
           Code Smell Analysis & Feedback System
         </h2>
-        <div className="flex space-x-2">
+        <div className="flex flex-col md:flex-row md:items-center md:space-x-2 space-y-2 md:space-y-0">
+          <input
+            type="text"
+            placeholder="Enter GitHub Repo URL"
+            className="px-3 py-2 rounded border border-gray-400 text-black w-72"
+            value={repoUrl}
+            onChange={(e) => setRepoUrl(e.target.value)}
+          />
+          <Button
+            onClick={handleCloneRepo}
+            disabled={loadingClone}
+            className="bg-blue-500 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600"
+          >
+            {loadingClone ? "Cloning..." : "Clone & Analyze"}
+          </Button>
           <Button
             onClick={() => setShowCharts(!showCharts)}
             className="bg-white text-gray-900 font-semibold border border-gray-300 shadow-md px-6 py-2 hover:bg-gray-200 transition"
@@ -169,8 +248,8 @@ const Feedback = () => {
                       ) : (
                         <TableRow>
                           <TableCell
-                            className="text-center text-gray-400 p-4"
                             colSpan={4}
+                            className="text-center text-gray-400 p-4"
                           >
                             No Implementation Smells Detected.
                           </TableCell>
@@ -227,8 +306,8 @@ const Feedback = () => {
                       ) : (
                         <TableRow>
                           <TableCell
-                            className="text-center text-gray-400 p-4"
                             colSpan={4}
+                            className="text-center text-gray-400 p-4"
                           >
                             No Design Smells Detected.
                           </TableCell>
@@ -241,16 +320,10 @@ const Feedback = () => {
             </Card>
           </div>
         ) : (
-          // <CodeSmellCharts
-          //   implementationCount={implementationCount}
-          //   designCount={designCount}
-          // />
-          <div>
-            <CodeSmellCharts
-              implementationCount={implementationCount}
-              designCount={designCount}
-            />
-          </div>
+          <CodeSmellCharts
+            implementationCount={implementationCount}
+            designCount={designCount}
+          />
         )}
       </div>
     </div>

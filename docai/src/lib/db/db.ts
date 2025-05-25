@@ -6,8 +6,6 @@ interface CachedConnection {
   promise: Promise<typeof mongoose> | null;
 }
 
-
-
 const globalAny: any = global;
 
 let cached: CachedConnection = globalAny.mongoose || {

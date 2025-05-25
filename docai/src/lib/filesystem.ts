@@ -41,6 +41,7 @@ export const clonRepository = async (formData: FormData) => {
     // Save the repository information to the database
     const repo = new Repo({
       name: repoName,
+      link: link,
       updated: new Date(),
     });
 

@@ -8,11 +8,21 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { GetRepositoryByName, GetRepositoryResult } from "@/lib/actions/repo.action";
+import { useQuery } from "@tanstack/react-query";
 import { PlayCircle, ArrowDown, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { set } from "mongoose";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 
 const Chat = () => {
+
+  const searchParams = useSearchParams();
+  const repository = searchParams.get("repository");
+
+
   const [repoUrl, setRepoUrl] = useState("");
   const [questions, setQuestions] = useState<string[]>([]);
   const [stepStatus, setStepStatus] = useState({
@@ -21,8 +31,51 @@ const Chat = () => {
     step3: "pending",
     step4: "pending", // Added step 4 for chatbot launch
   });
+
   const [isChatbotVisible, setIsChatbotVisible] = useState(false); // State to control chatbot visibility
   const [chatbotRepository, setChatbotRepository] = useState<string | null>(null); // State to store the repository
+
+
+  // TanStack Query to fetch repository data
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    isSuccess
+  } = useQuery({
+    queryKey: ['repository', repository],
+    queryFn: async (): Promise<GetRepositoryResult> => {
+      if (!repository) throw new Error("No repository name provided");
+      return await GetRepositoryByName(repository);
+    },
+    enabled: !!repository,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    retry: 2,
+  })
+
+  // Handle successful data fetch (replaces onSuccess)
+  useEffect(() => {
+    if (isSuccess && data?.success && data.data) {
+      setRepoUrl(data.data.link || "");
+      toast.success(data.message);
+    } else if (isSuccess && data && !data.success) {
+      toast.error(data.message);
+    }
+  }, [isSuccess, data]);
+
+  // Handle errors (replaces onError)
+  useEffect(() => {
+    if (isError && error) {
+      toast.error(error.message || 'Failed to fetch repository data');
+    }
+  }, [isError, error]);
+
+  if (isError || error) {
+    toast.error(error?.message || 'Failed to fetch repository data');
+  }
+
+  if (isLoading) return <div>Loading</div>;
 
   const handleRun = async () => {
     if (!repoUrl.trim()) return;
@@ -136,11 +189,11 @@ const Chat = () => {
           <Step step="Launch Chatbot" index={4}>
             <div className="flex justify-center">
               <Button
-              onClick={() => {
-              window.location.href = "https://d1c6dudbx22yi.cloudfront.net";
-              }}
-  disabled={stepStatus.step3 !== "completed"}
->
+                onClick={() => {
+                  window.location.href = "https://d1c6dudbx22yi.cloudfront.net";
+                }}
+                disabled={stepStatus.step3 !== "completed"}
+              >
                 {stepStatus.step4 === "completed" ? (
                   "Completed ✅"
                 ) : (

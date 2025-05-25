@@ -4,6 +4,8 @@ import { SelectFeature, SelectRepo } from "@/components/home/WorkSpaceDialog";
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { DeleteRepo } from "./DeleteRepo";
+
 
 const ProjectToolBar = () => {
   const searchParams = useSearchParams();
@@ -19,9 +21,18 @@ const ProjectToolBar = () => {
     feature || undefined
   );
 
+
+
   return (
     <nav className="flex justify-end my-2 bg-primary-foreground">
       <div className="max-w-[1020px] flex gap-3">
+
+
+        {
+          repository && <DeleteRepo repository={repository} />
+        }
+
+
         {/* Repository Selector */}
         <SelectRepo repo={selectedRepo} setRepo={setSelectedRepo} />
 

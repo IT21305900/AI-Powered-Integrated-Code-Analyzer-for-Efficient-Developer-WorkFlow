@@ -495,52 +495,49 @@ ${typeof fileData.summary === 'string' ? fileData.summary : 'JavaScript/TypeScri
 This file contains **${fileFunctions.length} functions/methods**, indicating **${functionAnalysis.complexity.toLowerCase()} complexity** and **${functionAnalysis.responsibility.toLowerCase()}**.
 
 **Functions Implemented:**
-${fileFunctions.length > 0 ? fileFunctions.map(
-          //@ts-ignore-next-line
-          fn => `• **${fn}()**: Implementation of ${fn.toLowerCase().replace(/([A-Z])/g, ' $1').trim()} functionality`).join('\n') : '• No explicit functions detected (may contain inline code or exports)'}
+${//@ts-ignore 
+          fileFunctions.length > 0 ? fileFunctions.map(fn => `• **${fn}()**: Implementation of ${fn.toLowerCase().replace(/([A-Z])/g, ' $1').trim()} functionality`).join('\n') : '• No explicit functions detected (may contain inline code or exports)'}
 
 **📚 External Dependencies:**
-This file imports **${fileLibraries.length} external libraries**, showing its integration with the broader ecosystem:
-${fileLibraries.length > 0 ? fileLibraries.map(
-            //@ts-ignore-next-line
+          This file imports ** ${fileLibraries.length} external libraries **, showing its integration with the broader ecosystem:
+${fileLibraries.length > 0 ? fileLibraries.map(//@ts-ignore
             lib => `• **${lib}**: ${lib.startsWith('.') ? 'Local module dependency' : lib.includes('react') ? 'React ecosystem library' : lib.includes('node') ? 'Node.js module' : 'Third-party library'}`).join('\n') : '• No external dependencies detected'}
 
 **🎯 Coding Patterns & Practices:**
-
-${filePractices.map(
-              //@ts-ignore-next-line
+        ${filePractices.map(//@ts-ignore
               practice => {
                 const explanation = getPatternExplanation(practice);
                 return `**${practice}**:
 • **Why Used**: ${explanation.why}
 • **Purpose**: ${explanation.purpose}
 • **Benefits**: ${explanation.benefits.join(', ')}`;
-              }).join('\n\n')}
+              }).join('\n\n')
+          }
 
 **📊 Code Metrics:**
-• **Lines of Code**: ${fileLOC} lines (${fileLOC < 50 ? 'Small file' : fileLOC < 200 ? 'Medium-sized file' : fileLOC < 500 ? 'Large file' : 'Very large file'})
-• **Function Count**: ${fileFunctions.length} functions (${functionAnalysis.complexity} complexity)
-• **Dependency Count**: ${fileLibraries.length} imports (${fileLibraries.length < 5 ? 'Low coupling' : fileLibraries.length < 15 ? 'Medium coupling' : 'High coupling'})
-• **Pattern Usage**: ${filePractices.length} patterns detected
-• **Last Modified**: ${lastCommit ? new Date(lastCommit).toLocaleDateString() : 'Unknown'}
+• ** Lines of Code **: ${fileLOC} lines(${fileLOC < 50 ? 'Small file' : fileLOC < 200 ? 'Medium-sized file' : fileLOC < 500 ? 'Large file' : 'Very large file'})
+• ** Function Count **: ${fileFunctions.length} functions(${functionAnalysis.complexity} complexity)
+• ** Dependency Count **: ${fileLibraries.length} imports(${fileLibraries.length < 5 ? 'Low coupling' : fileLibraries.length < 15 ? 'Medium coupling' : 'High coupling'})
+• ** Pattern Usage **: ${filePractices.length} patterns detected
+• ** Last Modified **: ${lastCommit ? new Date(lastCommit).toLocaleDateString() : 'Unknown'}
 
 **🔍 Code Quality Assessment:**
-• **Maintainability**: ${functionAnalysis.maintainability}
-• **Single Responsibility**: ${fileFunctions.length <= 5 ? '✅ Follows SRP well' : fileFunctions.length <= 15 ? '⚠️ May have multiple responsibilities' : '❌ Consider splitting into smaller files'}
-• **Coupling**: ${fileLibraries.length <= 10 ? '✅ Low to medium coupling' : '⚠️ High coupling - consider dependency injection'}
-• **Size**: ${fileLOC <= 300 ? '✅ Appropriate file size' : '⚠️ Large file - consider refactoring'}
+• ** Maintainability **: ${functionAnalysis.maintainability}
+• ** Single Responsibility **: ${fileFunctions.length <= 5 ? '✅ Follows SRP well' : fileFunctions.length <= 15 ? '⚠️ May have multiple responsibilities' : '❌ Consider splitting into smaller files'}
+• ** Coupling **: ${fileLibraries.length <= 10 ? '✅ Low to medium coupling' : '⚠️ High coupling - consider dependency injection'}
+• ** Size **: ${fileLOC <= 300 ? '✅ Appropriate file size' : '⚠️ Large file - consider refactoring'}
 
 **🚀 Performance Implications:**
-• **Load Impact**: ${fileLOC < 100 ? 'Minimal' : fileLOC < 500 ? 'Low' : fileLOC < 1000 ? 'Medium' : 'High'} impact on bundle size
-• **Parse Time**: ${fileFunctions.length < 10 ? 'Fast' : fileFunctions.length < 30 ? 'Medium' : 'Slower'} JavaScript parsing
-• **Memory Usage**: ${fileLibraries.length < 5 ? 'Low' : fileLibraries.length < 15 ? 'Medium' : 'High'} memory footprint from dependencies
+• ** Load Impact **: ${fileLOC < 100 ? 'Minimal' : fileLOC < 500 ? 'Low' : fileLOC < 1000 ? 'Medium' : 'High'} impact on bundle size
+• ** Parse Time **: ${fileFunctions.length < 10 ? 'Fast' : fileFunctions.length < 30 ? 'Medium' : 'Slower'} JavaScript parsing
+• ** Memory Usage **: ${fileLibraries.length < 5 ? 'Low' : fileLibraries.length < 15 ? 'Medium' : 'High'} memory footprint from dependencies
 
-**🔧 Development Recommendations:**
-${fileLOC > 500 ? '• Consider breaking this file into smaller, more focused modules' : ''}
+    **🔧 Development Recommendations:**
+      ${fileLOC > 500 ? '• Consider breaking this file into smaller, more focused modules' : ''}
 ${fileFunctions.length > 20 ? '• High function count - consider using classes or modules for better organization' : ''}
 ${fileLibraries.length > 15 ? '• Many dependencies - review for potential consolidation or lazy loading' : ''}
 ${filePractices.length === 0 ? '• Consider adopting modern coding patterns for better maintainability' : ''}
-${fileFunctions.length === 0 ? '• Consider adding explicit function exports for better code organization' : ''}`,
+${fileFunctions.length === 0 ? '• Consider adding explicit function exports for better code organization' : ''} `,
 
         functions: fileFunctions.length > 0 ? fileFunctions : ['No explicit functions detected'],
         libraries: fileLibraries.length > 0 ? fileLibraries : ['No external dependencies'],
@@ -584,8 +581,8 @@ ${fileFunctions.length === 0 ? '• Consider adding explicit function exports fo
     return {
       name: "Class Diagram Analysis",
       summary: "UML Class Diagram - Detailed Code Mapping Analysis",
-      description: `This UML Class Diagram provides a comprehensive static structure view of your codebase, following UML 2.0 standards. It represents ${totalFiles} files across ${categories.length} different categories.`,
-      functions: [`Total Functions: ${totalFunctions}`, "Visibility Analysis", "Dependency Mapping", "Relationship Classification"],
+      description: `This UML Class Diagram provides a comprehensive static structure view of your codebase, following UML 2.0 standards.It represents ${totalFiles} files across ${categories.length} different categories.`,
+      functions: [`Total Functions: ${totalFunctions} `, "Visibility Analysis", "Dependency Mapping", "Relationship Classification"],
       libraries: categories,
       practices: [
         "UML 2.0 Standard Compliance",
@@ -616,7 +613,7 @@ ${fileFunctions.length === 0 ? '• Consider adding explicit function exports fo
     return {
       name: "Component Diagram Analysis",
       summary: "UML Component Diagram - Detailed Code Architecture Mapping",
-      description: `This UML Component Diagram illustrates the high-level architecture and component relationships of your system, following UML 2.0 component modeling standards. It shows ${totalComponents} main components.`,
+      description: `This UML Component Diagram illustrates the high - level architecture and component relationships of your system, following UML 2.0 component modeling standards.It shows ${totalComponents} main components.`,
       functions: [
         `${totalComponents} Components Analyzed`,
         "Component Relationship Mapping",
@@ -660,28 +657,28 @@ ${fileFunctions.length === 0 ? '• Consider adding explicit function exports fo
     return {
       name: "ER Diagram Analysis",
       summary: "Entity-Relationship Diagram - Database Schema Mapping",
-      description: `This Entity-Relationship Diagram represents the data model and relationships derived from your codebase analysis. It shows potential database entities and their relationships based on code patterns and naming conventions.
+      description: `This Entity - Relationship Diagram represents the data model and relationships derived from your codebase analysis.It shows potential database entities and their relationships based on code patterns and naming conventions.
 
 **🗄️ Database Schema Overview:**
 
-The ER diagram is generated by analyzing your codebase for database-related patterns, including:
-• Function names containing CRUD operations (create, read, update, delete)
+    The ER diagram is generated by analyzing your codebase for database - related patterns, including:
+• Function names containing CRUD operations(create, read, update, delete)
 • Import statements referencing models, schemas, or entities
 • File naming conventions suggesting database interactions
 
-**📊 Entity Analysis:**
-• **Total Files Analyzed**: ${totalFiles} source files
-• **Database-Related Files**: ${databaseFiles.length} files
-• **Entity Relationships**: Derived from code dependencies and naming patterns
+    **📊 Entity Analysis:**
+• ** Total Files Analyzed **: ${totalFiles} source files
+• ** Database - Related Files **: ${databaseFiles.length} files
+• ** Entity Relationships **: Derived from code dependencies and naming patterns
 
-**🔍 Pattern Detection:**
-The diagram identifies entities based on:
+    **🔍 Pattern Detection:**
+      The diagram identifies entities based on:
 • Function names like 'createUser', 'findProduct', 'updateOrder'
 • Import paths containing 'model', 'schema', 'entity'
-• File categorization as Database/ORM
+• File categorization as Database / ORM
 
-**⚠️ Important Note:**
-This ER diagram is **inferred from code analysis** and may not represent the actual database schema. It's a conceptual model based on code patterns and should be validated against your actual database structure.`,
+    **⚠️ Important Note:**
+      This ER diagram is ** inferred from code analysis ** and may not represent the actual database schema.It's a conceptual model based on code patterns and should be validated against your actual database structure.`,
 
       functions: [
         "Code Pattern Analysis",
@@ -880,8 +877,8 @@ This ER diagram is **inferred from code analysis** and may not represent the act
         g.attr("transform", event.transform);
       });
 
-    //@ts-ignore-next-line
-    svg.call(zoom);
+    svg.call(//@ts-ignore-next-line 
+      zoom);
     zoomBehaviorRef.current = zoom;
 
     const root = d3.hierarchy<any>(treeData, (d) => d.children);
@@ -970,8 +967,9 @@ This ER diagram is **inferred from code analysis** and may not represent the act
         container.attr("transform", event.transform);
       });
 
-    //@ts-ignore-next-line
-    svg.call(zoom);
+    svg.call(
+      //@ts-ignore-next-line
+      zoom);
     zoomBehaviorRef.current = zoom;
 
     const container = svg.append("g");
@@ -997,8 +995,9 @@ This ER diagram is **inferred from code analysis** and may not represent the act
       path: l.path,
     }));
     const sim = d3
-      //@ts-ignore-next-line
-      .forceSimulation(nodes)
+      .forceSimulation(
+        //@ts-ignore-next-line
+        nodes)
       .force(
         "link",
         d3.forceLink(linksData).id((d: any) => d.id).distance(100)
@@ -1138,7 +1137,7 @@ This ER diagram is **inferred from code analysis** and may not represent the act
 
     mermaidRef.current.innerHTML = `<div class="mermaid">${raw}</div>`;
     try {
-      //@ts-ignore-next-line
+      // @ts-ignore-next-line
       mermaid.init(undefined, mermaidRef.current.querySelector(".mermaid"));
       // Apply current zoom level
       setTimeout(() => applyZoom(zoomLevel), 100);
@@ -1393,6 +1392,7 @@ This ER diagram is **inferred from code analysis** and may not represent the act
         </div>
       )}
 
+/*///////////////////////////////*/
 
       {/* History Panel */}
       {showHistory && (
@@ -1739,12 +1739,13 @@ This ER diagram is **inferred from code analysis** and may not represent the act
                       <ul style={{ fontSize: "12px" }}>
                         {//@ts-ignore-next-line
                           selectedNode.libraries.map((lib, i) => (
-                            <li key={i}>{lib}</li>
+                            < li key={i}>{lib}</li>
                           ))}
                       </ul>
                     </>
                   )}
-                {//@ts-ignore-next-line
+                {
+                  //@ts-ignore-next-line
                   selectedNode.practices?.length > 0 && (
                     <>
                       <strong>UML Standards Applied:</strong>
@@ -1769,7 +1770,8 @@ This ER diagram is **inferred from code analysis** and may not represent the act
             )}
           </div>
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 }

@@ -35,5 +35,6 @@ export const getFeaturesList = () => {
       description:
         "A structured feedback mechanism to gather user insights and improve the system.",
     },
+
   ];
 };
