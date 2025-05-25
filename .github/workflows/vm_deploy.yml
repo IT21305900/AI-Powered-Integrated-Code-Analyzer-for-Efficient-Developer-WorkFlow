@@ -22,23 +22,24 @@ jobs:
             nvm install 20
             nvm use 20
             node -v
+
             cd ~/AI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow
             if [ ! -d .git ]; then
                 echo "Error: Not a git repository. Exiting."
                 exit 1
             fi
-            git pull origin main
-            cd docai
-            
-            npm install   
-            npm run build 
 
-            # Start or restart app with PM2
+            git fetch origin
+            git reset --hard origin/main
+            rm -rf docai/.next
+
+            cd docai
+            npm install
+            npm run build
+
             if pm2 describe nextjs-app > /dev/null; then
-              echo "PM2 process exists, restarting..."
               pm2 restart nextjs-app
             else
-              echo "PM2 process not found, starting a new one..."
               pm2 start npm --name "nextjs-app" -- run start
             fi
             pm2 save
