@@ -30,6 +30,9 @@ jobs:
             git pull origin main
             cd docai
             
+            npm install   
+            npm run build 
+
             # Start or restart app with PM2
             if pm2 describe nextjs-app > /dev/null; then
               echo "PM2 process exists, restarting..."
