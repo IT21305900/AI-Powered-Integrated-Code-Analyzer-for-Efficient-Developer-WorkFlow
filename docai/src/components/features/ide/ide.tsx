@@ -331,7 +331,7 @@ export default function IDE({
         )}
 
         {feature === "visual" && (
-          <ResizablePanel defaultSize={100}>
+          <ResizablePanel defaultSize={500}>
             <div className="max-h-[92vh] w-auto overflow-y-auto">
               <VisualAid />
             </div>
@@ -350,7 +350,7 @@ export default function IDE({
 
 
         {feature === "chat" && (
-          <ResizablePanel defaultSize={100}>
+          <ResizablePanel defaultSize={500}>
             <div className="max-h-[92vh] w-auto overflow-y-auto">
               <Chat />
             </div>
@@ -358,7 +358,7 @@ export default function IDE({
         )}
 
         {
-          feature === "feedback" && <ResizablePanel defaultSize={100}>
+          feature === "feedback" && <ResizablePanel defaultSize={500}>
             <div className="max-h-[92vh] w-auto overflow-y-auto">
               <Feedback />
             </div>
