@@ -2,6 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import * as d3 from "d3";
 import mermaid from "mermaid";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { FullscreenIcon, History, ZoomIn } from "lucide-react";
 
 interface FileNode {
   name: string;
@@ -1149,7 +1153,10 @@ ${fileFunctions.length === 0 ? '• Consider adding explicit function exports fo
 
   return (
     <div style={{ padding: 20 }}>
-      <h2>Codebase Visual Aid - UML Standards Compliant</h2>
+
+      <div className="border-b py-1">
+        <p className="lead mx-5">Codebase Visual Aid - UML Standards Compliant</p>
+      </div>
 
       {/* Error Message */}
       {errorMsg && (
@@ -1163,10 +1170,11 @@ ${fileFunctions.length === 0 ? '• Consider adding explicit function exports fo
         marginBottom: 10,
         display: "flex",
         flexWrap: "wrap",
+        marginTop: 10,
         alignItems: "center",
         gap: "8px"
       }}>
-        <input
+        {/* <input
           value={repoUrl}
           onChange={(e) => setRepoUrl(e.target.value)}
           placeholder="Enter repository URL"
@@ -1193,584 +1201,548 @@ ${fileFunctions.length === 0 ? '• Consider adding explicit function exports fo
           }}
         >
           {loading ? "Analyzing..." : "🔍 Analyze"}
-        </button>
+        </button> */}
 
-        <button
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="repo">Project</Label>
+          <div className="flex gap-2">
+            <Input id="repo" value={repoUrl} onChange={(e) => setRepoUrl(e.target.value)} placeholder="Enter repository URL" />
+            <Button className="border border-black-300">
+              {loading ? "Analyzing..." : "Analyze"}
+            </Button>
+          </div>
+        </div>
+
+        <Button
           onClick={() => {
             setShowHistory(!showHistory);
             setView("history");
           }}
-          style={{
-            padding: "10px 20px",
-            backgroundColor: showHistory ? "#28a745" : "#dc3545",
-            color: "white",
-            border: "3px solid #fff",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontSize: "16px",
-            fontWeight: "bold",
-            minWidth: "150px",
-            boxShadow: "0 4px 8px rgba(0,0,0,0.3)",
-            textTransform: "uppercase"
-          }}
-        >
-          📚 {showHistory ? "HIDE HISTORY" : "SHOW HISTORY"} ({history.length})
-        </button>
 
-        <button
+        >
+          <History /> {showHistory ? "HIDE HISTORY" : "SHOW HISTORY"} ({history.length})
+        </Button>
+
+        <Button
           onClick={() => setView("structure")}
           disabled={!treeData}
-          style={{
-            padding: "8px 12px",
-            backgroundColor: view === "structure" ? "#007bff" : "#6c757d",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: !treeData ? "not-allowed" : "pointer",
-            fontSize: "14px"
-          }}
+          className="border border-black-300"
         >
           Structure
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() => setView("imports")}
           disabled={!treeData}
-          style={{
-            padding: "8px 12px",
-            backgroundColor: view === "imports" ? "#007bff" : "#6c757d",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: !treeData ? "not-allowed" : "pointer",
-            fontSize: "14px"
-          }}
+          className="border border-black-300"
         >
           Imports
-        </button>
-        <button
-          onClick={() => setView("class")}
-          disabled={!classDiagram}
-          style={{
-            padding: "8px 12px",
-            backgroundColor: view === "class" ? "#007bff" : "#6c757d",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: !classDiagram ? "not-allowed" : "pointer",
-            fontSize: "14px"
-          }}
-        >
-          UML Class
-        </button>
-        <button
-          onClick={() => setView("component")}
-          disabled={!componentDiagram}
-          style={{
-            padding: "8px 12px",
-            backgroundColor: view === "component" ? "#007bff" : "#6c757d",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: !componentDiagram ? "not-allowed" : "pointer",
-            fontSize: "14px"
-          }}
-        >
-          UML Component
-        </button>
+        </Button>
 
-        {/* CHANGE 13: ER Diagram Button - FIXED (was already there but working now) */}
-        <button
-          onClick={() => setView("er")}
-          disabled={!erDiagram}
-          style={{
-            padding: "8px 12px",
-            backgroundColor: view === "er" ? "#007bff" : "#6c757d",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: !erDiagram ? "not-allowed" : "pointer",
-            fontSize: "14px"
-          }}
-        >
-          ER Diagram
-        </button>
 
-        {/* Enhanced Fullscreen Button for ALL diagrams */}
-        {view !== "history" && !isFullscreen && (
-          <button
-            onClick={enterFullscreen}
-            style={{
-              padding: "10px 16px",
-              backgroundColor: "#ff6b6b",
-              color: "white",
-              border: "2px solid #fff",
-              borderRadius: "8px",
-              cursor: "pointer",
-              fontSize: "14px",
-              fontWeight: "bold",
-              boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
-              marginLeft: "auto"
-            }}
-          >
-            🔍 Fullscreen
-          </button>
-        )}
+        <div className="flex justify-between w-full border-t my-4 py-2">
+          <div className="flex gap-[0/5]">
+            <Button
+              onClick={() => setView("class")}
+              className="rounded-none"
+              disabled={!classDiagram}
+            >
+              UML Class
+            </Button>
+            <Button
+              onClick={() => setView("component")}
+              disabled={!componentDiagram}
+              className="rounded-none"
+            >
+              UML Component
+            </Button>
+            <Button
+              onClick={() => setView("er")}
+              disabled={!erDiagram}
+              className="rounded-none"
+            >
+              ER Diagram
+            </Button>
+          </div>
+
+          {/* Enhanced Fullscreen Button for ALL diagrams */}
+          {view !== "history" && !isFullscreen && (
+            <Button
+              onClick={enterFullscreen}
+              className="rounded-none mr-auto"
+            >
+              <FullscreenIcon /> Fullscreen
+            </Button>
+          )}
+        </div>
       </div>
 
+
+
       {/* Zoom Controls for ALL diagrams */}
-      {view !== "history" && (
-        <div style={{
-          marginBottom: 10,
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-          padding: "8px 12px",
-          background: "#f8f9fa",
-          borderRadius: "6px",
-          border: "1px solid #dee2e6"
-        }}>
-          <span style={{ fontSize: "14px", fontWeight: "bold", color: "#495057" }}>
-            Zoom Controls:
-          </span>
-          <button
-            onClick={zoomOut}
-            style={{
-              padding: "6px 12px",
-              backgroundColor: "#6c757d",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-              fontSize: "14px",
-              fontWeight: "bold"
-            }}
-          >
-            🔍➖ Zoom Out
-          </button>
-          <span style={{
-            padding: "6px 12px",
-            background: "#fff",
-            border: "1px solid #ced4da",
-            borderRadius: "4px",
-            fontSize: "14px",
-            fontWeight: "bold",
-            minWidth: "80px",
-            textAlign: "center"
+      {
+        view !== "history" && (
+          <div style={{
+            marginBottom: 10,
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            padding: "8px 12px",
+            background: "#f8f9fa",
+            borderRadius: "6px",
+            border: "1px solid #dee2e6"
           }}>
-            {Math.round(zoomLevel * 100)}%
-          </span>
-          <button
-            onClick={zoomIn}
-            style={{
-              padding: "6px 12px",
-              backgroundColor: "#28a745",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-              fontSize: "14px",
-              fontWeight: "bold"
-            }}
-          >
-            🔍➕ Zoom In
-          </button>
-          <button
-            onClick={resetZoom}
-            style={{
-              padding: "6px 12px",
-              backgroundColor: "#007bff",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-              fontSize: "14px",
-              fontWeight: "bold"
-            }}
-          >
-            🔄 Reset
-          </button>
-        </div>
-      )}
-
-/*///////////////////////////////*/
-
-      {/* History Panel */}
-      {showHistory && (
-        <div style={{
-          marginBottom: 15,
-          padding: 15,
-          background: "#f8f9fa",
-          border: "3px solid #007bff",
-          borderRadius: "10px",
-          maxHeight: "300px",
-          overflowY: "auto",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.2)"
-        }}>
-          <h4 style={{ marginTop: 0, marginBottom: 15, color: "#007bff", fontSize: "18px" }}>📚 Analysis History</h4>
-          {history.length === 0 ? (
-            <p style={{ color: "#6c757d", fontStyle: "italic", fontSize: "16px" }}>No previous analyses found. Analyze a repository to start building your history.</p>
-          ) : (
-            <div style={{ display: "grid", gap: "12px" }}>
-              {history.map((item) => (
-                <div key={item.id} style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  padding: "15px",
-                  background: currentAnalysisId === item.id ? "#e3f2fd" : "#fff",
-                  border: currentAnalysisId === item.id ? "3px solid #007bff" : "2px solid #ddd",
-                  borderRadius: "8px",
-                  boxShadow: "0 2px 6px rgba(0,0,0,0.1)"
-                }}>
-                  <div style={{ flex: 1 }}>
-                    <strong style={{ fontSize: "18px", color: "#007bff" }}>{item.repo_name}</strong>
-                    <div style={{ fontSize: "14px", color: "#666", marginTop: "6px" }}>
-                      {item.repo_url}
-                    </div>
-                    <div style={{ fontSize: "12px", color: "#999", marginTop: "4px" }}>
-                      Analyzed: {new Date(item.analyzed_at).toLocaleString()}
-                    </div>
-                  </div>
-                  <div style={{ display: "flex", gap: "10px" }}>
-                    <button
-                      onClick={() => loadHistoryItem(item.id)}
-                      style={{
-                        padding: "8px 16px",
-                        fontSize: "14px",
-                        backgroundColor: "#28a745",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "6px",
-                        cursor: "pointer",
-                        fontWeight: "bold"
-                      }}
-                      disabled={loading}
-                    >
-                      {loading ? "Loading..." : "📂 Load"}
-                    </button>
-                    <button
-                      onClick={() => deleteHistoryItem(item.id)}
-                      style={{
-                        padding: "8px 16px",
-                        fontSize: "14px",
-                        backgroundColor: "#dc3545",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "6px",
-                        cursor: "pointer",
-                        fontWeight: "bold"
-                      }}
-                    >
-                      🗑️ Delete
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Current Analysis Info */}
-      {currentAnalysisId && (
-        <div style={{
-          marginBottom: 10,
-          padding: 10,
-          background: "#d4edda",
-          border: "2px solid #c3e6cb",
-          borderRadius: "6px",
-          fontSize: "16px"
-        }}>
-          📊 Currently viewing: <strong>{history.find(h => h.id === currentAnalysisId)?.repo_name || "Unknown"}</strong>
-          {history.find(h => h.id === currentAnalysisId) && (
-            <span style={{ marginLeft: 10, color: "#666" }}>
-              (Analyzed: {new Date(history.find(h => h.id === currentAnalysisId)!.analyzed_at).toLocaleString()})
+            <span style={{ fontSize: "14px", fontWeight: "bold", color: "#495057" }}>
+              Zoom Controls:
             </span>
-          )}
-        </div>
-      )}
-
-      {/* Overview & Key Flows */}
-      {overallSummary && (
-        <div style={{ background: "#f9f9f9", padding: 10, marginBottom: 10 }}>
-          <h4>System Overview</h4>
-          <p>{overallSummary}</p>
-        </div>
-      )}
-      {keyFlows.length > 0 && (
-        <div style={{ marginBottom: 10 }}>
-          <h4>Key Flows</h4>
-          <ul>{keyFlows.map((f, i) => <li key={i}>{f}</li>)}</ul>
-        </div>
-      )}
-
-      {/* Diagram + Sidebar */}
-      {treeData && view !== "history" && (
-        <div style={{ display: "flex" }}>
-          <div
-            ref={containerRef}
-            onClick={(view === "class" || view === "component") ? handleDiagramClick : undefined}
-            style={{
-              background: "#000",
-              border: "1px solid #ccc",
-              cursor: (view === "class" || view === "component") ? "pointer" : "default",
-              position: "relative",
-              width: 850,
-              height: 550,
-              overflow: "hidden"
-            }}
-          >
-            {view === "structure" && (
-              <svg ref={svgTreeRef} style={{ width: "100%", height: "100%" }} />
-            )}
-            {view === "imports" && (
-              <svg ref={svgImportRef} style={{ width: "100%", height: "100%" }} />
-            )}
-            {(view === "class" || view === "component") && (
-              <div
-                ref={mermaidRef}
-                className="mermaid"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  overflow: "auto",
-                  transformOrigin: "top left"
-                }}
-              />
-            )}
-
-            {/* ER Diagram Rendering - FIXED */}
-            {view === "er" && (
-              <div
-                ref={mermaidRef}
-                className="mermaid"
-                onClick={handleDiagramClick}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  overflow: "auto",
-                  transformOrigin: "top left",
-                  cursor: "pointer"
-                }}
-              />
-            )}
-
-            {/* Enhanced Exit Fullscreen Button */}
-            {isFullscreen && (
-              <button
-                onClick={exitFullscreen}
-                style={{
-                  position: "absolute",
-                  top: 12,
-                  right: 12,
-                  background: "rgba(255,255,255,0.95)",
-                  border: "3px solid #ff6b6b",
-                  padding: "12px 20px",
-                  cursor: "pointer",
-                  borderRadius: "8px",
-                  fontWeight: "bold",
-                  fontSize: "16px",
-                  color: "#ff6b6b",
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-                  zIndex: 1000
-                }}
-              >
-                ✕ Exit Fullscreen
-              </button>
-            )}
-
-            {/* Enhanced Zoom Controls in Fullscreen */}
-            {isFullscreen && (
-              <div style={{
-                position: "absolute",
-                top: 12,
-                left: 12,
-                display: "flex",
-                gap: "8px",
-                zIndex: 1000
-              }}>
-                <button
-                  onClick={zoomOut}
-                  style={{
-                    padding: "8px 12px",
-                    backgroundColor: "rgba(108,117,125,0.9)",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "6px",
-                    cursor: "pointer",
-                    fontSize: "14px",
-                    fontWeight: "bold"
-                  }}
-                >
-                  🔍➖
-                </button>
-                <span style={{
-                  padding: "8px 12px",
-                  background: "rgba(255,255,255,0.9)",
-                  borderRadius: "6px",
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  minWidth: "60px",
-                  textAlign: "center"
-                }}>
-                  {Math.round(zoomLevel * 100)}%
-                </span>
-                <button
-                  onClick={zoomIn}
-                  style={{
-                    padding: "8px 12px",
-                    backgroundColor: "rgba(40,167,69,0.9)",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "6px",
-                    cursor: "pointer",
-                    fontSize: "14px",
-                    fontWeight: "bold"
-                  }}
-                >
-                  🔍➕
-                </button>
-                <button
-                  onClick={resetZoom}
-                  style={{
-                    padding: "8px 12px",
-                    backgroundColor: "rgba(0,123,255,0.9)",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "6px",
-                    cursor: "pointer",
-                    fontSize: "14px",
-                    fontWeight: "bold"
-                  }}
-                >
-                  🔄
-                </button>
-              </div>
-            )}
-
-            {/* Enhanced Instructions */}
-            <div
+            <button
+              onClick={zoomOut}
               style={{
-                position: "absolute",
-                bottom: 12,
-                left: 12,
-                background: "rgba(255,255,255,0.95)",
-                padding: "8px 16px",
-                borderRadius: "6px",
+                padding: "6px 12px",
+                backgroundColor: "#6c757d",
+                color: "white",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
                 fontSize: "14px",
-                color: "#333",
-                border: "2px solid #007bff",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.2)"
+                fontWeight: "bold"
               }}
             >
-              {isFullscreen ?
-                "🔍 Zoom: Mouse wheel • Pan: Drag • ESC to exit" :
-                "🔍 Mouse wheel to zoom • Drag to pan • Click for fullscreen"
-              }
-            </div>
-          </div>
-          <div
-            style={{
-              width: 300,
-              height: 550,
-              marginLeft: 12,
-              padding: 10,
+              🔍➖ Zoom Out
+            </button>
+            <span style={{
+              padding: "6px 12px",
               background: "#fff",
-              color: "#000",
-              border: "1px solid #ccc",
-              overflowY: "auto",
-            }}
-          >
-            {!selectedNode ? (
-              <p style={{ color: "#666" }}>
-                {(view === "class" || view === "component")
-                  ? "Click the diagram for detailed UML analysis"
-                  : "Click a node to see details here"}
-              </p>
+              border: "1px solid #ced4da",
+              borderRadius: "4px",
+              fontSize: "14px",
+              fontWeight: "bold",
+              minWidth: "80px",
+              textAlign: "center"
+            }}>
+              {Math.round(zoomLevel * 100)}%
+            </span>
+            <button
+              onClick={zoomIn}
+              style={{
+                padding: "6px 12px",
+                backgroundColor: "#28a745",
+                color: "white",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+                fontSize: "14px",
+                fontWeight: "bold"
+              }}
+            >
+              🔍➕ Zoom In
+            </button>
+            <button
+              onClick={resetZoom}
+              style={{
+                padding: "6px 12px",
+                backgroundColor: "#007bff",
+                color: "white",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+                fontSize: "14px",
+                fontWeight: "bold"
+              }}
+            >
+              🔄 Reset
+            </button>
+          </div>
+        )
+      }
+
+  /*///////////////////////////////*/
+
+      {/* History Panel */}
+      {
+        showHistory && (
+          <div style={{
+            marginBottom: 15,
+            padding: 15,
+            background: "#f8f9fa",
+            border: "3px solid #007bff",
+            borderRadius: "10px",
+            maxHeight: "300px",
+            overflowY: "auto",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.2)"
+          }}>
+            <h4 style={{ marginTop: 0, marginBottom: 15, color: "#007bff", fontSize: "18px" }}>📚 Analysis History</h4>
+            {history.length === 0 ? (
+              <p style={{ color: "#6c757d", fontStyle: "italic", fontSize: "16px" }}>No previous analyses found. Analyze a repository to start building your history.</p>
             ) : (
-              <>
-                <h4 style={{ marginBottom: 4 }}>{selectedNode.name}</h4>
-                <p style={{ fontStyle: "italic", marginTop: 0 }}>
-                  {selectedNode.summary}
-                </p>
-                {selectedNode.description && (
-                  <div style={{ marginBottom: 15 }}>
-                    <strong>Detailed Analysis:</strong>
-                    <div style={{
-                      whiteSpace: "pre-line",
-                      fontSize: "12px",
-                      lineHeight: "1.4",
-                      marginTop: 5,
-                      padding: 10,
-                      background: "#f8f9fa",
-                      borderRadius: "4px",
-                      border: "1px solid #e9ecef"
-                    }}>
-                      {selectedNode.description}
+              <div style={{ display: "grid", gap: "12px" }}>
+                {history.map((item) => (
+                  <div key={item.id} style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    padding: "15px",
+                    background: currentAnalysisId === item.id ? "#e3f2fd" : "#fff",
+                    border: currentAnalysisId === item.id ? "3px solid #007bff" : "2px solid #ddd",
+                    borderRadius: "8px",
+                    boxShadow: "0 2px 6px rgba(0,0,0,0.1)"
+                  }}>
+                    <div style={{ flex: 1 }}>
+                      <strong style={{ fontSize: "18px", color: "#007bff" }}>{item.repo_name}</strong>
+                      <div style={{ fontSize: "14px", color: "#666", marginTop: "6px" }}>
+                        {item.repo_url}
+                      </div>
+                      <div style={{ fontSize: "12px", color: "#999", marginTop: "4px" }}>
+                        Analyzed: {new Date(item.analyzed_at).toLocaleString()}
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", gap: "10px" }}>
+                      <button
+                        onClick={() => loadHistoryItem(item.id)}
+                        style={{
+                          padding: "8px 16px",
+                          fontSize: "14px",
+                          backgroundColor: "#28a745",
+                          color: "white",
+                          border: "none",
+                          borderRadius: "6px",
+                          cursor: "pointer",
+                          fontWeight: "bold"
+                        }}
+                        disabled={loading}
+                      >
+                        {loading ? "Loading..." : "📂 Load"}
+                      </button>
+                      <button
+                        onClick={() => deleteHistoryItem(item.id)}
+                        style={{
+                          padding: "8px 16px",
+                          fontSize: "14px",
+                          backgroundColor: "#dc3545",
+                          color: "white",
+                          border: "none",
+                          borderRadius: "6px",
+                          cursor: "pointer",
+                          fontWeight: "bold"
+                        }}
+                      >
+                        🗑️ Delete
+                      </button>
                     </div>
                   </div>
-                )}
-                {selectedNode.codeMapping && selectedNode.codeMapping.length > 0 && (
-                  <>
-                    <strong>🔗 Code Mapping:</strong>
-                    <ul style={{ fontSize: "12px", marginBottom: 15 }}>
-                      {selectedNode.codeMapping.map((mapping, i) => (
-                        <li key={i} style={{ marginBottom: 4 }}>{mapping}</li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-                {//@ts-ignore-next-line
-                  selectedNode.functions?.length > 0 && (
-                    <>
-                      <strong>Analysis Points:</strong>
-                      <ul style={{ fontSize: "12px" }}>
-                        {//@ts-ignore-next-line
-                          selectedNode.functions.map((fn, i) => (
-                            <li key={i}>{fn}</li>
-                          ))}
-                      </ul>
-                    </>
-                  )}
-                {//@ts-ignore-next-line
-                  selectedNode.libraries?.length > 0 && (
-                    <>
-                      <strong>Categories/Libraries:</strong>
-                      <ul style={{ fontSize: "12px" }}>
-                        {//@ts-ignore-next-line
-                          selectedNode.libraries.map((lib, i) => (
-                            < li key={i}>{lib}</li>
-                          ))}
-                      </ul>
-                    </>
-                  )}
-                {
-                  //@ts-ignore-next-line
-                  selectedNode.practices?.length > 0 && (
-                    <>
-                      <strong>UML Standards Applied:</strong>
-                      <ul style={{ fontSize: "12px" }}>
-                        {//@ts-ignore-next-line
-                          selectedNode.practices.map((p, i) => (
-                            <li key={i}>{p}</li>
-                          ))}
-                      </ul>
-                    </>
-                  )}
-                {selectedNode.metrics && (
-                  <>
-                    <strong>Metrics:</strong>
-                    <ul style={{ fontSize: "12px" }}>
-                      <li>Count: {selectedNode.metrics.loc}</li>
-                      <li>Analysis: {selectedNode.metrics.last_commit || "N/A"}</li>
-                    </ul>
-                  </>
-                )}
-              </>
+                ))}
+              </div>
             )}
           </div>
-        </div>
-      )
+        )
+      }
+
+      {/* Current Analysis Info */}
+      {
+        currentAnalysisId && (
+          <div style={{
+            marginBottom: 10,
+            padding: 10,
+            background: "#d4edda",
+            border: "2px solid #c3e6cb",
+            borderRadius: "6px",
+            fontSize: "16px"
+          }}>
+            📊 Currently viewing: <strong>{history.find(h => h.id === currentAnalysisId)?.repo_name || "Unknown"}</strong>
+            {history.find(h => h.id === currentAnalysisId) && (
+              <span style={{ marginLeft: 10, color: "#666" }}>
+                (Analyzed: {new Date(history.find(h => h.id === currentAnalysisId)!.analyzed_at).toLocaleString()})
+              </span>
+            )}
+          </div>
+        )
+      }
+
+      {/* Overview & Key Flows */}
+      {
+        overallSummary && (
+          <div style={{ background: "#f9f9f9", padding: 10, marginBottom: 10 }}>
+            <h4>System Overview</h4>
+            <p>{overallSummary}</p>
+          </div>
+        )
+      }
+      {
+        keyFlows.length > 0 && (
+          <div style={{ marginBottom: 10 }}>
+            <h4>Key Flows</h4>
+            <ul>{keyFlows.map((f, i) => <li key={i}>{f}</li>)}</ul>
+          </div>
+        )
+      }
+
+      {/* Diagram + Sidebar */}
+      {
+        treeData && view !== "history" && (
+          <div style={{ display: "flex" }}>
+            <div
+              ref={containerRef}
+              onClick={(view === "class" || view === "component") ? handleDiagramClick : undefined}
+              style={{
+                background: "#000",
+                border: "1px solid #ccc",
+                cursor: (view === "class" || view === "component") ? "pointer" : "default",
+                position: "relative",
+                width: 850,
+                height: 550,
+                overflow: "hidden"
+              }}
+            >
+              {view === "structure" && (
+                <svg ref={svgTreeRef} style={{ width: "100%", height: "100%" }} />
+              )}
+              {view === "imports" && (
+                <svg ref={svgImportRef} style={{ width: "100%", height: "100%" }} />
+              )}
+              {(view === "class" || view === "component") && (
+                <div
+                  ref={mermaidRef}
+                  className="mermaid"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    overflow: "auto",
+                    transformOrigin: "top left"
+                  }}
+                />
+              )}
+
+              {/* ER Diagram Rendering - FIXED */}
+              {view === "er" && (
+                <div
+                  ref={mermaidRef}
+                  className="mermaid"
+                  onClick={handleDiagramClick}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    overflow: "auto",
+                    transformOrigin: "top left",
+                    cursor: "pointer"
+                  }}
+                />
+              )}
+
+              {/* Enhanced Exit Fullscreen Button */}
+              {isFullscreen && (
+                <button
+                  onClick={exitFullscreen}
+                  style={{
+                    position: "absolute",
+                    top: 12,
+                    right: 12,
+                    background: "rgba(255,255,255,0.95)",
+                    border: "3px solid #ff6b6b",
+                    padding: "12px 20px",
+                    cursor: "pointer",
+                    borderRadius: "8px",
+                    fontWeight: "bold",
+                    fontSize: "16px",
+                    color: "#ff6b6b",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+                    zIndex: 1000
+                  }}
+                >
+                  ✕ Exit Fullscreen
+                </button>
+              )}
+
+              {/* Enhanced Zoom Controls in Fullscreen */}
+              {isFullscreen && (
+                <div style={{
+                  position: "absolute",
+                  top: 12,
+                  left: 12,
+                  display: "flex",
+                  gap: "8px",
+                  zIndex: 1000
+                }}>
+                  <button
+                    onClick={zoomOut}
+                    style={{
+                      padding: "8px 12px",
+                      backgroundColor: "rgba(108,117,125,0.9)",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "6px",
+                      cursor: "pointer",
+                      fontSize: "14px",
+                      fontWeight: "bold"
+                    }}
+                  >
+                    🔍➖
+                  </button>
+                  <span style={{
+                    padding: "8px 12px",
+                    background: "rgba(255,255,255,0.9)",
+                    borderRadius: "6px",
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    minWidth: "60px",
+                    textAlign: "center"
+                  }}>
+                    {Math.round(zoomLevel * 100)}%
+                  </span>
+                  <button
+                    onClick={zoomIn}
+                    style={{
+                      padding: "8px 12px",
+                      backgroundColor: "rgba(40,167,69,0.9)",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "6px",
+                      cursor: "pointer",
+                      fontSize: "14px",
+                      fontWeight: "bold"
+                    }}
+                  >
+                    🔍➕
+                  </button>
+                  <button
+                    onClick={resetZoom}
+                    style={{
+                      padding: "8px 12px",
+                      backgroundColor: "rgba(0,123,255,0.9)",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "6px",
+                      cursor: "pointer",
+                      fontSize: "14px",
+                      fontWeight: "bold"
+                    }}
+                  >
+                    🔄
+                  </button>
+                </div>
+              )}
+
+              {/* Enhanced Instructions */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 12,
+                  left: 12,
+                  background: "rgba(255,255,255,0.95)",
+                  padding: "8px 16px",
+                  borderRadius: "6px",
+                  fontSize: "14px",
+                  color: "#333",
+                  border: "2px solid #007bff",
+                  boxShadow: "0 2px 6px rgba(0,0,0,0.2)"
+                }}
+              >
+                {isFullscreen ?
+                  "🔍 Zoom: Mouse wheel • Pan: Drag • ESC to exit" :
+                  "🔍 Mouse wheel to zoom • Drag to pan • Click for fullscreen"
+                }
+              </div>
+            </div>
+            <div
+              style={{
+                width: 300,
+                height: 550,
+                marginLeft: 12,
+                padding: 10,
+                background: "#fff",
+                color: "#000",
+                border: "1px solid #ccc",
+                overflowY: "auto",
+              }}
+            >
+              {!selectedNode ? (
+                <p style={{ color: "#666" }}>
+                  {(view === "class" || view === "component")
+                    ? "Click the diagram for detailed UML analysis"
+                    : "Click a node to see details here"}
+                </p>
+              ) : (
+                <>
+                  <h4 style={{ marginBottom: 4 }}>{selectedNode.name}</h4>
+                  <p style={{ fontStyle: "italic", marginTop: 0 }}>
+                    {selectedNode.summary}
+                  </p>
+                  {selectedNode.description && (
+                    <div style={{ marginBottom: 15 }}>
+                      <strong>Detailed Analysis:</strong>
+                      <div style={{
+                        whiteSpace: "pre-line",
+                        fontSize: "12px",
+                        lineHeight: "1.4",
+                        marginTop: 5,
+                        padding: 10,
+                        background: "#f8f9fa",
+                        borderRadius: "4px",
+                        border: "1px solid #e9ecef"
+                      }}>
+                        {selectedNode.description}
+                      </div>
+                    </div>
+                  )}
+                  {selectedNode.codeMapping && selectedNode.codeMapping.length > 0 && (
+                    <>
+                      <strong>🔗 Code Mapping:</strong>
+                      <ul style={{ fontSize: "12px", marginBottom: 15 }}>
+                        {selectedNode.codeMapping.map((mapping, i) => (
+                          <li key={i} style={{ marginBottom: 4 }}>{mapping}</li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                  {//@ts-ignore-next-line
+                    selectedNode.functions?.length > 0 && (
+                      <>
+                        <strong>Analysis Points:</strong>
+                        <ul style={{ fontSize: "12px" }}>
+                          {//@ts-ignore-next-line
+                            selectedNode.functions.map((fn, i) => (
+                              <li key={i}>{fn}</li>
+                            ))}
+                        </ul>
+                      </>
+                    )}
+                  {//@ts-ignore-next-line
+                    selectedNode.libraries?.length > 0 && (
+                      <>
+                        <strong>Categories/Libraries:</strong>
+                        <ul style={{ fontSize: "12px" }}>
+                          {//@ts-ignore-next-line
+                            selectedNode.libraries.map((lib, i) => (
+                              < li key={i}>{lib}</li>
+                            ))}
+                        </ul>
+                      </>
+                    )}
+                  {
+                    //@ts-ignore-next-line
+                    selectedNode.practices?.length > 0 && (
+                      <>
+                        <strong>UML Standards Applied:</strong>
+                        <ul style={{ fontSize: "12px" }}>
+                          {//@ts-ignore-next-line
+                            selectedNode.practices.map((p, i) => (
+                              <li key={i}>{p}</li>
+                            ))}
+                        </ul>
+                      </>
+                    )}
+                  {selectedNode.metrics && (
+                    <>
+                      <strong>Metrics:</strong>
+                      <ul style={{ fontSize: "12px" }}>
+                        <li>Count: {selectedNode.metrics.loc}</li>
+                        <li>Analysis: {selectedNode.metrics.last_commit || "N/A"}</li>
+                      </ul>
+                    </>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+        )
       }
     </div >
   );

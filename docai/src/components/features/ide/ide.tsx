@@ -339,6 +339,7 @@ export default function IDE({
         )}
 
 
+        <ResizableHandle />
 
         {feature === "documentation" && (
           <ResizablePanel defaultSize={500}>
@@ -357,6 +358,7 @@ export default function IDE({
           </ResizablePanel>
         )}
 
+        <ResizableHandle />
         {
           feature === "feedback" && <ResizablePanel defaultSize={500}>
             <div className="max-h-[92vh] w-auto overflow-y-auto">
@@ -367,7 +369,7 @@ export default function IDE({
 
         <ResizableHandle />
       </ResizablePanelGroup>
-    </Card>
+    </Card >
   );
 }
 

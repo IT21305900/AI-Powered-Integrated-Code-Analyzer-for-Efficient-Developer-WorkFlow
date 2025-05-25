@@ -13,12 +13,9 @@ import Editor from "./MarkdownEditor";
 import { useUser } from "@clerk/nextjs";
 
 const Documentation = () => {
-
-  const { isSignedIn, user, isLoaded } = useUser();
-  if (!isSignedIn || !isLoaded) return null; // Ensure user is signed in before rendering
-  console.log(user)
-
   const searchParams = useSearchParams();
+
+
   const [select, setSelect] = useState<string>("markdown");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
