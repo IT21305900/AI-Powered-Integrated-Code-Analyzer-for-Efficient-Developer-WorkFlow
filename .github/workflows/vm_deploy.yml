@@ -29,6 +29,13 @@ jobs:
             fi
             git pull origin main
             cd docai
-            npm install
-            npm run build
-            pm2 restart nextjs-app
+            
+            # Start or restart app with PM2
+            if pm2 describe nextjs-app > /dev/null; then
+              echo "PM2 process exists, restarting..."
+              pm2 restart nextjs-app
+            else
+              echo "PM2 process not found, starting a new one..."
+              pm2 start npm --name "nextjs-app" -- run start
+            fi
+            pm2 save
