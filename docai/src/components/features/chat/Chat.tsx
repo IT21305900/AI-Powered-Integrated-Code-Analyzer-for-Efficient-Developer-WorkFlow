@@ -16,8 +16,10 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
+import { useUser } from "@clerk/nextjs";
 
 const Chat = () => {
+  const { isSignedIn, user, isLoaded } = useUser();
 
   const searchParams = useSearchParams();
   const repository = searchParams.get("repository");
@@ -190,7 +192,7 @@ const Chat = () => {
             <div className="flex justify-center">
               <Button
                 onClick={() => {
-                  window.location.href = "https://d1c6dudbx22yi.cloudfront.net";
+                  window.location.href = `https://d1c6dudbx22yi.cloudfront.net?email=${user?.primaryEmailAddress?.emailAddress}`;
                 }}
                 disabled={stepStatus.step3 !== "completed"}
               >
