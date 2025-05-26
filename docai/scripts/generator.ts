@@ -13,6 +13,7 @@ import {
   runDocumentationAgent,
   writeDocumentationSummary,
 } from "./documentation-helper";
+import { updateDocumentPipelineStats } from "@/lib/actions/documentstats.action";
 
 // Initialize OpenAI Client
 const model = new AzureChatOpenAI({
@@ -386,6 +387,8 @@ const extractRoutePathFromFilePath = (filePath: string): string => {
 };
 
 export const generateDocumentation = async (collectionName: string) => {
+  await updateDocumentPipelineStats(collectionName, "generate", "running")
+
   const folderPath = path.join("./public", collectionName);
   const outputFilePath = path.join(folderPath, `${collectionName}.md`);
 
@@ -468,6 +471,7 @@ export const generateDocumentation = async (collectionName: string) => {
   await writeDocumentationSummary(outputFilePath, collectionName, progress);
 
   console.log(`📚 Documentation generation completed. File saved at: ${outputFilePath}`);
+  await updateDocumentPipelineStats(collectionName, "generate", "completed")
 
   return {
     filePath: outputFilePath,

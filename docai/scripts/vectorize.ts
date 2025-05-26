@@ -4,6 +4,8 @@ import path from "path";
 import { ChromaClient } from "chromadb";
 import { AzureOpenAI } from "openai";
 import axios from "axios";
+import { updateDocumentPipelineStats } from "@/lib/actions/documentstats.action";
+
 
 const apiKey = process.env.AZURE_OPEN_AI_EMBEDDING_API_KEY;
 const endpoint = process.env.AZURE_OPEN_AI_EMBEDDING_ENDPOINT;
@@ -111,6 +113,9 @@ const embedJsonFile = async (filePath: string) => {
 
 // Batch embed all JSON files in the "segments" folder
 export const embedAllJsonFiles = async (collectionName: string) => {
+
+  await updateDocumentPipelineStats(collectionName, "embedding", "running");
+
   const files = fs
     .readdirSync(segmentsFolder)
     .filter((file) => file.endsWith(".json"));
@@ -146,8 +151,8 @@ export const embedAllJsonFiles = async (collectionName: string) => {
         metadata: any;
       } = await embedJsonFile(filePath);
 
-      console.log(`Processing file: ${file}`);
-      console.log(response.metadata)
+      // console.log(`Processing file: ${file}`);
+      // console.log(response.metadata)
 
       // Add embedding to Chroma
       const res = await collection.add({
@@ -158,11 +163,16 @@ export const embedAllJsonFiles = async (collectionName: string) => {
       });
 
 
+
+
       console.log("Indexing Completed");
     } catch (error: any) {
+      await updateDocumentPipelineStats(collectionName, "embedding", "error", error.message);
       console.error(`Error processing file ${file}:`, error);
     }
   }
+
+  await updateDocumentPipelineStats(collectionName, "embedding", "completed");
 };
 
 // const checkEmbeddings = async () => {

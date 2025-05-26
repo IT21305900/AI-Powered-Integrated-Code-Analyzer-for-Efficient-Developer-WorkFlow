@@ -7,6 +7,10 @@ import path from "path";
 import { parse } from "@babel/parser";
 import traverse from "@babel/traverse";
 import { cookies } from "next/headers";
+import Pipeline from "@/lib/db/documentstats.model";
+import dbConnect from "@/lib/db/db";
+import { connect } from "http2";
+import { resetPipeline, updateDocumentPipelineStats } from "@/lib/actions/documentstats.action";
 
 const graph = new Graph({ directed: true });
 const segmentsFolder = path.resolve(process.cwd(), "segments");
@@ -35,101 +39,112 @@ const clearSegmentsFolder = async () => {
 };
 
 export const analyzeAndBuildGraph = async (repository: string) => {
+  await resetPipeline(repository);
+  await updateDocumentPipelineStats(repository, "analyze", "running")
+
   await clearSegmentsFolder();
 
-  const repoPath = path.resolve(process.cwd(), `repositories/${repository}`);
-  const files = getAllFiles(repoPath);
+  try {
+    const repoPath = path.resolve(process.cwd(), `repositories/${repository}`);
+    const files = getAllFiles(repoPath);
 
-  for (const file of files) {
-    if (
-      file.endsWith(".js") ||
-      file.endsWith(".jsx") ||
-      file.endsWith(".ts") ||
-      file.endsWith(".tsx")
-    ) {
-      // Process Code Files
-      const code = fs.readFileSync(file, "utf-8");
-      const relativePath = file.substring(file.indexOf(repository));
+    for (const file of files) {
+      if (
+        file.endsWith(".js") ||
+        file.endsWith(".jsx") ||
+        file.endsWith(".ts") ||
+        file.endsWith(".tsx")
+      ) {
+        // Process Code Files
+        const code = fs.readFileSync(file, "utf-8");
+        const relativePath = file.substring(file.indexOf(repository));
 
-      const {
-        dependencies,
-        components,
-        relativeFilePath,
-        reusableComponents,
-        stateUsages,
-        hooks,
-        propUsage,
-        fileRole,
-        dynamicParams,
-        serverActions,
-        apiCalls,
-      } = parseAndExtract(code, relativePath);
+        const {
+          dependencies,
+          components,
+          relativeFilePath,
+          reusableComponents,
+          stateUsages,
+          hooks,
+          propUsage,
+          fileRole,
+          dynamicParams,
+          serverActions,
+          apiCalls,
+        } = parseAndExtract(code, relativePath);
 
-      // Save metadata to JSON
-      saveMetadataToFile(file, {
-        filePath: file,
-        relativeFilePath,
-        code,
-        dependencies,
-        components,
-        reusableComponents,
-        stateUsages,
-        hooks,
-        propUsage,
-        fileRole,
-        dynamicParams,
-        serverActions,
-        apiCalls,
-      });
+        // Save metadata to JSON
+        saveMetadataToFile(file, {
+          filePath: file,
+          relativeFilePath,
+          code,
+          dependencies,
+          components,
+          reusableComponents,
+          stateUsages,
+          hooks,
+          propUsage,
+          fileRole,
+          dynamicParams,
+          serverActions,
+          apiCalls,
+        });
 
-      addToGraph(
-        file,
-        dependencies,
-        components,
-        reusableComponents,
-        stateUsages,
-        hooks,
-        fileRole
-      );
-    } else if (file.endsWith(".json")) {
-      // Process JSON files
-      processJsonFile(file, repository);
-    } else if (file.endsWith(".css") || file.endsWith(".scss")) {
-      // Process CSS files
-      processCssFile(file, repository);
-    } else if (
-      file.endsWith(".env") ||
-      file.includes(".env.") ||
-      file.endsWith(".gitignore") ||
-      file.endsWith("Dockerfile") ||
-      file.endsWith("README.md")
-    ) {
-      // Process supportive files
-      processSupportFile(file, repository);
+        addToGraph(
+          file,
+          dependencies,
+          components,
+          reusableComponents,
+          stateUsages,
+          hooks,
+          fileRole
+        );
+      } else if (file.endsWith(".json")) {
+        // Process JSON files
+        processJsonFile(file, repository);
+      } else if (file.endsWith(".css") || file.endsWith(".scss")) {
+        // Process CSS files
+        processCssFile(file, repository);
+      } else if (
+        file.endsWith(".env") ||
+        file.includes(".env.") ||
+        file.endsWith(".gitignore") ||
+        file.endsWith("Dockerfile") ||
+        file.endsWith("README.md")
+      ) {
+        // Process supportive files
+        processSupportFile(file, repository);
+      }
     }
+
+    // Save graph data AFTER all files have been processed
+    const graphData = {
+      nodes: graph.nodes().map((n) => ({ id: n, data: graph.node(n) })),
+      edges: graph.edges().map((e) => ({ source: e.v, target: e.w })),
+    };
+
+    // Define the target directory inside `public/`
+    const publicPath = path.join(process.cwd(), "public", repository);
+
+    // Ensure the repository folder exists, create if not
+    if (!fs.existsSync(publicPath)) {
+      fs.mkdirSync(publicPath, { recursive: true });
+    }
+
+    // Define the file path for `structure.json`
+    const filePath = path.join(publicPath, "structure.json");
+
+    // Write or overwrite the file
+    fs.writeFileSync(filePath, JSON.stringify(graphData, null, 2));
+
+    console.log(`Graph data saved to: ${filePath}`);
+    await updateDocumentPipelineStats(repository, "analyze", "completed")
+  }
+  catch (error: any) {
+    await updateDocumentPipelineStats(repository, "analyze", "error", error.message)
+    console.error("Error resetting pipeline:", error);
   }
 
-  // Save graph data AFTER all files have been processed
-  const graphData = {
-    nodes: graph.nodes().map((n) => ({ id: n, data: graph.node(n) })),
-    edges: graph.edges().map((e) => ({ source: e.v, target: e.w })),
-  };
-
-  // Define the target directory inside `public/`
-  const publicPath = path.join(process.cwd(), "public", repository);
-
-  // Ensure the repository folder exists, create if not
-  if (!fs.existsSync(publicPath)) {
-    fs.mkdirSync(publicPath, { recursive: true });
-  }
-
-  // Define the file path for `structure.json`
-  const filePath = path.join(publicPath, "structure.json");
-
-  // Write or overwrite the file
-  fs.writeFileSync(filePath, JSON.stringify(graphData, null, 2));
-
-  console.log(`Graph data saved to: ${filePath}`);
 };
 
 // Function to process JSON files
