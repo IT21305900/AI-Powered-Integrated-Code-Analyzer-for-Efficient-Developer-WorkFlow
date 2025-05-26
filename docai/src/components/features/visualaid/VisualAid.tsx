@@ -1174,7 +1174,7 @@ ${fileFunctions.length === 0 ? '• Consider adding explicit function exports fo
         alignItems: "center",
         gap: "8px"
       }}>
-        {/* <input
+        <input
           value={repoUrl}
           onChange={(e) => setRepoUrl(e.target.value)}
           placeholder="Enter repository URL"
@@ -1201,9 +1201,9 @@ ${fileFunctions.length === 0 ? '• Consider adding explicit function exports fo
           }}
         >
           {loading ? "Analyzing..." : "🔍 Analyze"}
-        </button> */}
+        </button>
 
-        <div className="grid w-full max-w-sm items-center gap-1.5">
+        {/* <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="repo">Project</Label>
           <div className="flex gap-2">
             <Input id="repo" value={repoUrl} onChange={(e) => setRepoUrl(e.target.value)} placeholder="Enter repository URL" />
@@ -1211,7 +1211,7 @@ ${fileFunctions.length === 0 ? '• Consider adding explicit function exports fo
               {loading ? "Analyzing..." : "Analyze"}
             </Button>
           </div>
-        </div>
+        </div> */}
 
         <Button
           onClick={() => {
