@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import CodeSmellCharts from "./CodeSmellChart";
+import CodeSmellCharts from "./CodeSmellCharts";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,13 +29,13 @@ const Feedback = () => {
 
   const fetchAnalysisResults = async () => {
     try {
-      const response = await fetch("http://localhost:5000/codesmelldata");
+      const response = await fetch("http://4.240.106.235:5000/codesmelldata");
       const data = await response.json();
 
       // Filter results by matching repo_url
       const matchedRepo = data
         .filter((entry: any) => entry.repo_url === repoUrl)
-        .sort( //@ts-ignore
+        .sort(//@ts-ignore
           (a: any, b: any) => new Date(b.timestamp) - new Date(a.timestamp)
         ); // latest first
 
@@ -71,7 +71,7 @@ const Feedback = () => {
     setLoadingClone(true);
 
     try {
-      const response = await fetch("http://localhost:5001/analyze", {
+      const response = await fetch("http://4.240.106.235:5001/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ repo_url: repoUrl }),
@@ -91,7 +91,7 @@ const Feedback = () => {
       await fetchAnalysisResults();
     } catch (err) {
       console.error("Clone error:", err);
-      // @ts-ignore
+      //@ts-ignore
       alert("❌ Clone failed: " + err.message);
     } finally {
       setLoadingClone(false);
