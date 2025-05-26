@@ -25,6 +25,8 @@ const Features = () => {
       {data.map((feature: Feature) => (
         <FeatureCard key={feature.id} {...feature} />
       ))}
+
+      <DashboardCard />
     </div>
   );
 };
@@ -46,6 +48,26 @@ const FeatureCard = (feature: Feature) => {
           </CardContent>
         </Card>
       </IDENavigator>
+    </Link>
+  );
+};
+
+
+const DashboardCard = () => {
+  return (
+    <Link className="block group" href={`http://performance-dashbaord.s3-website-us-east-1.amazonaws.com`}>
+      <Card className="rounded-md text-left shadow-sm bg-white w-full border border-yellow-200 transition-all duration-200 ease-in-out group-hover:shadow-md group-hover:border-gray-300 group-hover:translate-y-[-2px]">
+        <CardHeader>
+          <CardTitle className="text-xl font-medium antialiased group-hover:text-gray-900">
+            Analytic Dashboard
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <CardDescription className="group-hover:text-gray-700">
+            Access the KT assistive analysis dashboard to monitor and analyze your projects.
+          </CardDescription>
+        </CardContent>
+      </Card>
     </Link>
   );
 };
