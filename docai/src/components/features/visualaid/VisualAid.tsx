@@ -78,7 +78,7 @@ export default function VisualAid() {
 
   const loadHistory = async () => {
     try {
-      const { data } = await axios.get("http://54.151.132.142:5000/history");
+      const { data } = await axios.get("http://54.255.145.32:5000/history");
       setHistory(data);
       console.log("History loaded:", data);
     } catch (error) {
@@ -89,7 +89,7 @@ export default function VisualAid() {
   const loadHistoryItem = async (analysisId: string) => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`http://54.151.132.142:5000/history/${analysisId}`);
+      const { data } = await axios.get(`http://54.255.145.32:5000/history/${analysisId}`);
 
       setOverallSummary(
         typeof data.overall_summary === "string"
@@ -128,7 +128,7 @@ export default function VisualAid() {
     }
 
     try {
-      await axios.delete(`http://54.151.132.142:5000/history/${analysisId}`);
+      await axios.delete(`http://54.255.145.32:5000/history/${analysisId}`);
       await loadHistory();
 
       if (currentAnalysisId === analysisId) {
