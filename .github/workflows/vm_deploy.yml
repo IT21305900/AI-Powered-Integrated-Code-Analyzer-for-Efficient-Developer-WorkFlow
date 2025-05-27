@@ -17,26 +17,46 @@ jobs:
           password: ${{ secrets.VM_PASSWORD }}
           port: 22
           script: |
+            # Node setup
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm install 20
             nvm use 20
             node -v
 
+            # App code fetch
             cd ~/AI-Powered-Integrated-Code-Analyzer-for-Efficient-Developer-WorkFlow
             if [ ! -d .git ]; then
-                echo "Error: Not a git repository. Exiting."
-                exit 1
+              echo "Error: Not a git repository. Exiting."
+              exit 1
             fi
 
             git fetch origin
             git reset --hard origin/main
             rm -rf docai/.next
 
+            # ChromaDB safe startup with volume + auto-restart
+            echo "Checking if ChromaDB Docker container exists..."
+            if docker ps -a --format '{{.Names}}' | grep -Eq '^chromadb$'; then
+              echo "ChromaDB container exists. Ensuring it's running..."
+              docker update --restart unless-stopped chromadb
+              docker start chromadb || true
+            else
+              echo "Starting new ChromaDB container with volume and restart policy..."
+              docker run -d \
+                -p 8081:8000 \
+                --restart unless-stopped \
+                -v chroma_data:/chroma/chroma \
+                --name chromadb \
+                chromadb/chroma
+            fi
+
+            # App install + build
             cd docai
             npm install
             npm run build
 
+            # App runtime via PM2
             if pm2 describe nextjs-app > /dev/null; then
               pm2 restart nextjs-app
             else
