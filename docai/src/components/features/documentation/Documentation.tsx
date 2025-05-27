@@ -27,8 +27,7 @@ const Documentation = () => {
     if (!repository) return;
 
     setLoading(true);
-    // Fetch the markdown file content
-    fetch(`/${repository}/${repository}.md`)
+    fetch(`/api/docs/${repository}`)
       .then((response) => {
         if (!response.ok) {
           toast.error(
@@ -46,6 +45,25 @@ const Documentation = () => {
         setError(true);
         setLoading(false);
       });
+    // Fetch the markdown file content
+    // fetch(`/${repository}/${repository}.md`)
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       toast.error(
+    //         "Sorry, we didn't find documentation for the selected repository."
+    //       );
+    //       throw new Error("Not Found");
+    //     }
+    //     return response.text();
+    //   })
+    //   .then((text) => {
+    //     setMarkdownContent(text);
+    //     setLoading(false);
+    //   })
+    //   .catch((error) => {
+    //     setError(true);
+    //     setLoading(false);
+    //   });
   }, [repository]);
 
   return (
