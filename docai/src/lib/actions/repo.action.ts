@@ -61,10 +61,15 @@ export async function DeleteRepository(repoId: string): Promise<DeleteRepository
       }
     }
 
-    await Pipeline.findOneAndDelete({ repository: repo.name })
+    // Delete the repo
+    await Pipeline.findOneAndDelete({ repository: repoId })
 
-    // Delete from database
-    await Repo.findOneAndDelete({ name: repoId })
+    const pipeline = await Pipeline.findOne({ repository: repoId })
+
+    if (pipeline) {
+      // Delete from database
+      await Pipeline.findOneAndDelete({ repository: repoId })
+    }
 
     // Delete folder from filesystem
     const repoPath = path.join(process.cwd(), 'repositories', repo.name)
