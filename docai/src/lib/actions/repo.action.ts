@@ -53,6 +53,7 @@ export async function DeleteRepository(repoId: string): Promise<DeleteRepository
 
     // Find the repository in the database first
     const repo = await Repo.findOne({ name: repoId })
+    console.log(repo)
 
     if (!repo) {
       return {
@@ -62,7 +63,7 @@ export async function DeleteRepository(repoId: string): Promise<DeleteRepository
     }
 
     // Delete the repo
-    await Pipeline.findOneAndDelete({ repository: repoId })
+    await Repo.findOneAndDelete({ name: repo.name })
 
     const pipeline = await Pipeline.findOne({ repository: repoId })
 
