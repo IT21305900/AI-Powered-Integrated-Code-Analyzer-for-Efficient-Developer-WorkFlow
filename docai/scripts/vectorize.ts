@@ -163,9 +163,9 @@ export const embedAllJsonFiles = async (collectionName: string) => {
       });
 
 
-
-
-      console.log("Indexing Completed");
+      await updateDocumentPipelineStats(collectionName, "embedding", "running");
+      console.log('res', response.id)
+      console.log("File Indexing Completed");
     } catch (error: any) {
       await updateDocumentPipelineStats(collectionName, "embedding", "error", error.message);
       console.error(`Error processing file ${file}:`, error);

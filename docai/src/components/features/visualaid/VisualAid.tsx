@@ -5,7 +5,11 @@ import mermaid from "mermaid";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FullscreenIcon, History, ZoomIn } from "lucide-react";
+import { FullscreenIcon, History, RewindIcon, ZoomIn, ZoomInIcon, ZoomOutIcon } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { GetRepositoryByName, GetRepositoryResult } from "@/lib/actions/repo.action";
+import { toast } from "sonner";
 
 interface FileNode {
   name: string;
@@ -1139,6 +1143,8 @@ ${fileFunctions.length === 0 ? '• Consider adding explicit function exports fo
       }
     });
 
+
+
     mermaidRef.current.innerHTML = `<div class="mermaid">${raw}</div>`;
     try {
       // @ts-ignore-next-line
@@ -1150,6 +1156,51 @@ ${fileFunctions.length === 0 ? '• Consider adding explicit function exports fo
       mermaidRef.current.innerHTML = `<p style='color:red;'>Failed to render UML diagram: ${err.message}</p>`;
     }
   }, [view, classDiagram, componentDiagram, erDiagram]);  // CHANGE 12: Include erDiagram in dependencies (was already there)
+
+  const searchParams = useSearchParams();
+  const repository = searchParams.get("repository");
+
+
+  // TanStack Query to fetch repository data
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    isSuccess
+  } = useQuery({
+    queryKey: ['repository', repository],
+    queryFn: async (): Promise<GetRepositoryResult> => {
+      if (!repository) throw new Error("No repository name provided");
+      return await GetRepositoryByName(repository);
+    },
+    enabled: !!repository,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    retry: 2,
+  })
+
+  // Handle successful data fetch (replaces onSuccess)
+  useEffect(() => {
+    if (isSuccess && data?.success && data.data) {
+      setRepoUrl(data.data.link || "");
+      toast.success(data.message);
+    } else if (isSuccess && data && !data.success) {
+      toast.error(data.message);
+    }
+  }, [isSuccess, data]);
+
+  // Handle errors (replaces onError)
+  useEffect(() => {
+    if (isError && error) {
+      toast.error(error.message || 'Failed to fetch repository data');
+    }
+  }, [isError, error]);
+
+  if (isError || error) {
+    toast.error(error?.message || 'Failed to fetch repository data');
+  }
+
+  if (isLoading) return <div>Loading</div>;
 
   return (
     <div style={{ padding: 20 }}>
@@ -1178,30 +1229,16 @@ ${fileFunctions.length === 0 ? '• Consider adding explicit function exports fo
           value={repoUrl}
           onChange={(e) => setRepoUrl(e.target.value)}
           placeholder="Enter repository URL"
-          style={{
-            width: 300,
-            padding: "8px 12px",
-            border: "1px solid #ccc",
-            borderRadius: "4px",
-            fontSize: "14px"
-          }}
+          className="border text-black p-1 border-grey-100 rounded-md"
         />
-        <button
+        <Button
           onClick={handleAnalyze}
           disabled={loading}
-          style={{
-            padding: "10px 20px",
-            backgroundColor: loading ? "#ccc" : "#007bff",
-            color: "white",
-            border: "none",
-            borderRadius: "6px",
-            cursor: loading ? "not-allowed" : "pointer",
-            fontSize: "16px",
-            fontWeight: "bold"
-          }}
+
+
         >
-          {loading ? "Analyzing..." : "🔍 Analyze"}
-        </button>
+          {loading ? "Analyzing..." : "Generate"}
+        </Button>
 
         {/* <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="repo">Project</Label>
@@ -1281,7 +1318,7 @@ ${fileFunctions.length === 0 ? '• Consider adding explicit function exports fo
       {/* Zoom Controls for ALL diagrams */}
       {
         view !== "history" && (
-          <div style={{
+          <div className="border border-b pb-2" style={{
             marginBottom: 10,
             display: "flex",
             alignItems: "center",
@@ -1291,71 +1328,37 @@ ${fileFunctions.length === 0 ? '• Consider adding explicit function exports fo
             borderRadius: "6px",
             border: "1px solid #dee2e6"
           }}>
-            <span style={{ fontSize: "14px", fontWeight: "bold", color: "#495057" }}>
+            <span className="text-gray-700 font-semibold" style={{ marginRight: 10 }}>
               Zoom Controls:
             </span>
-            <button
+            <Button
               onClick={zoomOut}
-              style={{
-                padding: "6px 12px",
-                backgroundColor: "#6c757d",
-                color: "white",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontSize: "14px",
-                fontWeight: "bold"
-              }}
+              className="bg-white text-black border border-gray-300 hover:bg-gray-100"
             >
-              🔍➖ Zoom Out
-            </button>
-            <span style={{
-              padding: "6px 12px",
-              background: "#fff",
-              border: "1px solid #ced4da",
-              borderRadius: "4px",
-              fontSize: "14px",
-              fontWeight: "bold",
-              minWidth: "80px",
-              textAlign: "center"
-            }}>
+              <ZoomOutIcon />  Zoom Out
+            </Button>
+            <span
+              className="bg-white text-black border border-gray-300 hover:bg-gray-100 p-1 px-4 rounded-md">
               {Math.round(zoomLevel * 100)}%
             </span>
-            <button
+            <Button
               onClick={zoomIn}
-              style={{
-                padding: "6px 12px",
-                backgroundColor: "#28a745",
-                color: "white",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontSize: "14px",
-                fontWeight: "bold"
-              }}
+              className="bg-white text-black border border-gray-300 hover:bg-gray-100"
             >
-              🔍➕ Zoom In
-            </button>
-            <button
+              <ZoomInIcon /> Zoom In
+            </Button>
+
+            <Button
               onClick={resetZoom}
-              style={{
-                padding: "6px 12px",
-                backgroundColor: "#007bff",
-                color: "white",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontSize: "14px",
-                fontWeight: "bold"
-              }}
+              className="bg-white text-black border border-gray-300 hover:bg-gray-100"
             >
-              🔄 Reset
-            </button>
+              <RewindIcon /> Reset
+            </Button>
+
           </div>
         )
       }
 
-  /*///////////////////////////////*/
 
       {/* History Panel */}
       {

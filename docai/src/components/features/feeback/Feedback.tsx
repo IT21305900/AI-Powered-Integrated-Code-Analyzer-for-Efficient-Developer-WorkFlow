@@ -168,30 +168,30 @@ const Feedback = () => {
         <h2 className="text-3xl font-bold text-white">
           Code Smell Analysis & Feedback System
         </h2>
-        <div className="flex flex-col md:flex-row md:items-center md:space-x-2 space-y-2 md:space-y-0">
+        <div className="flex flex-col md:flex-row md:items-center md:space-x-2 space-y-2 md:space-y-0 border-b border-gray-500 pb-4">
           <input
             type="text"
             placeholder="Enter GitHub Repo URL"
-            className="px-3 py-2 rounded border border-gray-400 text-black w-72"
+            className="px-3 py-1 rounded border border-gray-400 text-black w-72"
             value={repoUrl}
             onChange={(e) => setRepoUrl(e.target.value)}
           />
           <Button
             onClick={handleCloneRepo}
             disabled={loadingClone}
-            className="bg-blue-500 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600"
+            className="bg-white text-black border border-gray-300 hover:bg-gray-100"
           >
-            {loadingClone ? "Cloning..." : "Clone & Analyze"}
+            {loadingClone ? "Analyzing..." : "Clone & Analyze"}
           </Button>
           <Button
             onClick={() => setShowCharts(!showCharts)}
-            className="bg-white text-gray-900 font-semibold border border-gray-300 shadow-md px-6 py-2 hover:bg-gray-200 transition"
+            className="bg-white text-black border border-gray-300 hover:bg-gray-100"
           >
             {showCharts ? "Back to Table" : "View Graphs"}
           </Button>
           <Button
             onClick={downloadPDF}
-            className="bg-green-500 text-white font-semibold px-4 py-2 rounded hover:bg-green-600"
+            className="bg-white text-black border border-gray-300 hover:bg-gray-100"
           >
             Download PDF
           </Button>
@@ -202,7 +202,7 @@ const Feedback = () => {
         {!showCharts ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Implementation Smells */}
-            <Card className="bg-gray-900 shadow-lg rounded-xl border border-blue-400">
+            <Card className="bg-gray-900 shadow-lg rounded-md border border-blue-400">
               <CardHeader>
                 <CardTitle className="text-white">
                   Implementation Smells
@@ -262,7 +262,7 @@ const Feedback = () => {
             </Card>
 
             {/* Design Smells */}
-            <Card className="bg-gray-900 shadow-lg rounded-xl border border-blue-400">
+            <Card className="bg-gray-900 shadow-lg rounded-md border border-blue-400">
               <CardHeader>
                 <CardTitle className="text-white">Design Smells</CardTitle>
               </CardHeader>
