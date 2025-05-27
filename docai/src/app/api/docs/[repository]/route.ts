@@ -1,17 +1,14 @@
 // app/api/docs/[repository]/route.ts
 import fs from 'fs';
 import path from 'path';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-interface RouteParams {
-  params: {
-    repository: string;
-  };
-}
-
-export async function GET(request: NextRequest, { params }: RouteParams) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ repository: string }> }
+) {
   try {
-    const { repository } = params;
+    const { repository } = await params;
     const filePath = path.join(process.cwd(), 'public', repository, `${repository}.md`);
     
     console.log('Looking for file at:', filePath);
@@ -19,10 +16,10 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     // Check if file exists
     if (!fs.existsSync(filePath)) {
       console.log('File not found:', filePath);
-      return new Response('Documentation not found', { 
-        status: 404,
-        headers: { 'Content-Type': 'text/plain' }
-      });
+    return NextResponse.json(
+      { error: 'Documentation not found' }, 
+      { status: 404 }
+    );
     }
     
     // Read and return file content
@@ -37,9 +34,9 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     });
   } catch (error) {
     console.error('Error reading documentation:', error);
-    return new Response('Error reading documentation', { 
-      status: 500,
-      headers: { 'Content-Type': 'text/plain' }
-    });
+    return NextResponse.json(
+      { error: 'Error reading documentation' }, 
+      { status: 500 }
+    );
   }
 }
