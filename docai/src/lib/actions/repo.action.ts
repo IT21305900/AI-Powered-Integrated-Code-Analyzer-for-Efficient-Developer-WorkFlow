@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache'
 import fs from 'fs/promises'
 import path from 'path'
 import exp from "constants";
+import Pipeline from "@/lib/db/documentstats.model";
 
 
 export type DeleteRepositoryResult = {
@@ -60,8 +61,10 @@ export async function DeleteRepository(repoId: string): Promise<DeleteRepository
       }
     }
 
+    await Pipeline.findOneAndDelete({ repository: repo.name })
+
     // Delete from database
-    await Repo.findOneAndDelete({ name: repo.name })
+    await Repo.findOneAndDelete({ name: repoId })
 
     // Delete folder from filesystem
     const repoPath = path.join(process.cwd(), 'repositories', repo.name)
