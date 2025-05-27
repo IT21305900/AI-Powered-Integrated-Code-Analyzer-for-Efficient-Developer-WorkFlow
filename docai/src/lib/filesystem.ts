@@ -45,6 +45,12 @@ export const clonRepository = async (formData: FormData) => {
     // Clone the repository
     await git.clone(link, targetFolder);
 
+    const repository = await Repo.findOne({ name: repoName })
+
+    if (repository) {
+      await Repo.findOneAndDelete({ name: repoName });
+    }
+
     // Save the repository information to the database
     const repo = new Repo({
       name: repoName,
