@@ -15,7 +15,7 @@ export async function updateDocumentPipelineStats(
         const updateFields: any = {
             updated: new Date()
         };
-        
+
 
         // Update the specific step field in your schema
         updateFields[step] = status;
@@ -37,7 +37,7 @@ export async function updateDocumentPipelineStats(
         console.log("Test Runn")
         console.log(status)
         console.log(result)
-      
+
 
         console.log(`Pipeline ${repository} - ${step}: ${status}`);
         return result;
@@ -83,8 +83,23 @@ export async function getPipelineStats(repository: string) {
         console.log("Fetching pipeline stats for repository:", repository);
         const result = await Pipeline.findOne({ repository: repository }, { _id: 0 }).lean()
 
+        if (!result) {
+            retrun({
+                analyze: "idle",
+                embedding: "idle",
+                generate: "idle",
+                error: "idle",
+                created: new Date(),
+                updated: new Date()
+            })
+        }
+
         return result;
     } catch (error: any) {
         console.error("Error fetching pipeline stats:", error);
     }
+}
+
+function retrun(arg0: { analyze: string; embedding: string; generate: string; error: string; created: Date; updated: Date; }) {
+    throw new Error("Function not implemented.");
 }
