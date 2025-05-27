@@ -28,10 +28,6 @@ export default function Home() {
           <Repositories />
           <Features />
         </section>
-
-        {/* <section className="my-20">
-          <History />
-        </section> */}
       </main>
     </div>
   );

@@ -732,7 +732,7 @@ ${fileFunctions.length === 0 ? '• Consider adding explicit function exports fo
     setCurrentAnalysisId(null);
 
     try {
-      const { data } = await axios.post("http://54.151.132.142:5000/analyze", {
+      const { data } = await axios.post("http://54.255.145.32:5000/analyze", {
         repo_url: repoUrl,
         timestamp: Date.now()
       });
@@ -1205,8 +1205,10 @@ ${fileFunctions.length === 0 ? '• Consider adding explicit function exports fo
   return (
     <div style={{ padding: 20 }}>
 
-      <div className="border-b py-1">
-        <p className="lead mx-5">Codebase Visual Aid - UML Standards Compliant</p>
+      <div className="border-gray-700 py-1 pt-4">
+        <p className="lead mx-5 text-xl text-gray-100">
+          Codebase Visual Aid - UML Standards Compliant
+        </p>
       </div>
 
       {/* Error Message */}
