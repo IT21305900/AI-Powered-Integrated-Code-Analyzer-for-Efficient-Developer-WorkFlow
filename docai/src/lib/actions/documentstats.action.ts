@@ -83,15 +83,19 @@ export async function getPipelineStats(repository: string) {
         console.log("Fetching pipeline stats for repository:", repository);
         const result = await Pipeline.findOne({ repository: repository }, { _id: 0 }).lean()
 
+        console.log(result)
+
         if (!result) {
-            retrun({
+            const intial = {
                 analyze: "idle",
                 embedding: "idle",
                 generate: "idle",
                 error: "idle",
                 created: new Date(),
                 updated: new Date()
-            })
+            }
+
+            return intial
         }
 
         return result;
@@ -100,6 +104,3 @@ export async function getPipelineStats(repository: string) {
     }
 }
 
-function retrun(arg0: { analyze: string; embedding: string; generate: string; error: string; created: Date; updated: Date; }) {
-    throw new Error("Function not implemented.");
-}

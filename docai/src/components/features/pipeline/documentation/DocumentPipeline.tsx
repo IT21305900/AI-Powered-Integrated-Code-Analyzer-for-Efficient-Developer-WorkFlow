@@ -25,13 +25,15 @@ const DocumentPipeline = () => {
   const { isLoading, isError, data } = useQuery({
     queryKey: ["pipeline-stats", repository],
     queryFn: () => getPipelineStats(repository!),
-    refetchInterval: 3000, // Refetch every 3 seconds
+    refetchInterval: 5000, // Refetch every 3 seconds
     staleTime: 0,
   });
 
   if (isLoading || !data) {
     return <div className="text-center">Loading...</div>;
   }
+
+  console.log(data)
 
   if (isError) {
     return <div className="text-red-500">Error loading pipeline stats.</div>;
