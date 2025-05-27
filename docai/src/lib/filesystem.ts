@@ -21,6 +21,7 @@ export const clonRepository = async (formData: FormData) => {
     // Define the folder to save the cloned repository
     const serverFolder = path.resolve(process.cwd(), "repositories");
 
+
     // Ensure the folder exists
     if (!fs.existsSync(serverFolder)) {
       fs.mkdirSync(serverFolder, { recursive: true });
@@ -34,6 +35,12 @@ export const clonRepository = async (formData: FormData) => {
 
     // Target folder for the cloned repository
     const targetFolder = path.join(serverFolder, repoName);
+
+    // ❗ Delete the folder if it already exists
+    if (fs.existsSync(targetFolder)) {
+      console.log(`Removing existing folder: ${targetFolder}`);
+      fs.rmSync(targetFolder, { recursive: true, force: true });
+    }
 
     // Clone the repository
     await git.clone(link, targetFolder);
